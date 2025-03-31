@@ -131,7 +131,7 @@ export default function Home() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <Leaf className="w-8 h-8 text-green-600 mr-2" />
-              <span className="font-bold text-2xl">EcoCreds</span>
+              <span className="font-bold text-2xl">CarbonGero</span>
             </div>
             
             <div className="hidden md:flex space-x-8">
@@ -519,7 +519,7 @@ export default function Home() {
             <div className="space-y-6">
               <div className="flex items-center">
                 <Leaf className="w-8 h-8 text-green-400 mr-2" />
-                <span className="font-bold text-2xl">EcoCreds</span>
+                <span className="font-bold text-2xl">CarbonGero</span>
               </div>
               <p className="text-gray-400 leading-relaxed">
                 Smart for Business, Great for Planet. Making sustainability accessible and rewarding.
@@ -563,7 +563,7 @@ export default function Home() {
               <ul className="space-y-3">
                 <li className="flex items-center text-gray-400">
                   <Mail className="w-5 h-5 mr-2" />
-                  hello@ecocreds.com
+                  hello@carbongero.com
                 </li>
                 <li className="flex items-center text-gray-400">
                   <MapPin className="w-5 h-5 mr-2" />
@@ -576,7 +576,7 @@ export default function Home() {
           <div className="border-t border-gray-800 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-gray-400 text-sm">
-                © 2025 EcoCreds. Smart for Business, Great for Planet.
+                © 2025 CarbonGero. Smart for Business, Great for Planet.
               </p>
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <a href="#" className="text-gray-400 hover:text-white text-sm">Privacy</a>
