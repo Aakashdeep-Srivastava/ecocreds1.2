@@ -174,15 +174,11 @@ export default function Home() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 w-full pt-16">
           <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-1/2 mb-8 md:mb-0 text-white">
-              <div className="inline-flex items-center px-4 py-2 bg-green-600 bg-opacity-90 rounded-full font-medium mb-6">
-                <Leaf className="w-4 h-4 mr-2" /> 
-                Smart for Business, Great for Planet
-              </div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Make Sustainability 
-                <span className="text-green-400"> Your Story</span>
-              </h1>
+          <div className="md:w-1/2 mb-8 md:mb-0 text-white">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight flex flex-col">
+  <span className="whitespace-nowrap">Smart for Business</span>
+  <span className="text-green-400">Great for Planet</span>
+</h1>
               <p className="text-xl mb-8 leading-relaxed opacity-90">
                 Join a community making sustainability simple, measurable, and rewarding. 
                 Every action counts towards a better future.
@@ -217,46 +213,12 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Journey Preview */}
-            <div className="md:w-1/3 bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-xl border border-white border-opacity-20">
-              <h3 className="text-white text-xl font-semibold mb-4">Choose Your Path</h3>
-              <div className="space-y-4">
-                <div className="flex items-center text-white">
-                  <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-3">
-                    <Users className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-sm opacity-80">For Individuals</div>
-                    <div className="font-semibold">Track Personal Impact</div>
-                  </div>
-                </div>
-                <div className="flex items-center text-white">
-                  <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-3">
-                    <Building className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-sm opacity-80">For Businesses</div>
-                    <div className="font-semibold">Measure & Report</div>
-                  </div>
-                </div>
-                <div className="flex items-center text-white">
-                  <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center mr-3">
-                    <Globe className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <div className="text-sm opacity-80">Together</div>
-                    <div className="font-semibold">Create Change</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          </div>
           </div>
         </div>
       </section>
-
-      {/* Features Section */}
+    
+            {/* Features Section */}
       <section id="features" className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
