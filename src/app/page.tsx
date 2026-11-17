@@ -4,7 +4,13 @@ import {
   TrendingUp, Globe, Building, Star, Sparkles, Plus, Menu, X,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import { motion } from 'motion/react';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /* ---- rotating almanac seal ------------------------------- */
 function Seal() {
@@ -34,6 +40,29 @@ const TICKER = [
 
 export default function Home() {
   const [menu, setMenu] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // Scroll-reveal for marked blocks
+    gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
+      gsap.from(el, {
+        y: 44, autoAlpha: 0, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 86%', once: true },
+      });
+    });
+    // Staggered children (card grids)
+    gsap.utils.toArray<HTMLElement>('[data-stagger]').forEach((grid) => {
+      gsap.from(grid.children, {
+        y: 36, autoAlpha: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12,
+        scrollTrigger: { trigger: grid, start: 'top 84%', once: true },
+      });
+    });
+    // Hero readout panel parallax
+    gsap.to('[data-parallax]', {
+      yPercent: -12, ease: 'none',
+      scrollTrigger: { trigger: root.current, start: 'top top', end: '60% top', scrub: true },
+    });
+  }, { scope: root });
 
   const stats = [
     { n: '48.2kt', l: 'CO₂ accounted' },
@@ -72,7 +101,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-paper text-ink overflow-x-hidden">
+    <div ref={root} className="min-h-screen bg-paper text-ink overflow-x-hidden">
       {/* ===================== NAV ===================== */}
       <nav className="fixed top-0 inset-x-0 z-50 bg-paper/85 backdrop-blur-md border-b border-ink/10">
         <div className="max-w-[1400px] mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
@@ -136,16 +165,20 @@ export default function Home() {
               sustainability — for people and the organisations they move.
             </p>
             <div className="mt-9 flex flex-wrap gap-3 reveal" style={{ animationDelay: '.44s' }}>
-              <Link href="/signup" className="btn-primary">
-                Start your journey <ArrowRight className="w-4 h-4" />
-              </Link>
-              <a href="#features" className="btn-ghost">Read the almanac</a>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }} className="inline-flex">
+                <Link href="/signup" className="btn-primary">
+                  Start your journey <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+              <motion.a whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }} href="#features" className="btn-ghost">
+                Read the almanac
+              </motion.a>
             </div>
           </div>
 
           {/* forest readout panel */}
           <div className="lg:col-span-5 reveal-slow" style={{ animationDelay: '.3s' }}>
-            <div className="relative bg-forest-deep text-paper p-7 md:p-9 bg-dots">
+            <div data-parallax className="relative bg-forest-deep text-paper p-7 md:p-9 bg-dots">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="tag text-lime">Live carbon index</p>
@@ -173,7 +206,7 @@ export default function Home() {
 
       {/* ===================== STAT BAND ===================== */}
       <section className="px-5 md:px-8">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-2 lg:grid-cols-4 border-y border-ink/15">
+        <div data-reveal className="max-w-[1400px] mx-auto grid grid-cols-2 lg:grid-cols-4 border-y border-ink/15">
           {stats.map((s, i) => (
             <div key={s.l}
               className={`py-8 px-6 ${i !== 0 ? 'border-l border-ink/15' : ''} ${i === 2 ? 'border-l-0 lg:border-l' : ''} ${i >= 2 ? 'border-t border-ink/15 lg:border-t-0' : ''}`}>
@@ -187,7 +220,7 @@ export default function Home() {
       {/* ===================== FEATURES ===================== */}
       <section id="features" className="px-5 md:px-8 py-24 md:py-32">
         <div className="max-w-[1400px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+          <div data-reveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
             <div>
               <p className="tag text-clay">Chapter I — The Platform</p>
               <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight text-balance">
@@ -200,7 +233,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 border-t border-ink/15">
+          <div data-stagger className="grid md:grid-cols-3 border-t border-ink/15">
             {features.map((f) => (
               <article key={f.k}
                 className="group relative p-8 md:p-9 border-b border-ink/15 md:border-b-0 md:border-r md:last:border-r-0 border-ink/15 hover:bg-[#faf8f1] transition-colors">
@@ -226,7 +259,7 @@ export default function Home() {
       {/* ===================== JOURNEY ===================== */}
       <section id="journey" className="px-5 md:px-8 py-24 md:py-28 bg-forest-deep text-paper">
         <div className="max-w-[1400px] mx-auto">
-          <div className="text-center mb-16">
+          <div data-reveal className="text-center mb-16">
             <p className="tag text-lime">Chapter II — Your Path</p>
             <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight">Choose your journey</h2>
             <p className="mt-4 text-paper/70 max-w-xl mx-auto">
@@ -267,7 +300,7 @@ export default function Home() {
 
       {/* ===================== CAPABILITIES ===================== */}
       <section className="px-5 md:px-8 py-24 md:py-32">
-        <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <div data-reveal className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <p className="tag text-clay">Chapter III — How it works</p>
             <h2 className="mt-4 font-display text-4xl md:text-5xl font-semibold tracking-tight text-balance">
@@ -320,21 +353,24 @@ export default function Home() {
       {/* ===================== COMMUNITY ===================== */}
       <section id="community" className="px-5 md:px-8 pb-24 md:pb-32">
         <div className="max-w-[1400px] mx-auto">
-          <div className="text-center mb-14">
+          <div data-reveal className="text-center mb-14">
             <p className="tag text-clay">Chapter IV — Join us</p>
             <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight">Be part of the change</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-5">
+          <div data-reveal className="grid md:grid-cols-3 gap-5">
             {[
               { icon: <Users />, t: 'Community Challenges', d: 'Join monthly challenges and compete to create positive change.' },
               { icon: <Star />, t: 'Recognition Program', d: 'Earn badges and rewards as you progress on your journey.' },
               { icon: <Globe />, t: 'Global Impact', d: 'See how your actions contribute to global sustainability goals.' },
             ].map((c) => (
-              <article key={c.t} className="card-paper p-8 group hover:-translate-y-1 transition-transform duration-500">
+              <motion.article key={c.t}
+                whileHover={{ y: -8 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                className="card-paper p-8 group">
                 <span className="text-forest group-hover:text-clay transition-colors [&>svg]:w-9 [&>svg]:h-9">{c.icon}</span>
                 <h3 className="mt-7 font-display text-xl font-semibold">{c.t}</h3>
                 <p className="mt-2 text-ink-soft">{c.d}</p>
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>
@@ -342,7 +378,7 @@ export default function Home() {
 
       {/* ===================== CTA ===================== */}
       <section className="px-5 md:px-8 pb-24">
-        <div className="max-w-[1400px] mx-auto bg-lime text-ink p-10 md:p-16 relative overflow-hidden">
+        <div data-reveal className="max-w-[1400px] mx-auto bg-lime text-ink p-10 md:p-16 relative overflow-hidden">
           <div className="absolute -right-10 -top-10 w-64 h-64 rounded-full border border-ink/20 animate-spin-slow" />
           <div className="relative grid lg:grid-cols-2 gap-8 items-center">
             <div>
