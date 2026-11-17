@@ -367,8 +367,18 @@ export default function Home() {
       </section>
 
       {/* ===================== FOOTER ===================== */}
-      <footer id="contact" className="bg-forest-dark text-paper/70">
-        <div className="max-w-[1400px] mx-auto px-5 md:px-8 py-16">
+      <footer id="contact" className="relative bg-forest-dark text-paper/70 overflow-hidden">
+        {/* ambient background video */}
+        <video
+          autoPlay loop muted playsInline preload="none"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          aria-hidden
+        >
+          <source src="/video/home.mp4" type="video/mp4" />
+        </video>
+        {/* legibility overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark via-forest-dark/85 to-forest-dark/70" aria-hidden />
+        <div className="relative z-10 max-w-[1400px] mx-auto px-5 md:px-8 py-16">
           <div className="grid md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
             <div className="md:col-span-1">
               <span className="font-display text-3xl font-semibold text-paper">CarbonGero</span>
