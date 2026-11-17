@@ -39,9 +39,16 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-6">
-      {/* Top Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div className="max-w-[1200px] mx-auto">
+      {/* Section — ledger */}
+      <div className="flex items-end justify-between mb-5">
+        <div>
+          <p className="tag text-clay">The ledger</p>
+          <h2 className="mt-1 font-display text-2xl font-semibold">This month at a glance</h2>
+        </div>
+        <span className="tag text-ink-faint hidden sm:block">Fig. 01 — 04</span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
         <CarbonMetrics
           total={userMetrics.carbonCredits}
           monthly={userMetrics.monthlyReduction}
@@ -56,8 +63,14 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Performance Chart */}
-      <div className="mb-8">
+      {/* Section — trend */}
+      <div className="flex items-end justify-between mb-5">
+        <div>
+          <p className="tag text-clay">The record</p>
+          <h2 className="mt-1 font-display text-2xl font-semibold">Emissions trend</h2>
+        </div>
+      </div>
+      <div className="mb-10">
         <EmissionsChart
           current={userMetrics.monthlyStats.saved}
           previous={userMetrics.monthlyStats.previousMonth}
@@ -65,8 +78,14 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Quick Actions & Active Challenge */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Section — field work */}
+      <div className="flex items-end justify-between mb-5">
+        <div>
+          <p className="tag text-clay">Field work</p>
+          <h2 className="mt-1 font-display text-2xl font-semibold">Act & earn</h2>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <QuickActions actions={quickActions} />
         <ChallengeCard
           challenge={activeChallenge}

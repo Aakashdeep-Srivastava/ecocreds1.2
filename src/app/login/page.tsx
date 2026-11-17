@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { Leaf, Mail, Lock, ArrowRight, Building, User, BarChart2 } from 'lucide-react';
+import { Leaf, Mail, Lock, ArrowRight, Building, User, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Login() {
@@ -10,178 +10,114 @@ export default function Login() {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [loginType, setLoginType] = useState('individual'); // 'individual' or 'corporate'
+  const [loginType, setLoginType] = useState<'individual' | 'corporate'>('individual');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    try {
-      await login(email, password);
-      router.push(loginType === 'corporate' ? '/dashboard/corporate' : '/dashboard');
-    } catch (err) {
-      setError('Invalid email or password');
-    } finally {
-      setIsLoading(false);
-    }
+    await login(email, password);
+    router.push(loginType === 'corporate' ? '/dashboard/corporate' : '/dashboard');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100">
-      <div className="max-w-md w-full m-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <Leaf className="w-6 h-6 text-green-600" />
+    <div className="min-h-screen grid lg:grid-cols-2 bg-paper text-ink">
+      {/* ---- Feature panel ---- */}
+      <aside className="relative hidden lg:flex flex-col justify-between p-12 bg-forest-deep text-paper bg-dots overflow-hidden">
+        <div className="absolute -left-16 -bottom-16 w-72 h-72 rounded-full border border-white/10 animate-spin-slow" />
+        <Link href="/" className="relative flex items-center gap-2 w-fit">
+          <Leaf className="w-7 h-7 text-lime" strokeWidth={1.5} />
+          <span className="font-display text-2xl font-semibold">CarbonGero</span>
+        </Link>
+
+        <div className="relative max-w-md">
+          <p className="tag text-lime">№ 01 — Welcome back</p>
+          <h2 className="mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance">
+            Every action,<br /><span className="italic font-normal">accounted for.</span>
+          </h2>
+          <p className="mt-6 text-paper/70 leading-relaxed">
+            Pick up where you left off. Your footprint, challenges and rewards —
+            all in one field guide.
+          </p>
+          <div className="mt-10 grid grid-cols-3 gap-px bg-white/10 border border-white/10">
+            {[['−18%', 'Footprint'], ['5,000', 'Credits'], ['A+', 'Tier']].map(([a, b]) => (
+              <div key={b} className="bg-forest-deep p-4">
+                <p className="font-display text-2xl stat-num">{a}</p>
+                <p className="tag text-paper/55 mt-1">{b}</p>
               </div>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-800">Welcome Back</h2>
-            <p className="text-gray-600 mt-2">Login to your EcoCredits account</p>
+            ))}
+          </div>
+        </div>
+
+        <p className="relative tag text-paper/40">Built on Algorand · sustainable ledger</p>
+      </aside>
+
+      {/* ---- Form ---- */}
+      <main className="flex items-center justify-center p-6 md:p-10">
+        <div className="w-full max-w-md">
+          <Link href="/" className="lg:hidden inline-flex items-center gap-2 tag text-ink-faint mb-8">
+            <ArrowLeft className="w-4 h-4" /> CarbonGero
+          </Link>
+
+          <p className="tag text-clay">Sign in</p>
+          <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight">Welcome back.</h1>
+          <p className="mt-2 text-ink-soft">Enter anything — this is an open demo.</p>
+
+          {/* type toggle */}
+          <div className="mt-8 grid grid-cols-2 border border-ink/15">
+            {(['individual', 'corporate'] as const).map((t) => (
+              <button key={t} type="button" onClick={() => setLoginType(t)}
+                className={`flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
+                  loginType === t ? 'bg-forest-deep text-paper' : 'text-ink-soft hover:bg-[#faf8f1]'
+                }`}>
+                {t === 'individual' ? <User className="w-4 h-4" /> : <Building className="w-4 h-4" />}
+                {t === 'individual' ? 'Individual' : 'Corporate'}
+              </button>
+            ))}
           </div>
 
-          {/* Login Type Selector */}
-          <div className="flex rounded-lg bg-gray-100 p-1 mb-6">
-            <button
-              onClick={() => setLoginType('individual')}
-              className={`flex-1 flex items-center justify-center py-2 px-4 rounded-md transition-colors ${
-                loginType === 'individual' 
-                  ? 'bg-white shadow-sm text-green-600' 
-                  : 'text-gray-600 hover:text-green-600'
-              }`}
-            >
-              <User className="w-4 h-4 mr-2" />
-              Individual
-            </button>
-            <button
-              onClick={() => setLoginType('corporate')}
-              className={`flex-1 flex items-center justify-center py-2 px-4 rounded-md transition-colors ${
-                loginType === 'corporate' 
-                  ? 'bg-white shadow-sm text-green-600' 
-                  : 'text-gray-600 hover:text-green-600'
-              }`}
-            >
-              <Building className="w-4 h-4 mr-2" />
-              Corporate
-            </button>
-          </div>
-
-          {loginType === 'corporate' && (
-            <div className="bg-green-50 p-4 rounded-lg mb-6">
-              <div className="flex items-center mb-2">
-                <BarChart2 className="w-5 h-5 text-green-600 mr-2" />
-                <h3 className="font-medium">Corporate Partner Benefits</h3>
+          <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+            <label className="block">
+              <span className="tag text-ink-faint">{loginType === 'corporate' ? 'Corporate email' : 'Email'}</span>
+              <div className="relative mt-2">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-faint" />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@planet.earth"
+                  className="w-full pl-11 pr-4 py-3.5 bg-[#faf8f1] border border-ink/15 focus:border-forest focus:bg-white outline-none focus:ring-2 focus:ring-lime/60 transition" />
               </div>
-              <ul className="text-sm text-gray-600 space-y-2 ml-7">
-                <li>• Real-time sustainability metrics dashboard</li>
-                <li>• Employee engagement analytics</li>
-                <li>• Carbon credit trading platform</li>
-                <li>• ESG reporting tools</li>
-              </ul>
-            </div>
-          )}
-
-          {error && (
-            <div className="bg-red-50 text-red-500 p-4 rounded-lg mb-6 text-center">
-              {error}
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-4">
-              <div>
-                <label className="text-sm font-medium text-gray-700 block mb-2">
-                  {loginType === 'corporate' ? 'Corporate Email' : 'Email'}
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    placeholder={loginType === 'corporate' ? 'Enter your corporate email' : 'Enter your email'}
-                    required
-                  />
-                </div>
+            </label>
+            <label className="block">
+              <span className="tag text-ink-faint">Password</span>
+              <div className="relative mt-2">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-faint" />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full pl-11 pr-4 py-3.5 bg-[#faf8f1] border border-ink/15 focus:border-forest focus:bg-white outline-none focus:ring-2 focus:ring-lime/60 transition" />
               </div>
+            </label>
 
-              <div>
-                <label className="text-sm font-medium text-gray-700 block mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                    placeholder="Enter your password"
-                    required
-                  />
-                </div>
-              </div>
+            <div className="flex items-center justify-between text-sm">
+              <label className="flex items-center gap-2 text-ink-soft cursor-pointer">
+                <input type="checkbox" className="accent-forest w-4 h-4" /> Remember me
+              </label>
+              <a href="#" className="link-wipe text-ink-soft">Forgot password?</a>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                />
-                <label className="ml-2 block text-sm text-gray-700">
-                  Remember me
-                </label>
-              </div>
-              <Link
-                href="/forgot-password"
-                className="text-sm text-green-600 hover:text-green-500"
-              >
-                Forgot password?
-              </Link>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-sm font-medium rounded-lg text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
-            >
+            <button type="submit" disabled={isLoading} className="btn-primary w-full !py-4">
               {isLoading ? (
-                <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span className="w-5 h-5 border-2 border-paper border-t-transparent rounded-full animate-spin" />
               ) : (
-                <>
-                  {loginType === 'corporate' ? 'Access Dashboard' : 'Sign in'}
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </>
+                <>{loginType === 'corporate' ? 'Access dashboard' : 'Sign in'} <ArrowRight className="w-4 h-4" /></>
               )}
             </button>
           </form>
 
-          {loginType === 'individual' ? (
-            <p className="mt-8 text-center text-sm text-gray-600">
-              Don't have an account?{' '}
-              <Link
-                href="/signup"
-                className="font-medium text-green-600 hover:text-green-500"
-              >
-                Sign up
-              </Link>
-            </p>
-          ) : (
-            <p className="mt-8 text-center text-sm text-gray-600">
-              Need a corporate account?{' '}
-              <Link
-                href="/contact"
-                className="font-medium text-green-600 hover:text-green-500"
-              >
-                Contact Sales
-              </Link>
-            </p>
-          )}
+          <p className="mt-8 text-center text-sm text-ink-soft">
+            Don&apos;t have an account?{' '}
+            <Link href="/signup" className="link-wipe font-semibold text-forest">Sign up</Link>
+          </p>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

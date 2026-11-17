@@ -1,550 +1,402 @@
 'use client';
-import { 
-  Leaf, Globe, Trees, Recycle, Users, Zap, 
-  Building, Car, Hotel, Calendar, Star, Award,
-  BarChart2, TrendingUp, ShoppingBag, ArrowRight,
-  Check, Shield, ChevronDown, Play, Mail, Phone, MapPin,
-  Sparkles, Lock, LineChart
+import {
+  Leaf, Users, ArrowRight, ArrowUpRight, Check, LineChart,
+  TrendingUp, Globe, Building, Star, Sparkles, Plus, Menu, X,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
-export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+/* ---- rotating almanac seal ------------------------------- */
+function Seal() {
+  return (
+    <div className="relative w-36 h-36 md:w-44 md:h-44 shrink-0">
+      <svg viewBox="0 0 200 200" className="w-full h-full animate-spin-slow" aria-hidden>
+        <defs>
+          <path id="seal" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
+        </defs>
+        <text className="fill-[#f2eee1]" style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: 6 }}>
+          <textPath href="#seal" startOffset="0%">
+            · CARBON ALMANAC · EST. 2024 · SMART FOR BUSINESS · GREAT FOR PLANET
+          </textPath>
+        </text>
+      </svg>
+      <div className="absolute inset-0 grid place-items-center">
+        <Leaf className="w-10 h-10 text-lime" strokeWidth={1.4} />
+      </div>
+    </div>
+  );
+}
 
-  // Updated feature cards to be more story-driven
+const TICKER = [
+  'CO₂ TRACKED · 48.2kt', 'EV RIDES LOGGED · 12,904', 'TREES EQUIVALENT · 61,300',
+  'ACTIVE CHANGEMAKERS · 8,412', 'CHALLENGES RUNNING · 37', 'WATER SAVED · 2.1M L',
+];
+
+export default function Home() {
+  const [menu, setMenu] = useState(false);
+
+  const stats = [
+    { n: '48.2kt', l: 'CO₂ accounted' },
+    { n: '8,412', l: 'Changemakers' },
+    { n: '37', l: 'Live challenges' },
+    { n: '61.3k', l: 'Trees equiv.' },
+  ];
+
   const features = [
     {
-      title: "Connect & Track",
-      description: "Join a community making sustainability simple and rewarding. Track your impact, join challenges, and earn rewards.",
-      icon: <Users className="w-6 h-6 text-green-600" />,
-      benefits: ["Activity Tracking", "Community Challenges", "Digital Rewards"]
+      k: '01', title: 'Connect & Track',
+      body: 'Join a community making sustainability simple and rewarding. Log daily activity, join challenges, earn real rewards.',
+      tags: ['Activity tracking', 'Community challenges', 'Digital rewards'], icon: <Users />,
     },
     {
-      title: "Measure & Report",
-      description: "Transform complex sustainability data into clear insights and reports that showcase your environmental impact.",
-      icon: <LineChart className="w-6 h-6 text-green-600" />,
-      benefits: ["Impact Analytics", "Progress Reports", "Performance Tracking"]
+      k: '02', title: 'Measure & Report',
+      body: 'Turn complex sustainability data into clear insight and reports that prove your environmental impact.',
+      tags: ['Impact analytics', 'Progress reports', 'Performance tracking'], icon: <LineChart />,
     },
     {
-      title: "Grow & Share",
-      description: "Be part of a movement. Share your sustainability journey and inspire others to join the cause.",
-      icon: <Sparkles className="w-6 h-6 text-green-600" />,
-      benefits: ["Success Stories", "Community Impact", "Knowledge Sharing"]
-    }
+      k: '03', title: 'Grow & Share',
+      body: 'Be part of a movement. Share your journey, inspire others, and compound small actions into measurable change.',
+      tags: ['Success stories', 'Community impact', 'Knowledge sharing'], icon: <Sparkles />,
+    },
   ];
 
-  // Dual journey paths
-  const journeyPaths = {
-    individual: [
-      {
-        stage: "Start",
-        title: "Track Your Impact",
-        description: "Connect your daily activities to sustainability metrics",
-        icon: <Leaf className="w-8 h-8 text-green-600" />
-      },
-      {
-        stage: "Engage",
-        title: "Join Challenges",
-        description: "Participate in community initiatives and earn rewards",
-        icon: <Users className="w-8 h-8 text-green-600" />
-      },
-      {
-        stage: "Grow",
-        title: "Lead Change",
-        description: "Inspire others and expand your positive impact",
-        icon: <Star className="w-8 h-8 text-green-600" />
-      }
-    ],
-    business: [
-      {
-        stage: "Start",
-        title: "Measure & Report",
-        description: "Set up your sustainability tracking framework",
-        icon: <LineChart className="w-8 h-8 text-green-600" />
-      },
-      {
-        stage: "Optimize",
-        title: "Improve & Adapt",
-        description: "Use insights to enhance your sustainability practices",
-        icon: <TrendingUp className="w-8 h-8 text-green-600" />
-      },
-      {
-        stage: "Scale",
-        title: "Expand Impact",
-        description: "Grow your sustainability initiatives across operations",
-        icon: <Globe className="w-8 h-8 text-green-600" />
-      }
-    ]
-  };
-
-  // Community focus instead of success stories
-  const communityInitiatives = [
-    {
-      type: "individual",
-      title: "Personal Impact",
-      description: "Track your daily sustainable choices and see how small actions add up to meaningful change",
-      features: [
-        "Activity Tracking",
-        "Personal Dashboard",
-        "Community Challenges",
-        "Reward System"
-      ]
-    },
-    {
-      type: "business",
-      title: "Business Impact",
-      description: "Transform your operations with comprehensive sustainability tracking and reporting",
-      features: [
-        "ESG Integration",
-        "Team Engagement",
-        "Impact Analytics",
-        "Progress Tracking"
-      ]
-    }
+  const individual = [
+    { s: 'Start', t: 'Track your impact', d: 'Connect daily activity to sustainability metrics.', icon: <Leaf /> },
+    { s: 'Engage', t: 'Join challenges', d: 'Take part in community initiatives and earn rewards.', icon: <Users /> },
+    { s: 'Grow', t: 'Lead change', d: 'Inspire others and widen your positive impact.', icon: <Star /> },
   ];
-
-  // Platform capabilities
-  const capabilities = [
-    {
-      title: "Activity Tracking",
-      description: "Connect your daily actions to meaningful sustainability metrics",
-      icon: <LineChart className="w-6 h-6 text-green-600" />
-    },
-    {
-      title: "Community Platform",
-      description: "Join challenges and share experiences with like-minded individuals and organizations",
-      icon: <Users className="w-6 h-6 text-green-600" />
-    },
-    {
-      title: "Impact Analytics",
-      description: "Understand and improve your environmental impact with clear insights",
-      icon: <BarChart2 className="w-6 h-6 text-green-600" />
-    }
+  const business = [
+    { s: 'Start', t: 'Measure & report', d: 'Stand up your sustainability tracking framework.', icon: <LineChart /> },
+    { s: 'Optimize', t: 'Improve & adapt', d: 'Use insight to sharpen sustainability practices.', icon: <TrendingUp /> },
+    { s: 'Scale', t: 'Expand impact', d: 'Grow initiatives across every operation.', icon: <Globe /> },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm fixed w-full z-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Leaf className="w-8 h-8 text-green-600 mr-2" />
-              <span className="font-bold text-2xl">CarbonGero</span>
-            </div>
-            
-            <div className="hidden md:flex space-x-8">
-              <a href="#features" className="text-gray-600 hover:text-green-600">Features</a>
-              <a href="#journey" className="text-gray-600 hover:text-green-600">Journey</a>
-              <a href="#community" className="text-gray-600 hover:text-green-600">Community</a>
-              <a href="#contact" className="text-gray-600 hover:text-green-600">Contact</a>
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <Link href="/login" className="text-gray-600 hover:text-green-600">
-                Login
-              </Link>
-              <Link 
-                href="/signup" 
-                className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center"
-              >
-                Join The Movement <ArrowRight className="w-4 h-4 ml-2" />
-              </Link>
-            </div>
+    <div className="min-h-screen bg-paper text-ink overflow-x-hidden">
+      {/* ===================== NAV ===================== */}
+      <nav className="fixed top-0 inset-x-0 z-50 bg-paper/85 backdrop-blur-md border-b border-ink/10">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-baseline gap-2">
+            <span className="font-display text-2xl font-semibold tracking-tight">CarbonGero</span>
+            <span className="tag text-ink-faint hidden sm:inline">/ index</span>
+          </Link>
+          <div className="hidden md:flex items-center gap-9 text-sm font-medium">
+            <a href="#features" className="link-wipe">Features</a>
+            <a href="#journey" className="link-wipe">Journey</a>
+            <a href="#community" className="link-wipe">Community</a>
+            <Link href="/login" className="link-wipe">Login</Link>
+            <Link href="/signup" className="btn-primary !px-5 !py-2.5 text-sm">
+              Join the movement <ArrowUpRight className="w-4 h-4" />
+            </Link>
           </div>
+          <button onClick={() => setMenu(!menu)} className="md:hidden p-2 -mr-2" aria-label="Menu">
+            {menu ? <X /> : <Menu />}
+          </button>
         </div>
+        {menu && (
+          <div className="md:hidden border-t border-ink/10 bg-paper px-5 py-4 flex flex-col gap-4 text-sm font-medium">
+            <a href="#features" onClick={() => setMenu(false)}>Features</a>
+            <a href="#journey" onClick={() => setMenu(false)}>Journey</a>
+            <a href="#community" onClick={() => setMenu(false)}>Community</a>
+            <Link href="/login" onClick={() => setMenu(false)}>Login</Link>
+            <Link href="/signup" className="btn-primary text-sm" onClick={() => setMenu(false)}>
+              Join the movement <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center">
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-70 z-10"></div>
-          <video 
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute w-full h-full object-cover"
-            poster="/api/placeholder/1920/1080"
-          >
-            <source src="/video/home.mp4" type="video/mp4" />
-          </video>
+      {/* ===================== TICKER ===================== */}
+      <div className="fixed top-16 inset-x-0 z-40 bg-forest-deep text-paper/90 border-b border-black/20 overflow-hidden marquee-mask">
+        <div className="marquee-track py-2">
+          {[...TICKER, ...TICKER].map((t, i) => (
+            <span key={i} className="tag flex items-center gap-4 px-6 whitespace-nowrap text-paper/70">
+              <span className="w-1.5 h-1.5 rounded-full bg-lime" /> {t}
+            </span>
+          ))}
         </div>
+      </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 w-full pt-16">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="md:w-1/2 mb-8 md:mb-0 text-white">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight flex flex-col">
-  <span className="whitespace-nowrap">Smart for Business</span>
-  <span className="text-green-400">Great for Planet</span>
-</h1>
-              <p className="text-xl mb-8 leading-relaxed opacity-90">
-                Join a community making sustainability simple, measurable, and rewarding. 
-                Every action counts towards a better future.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-green-600 text-white px-8 py-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center">
-                  Start Your Journey <ArrowRight className="w-5 h-5 ml-2" />
-                </button>
-                <button className="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white hover:text-green-600 transition-colors flex items-center justify-center">
-                  Learn How <Play className="w-5 h-5 ml-2" />
-                </button>
-              </div>
-              
-              {/* Trust Elements */}
-              <div className="mt-12 grid grid-cols-2 gap-6">
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-black bg-opacity-30 rounded-lg flex items-center justify-center mr-3">
-                    <img src="/api/placeholder/32/32" alt="Algorand" className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <div className="font-medium">Built on Algorand</div>
-                    <div className="text-sm text-green-300">Sustainable Blockchain</div>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-black bg-opacity-30 rounded-lg flex items-center justify-center mr-3">
-                    <Users className="w-8 h-8 text-green-400" />
-                  </div>
-                  <div>
-                    <div className="font-medium">Community Driven</div>
-                    <div className="text-sm text-green-300">Growing Together</div>
-                  </div>
-                </div>
-              </div>
-          </div>
-          </div>
-        </div>
-      </section>
-    
-            {/* Features Section */}
-      <section id="features" className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-green-600 font-semibold mb-2 inline-block">The Platform</span>
-            <h2 className="text-4xl font-bold mb-6">Sustainability Made Simple</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Track, measure, and improve your environmental impact with tools designed for everyone
+      {/* ===================== HERO ===================== */}
+      <header className="pt-40 md:pt-48 pb-16 px-5 md:px-8">
+        <div className="max-w-[1400px] mx-auto grid lg:grid-cols-12 gap-10 items-end">
+          <div className="lg:col-span-7">
+            <p className="tag text-ink-faint reveal" style={{ animationDelay: '.05s' }}>
+              № 01 — The sustainability index
             </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="p-8 bg-white rounded-xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-                <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mb-6">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
-                <p className="text-gray-600 mb-6">{feature.description}</p>
-                <ul className="space-y-3">
-                  {feature.benefits.map((benefit, idx) => (
-                    <li key={idx} className="flex items-center text-gray-600">
-                      <Check className="w-5 h-5 text-green-600 mr-2" />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Dual Journey Section */}
-      <section id="journey" className="py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-green-600 font-semibold mb-2 inline-block">Your Path</span>
-            <h2 className="text-4xl font-bold mb-6">Choose Your Journey</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Whether you're an individual or a business, there's a path for everyone to make an impact
+            <h1 className="mt-6 font-display font-semibold leading-[0.92] tracking-tight text-[clamp(2.9rem,8vw,6.4rem)] text-balance">
+              <span className="reveal block" style={{ animationDelay: '.12s' }}>Smart for</span>
+              <span className="reveal block" style={{ animationDelay: '.2s' }}>
+                Business, <span className="italic font-normal text-forest">great</span>
+              </span>
+              <span className="reveal block" style={{ animationDelay: '.28s' }}>for Planet.</span>
+            </h1>
+            <p className="mt-8 max-w-md text-lg text-ink-soft reveal text-pretty" style={{ animationDelay: '.36s' }}>
+              A field guide to real climate action. Track, measure and reward
+              sustainability — for people and the organisations they move.
             </p>
-          </div>
-
-          {/* Individual Journey */}
-          <div className="grid md:grid-cols-2 gap-12 mb-20">
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <div className="flex items-center mb-6">
-                <Users className="w-10 h-10 text-green-600 mr-4" />
-                <div>
-                  <h3 className="text-2xl font-bold">For Individuals</h3>
-                  <p className="text-gray-600">Make every action count</p>
-                </div>
-              </div>
-              <div className="space-y-6">
-                {journeyPaths.individual.map((step, index) => (
-                  <div key={index} className="flex items-start">
-                    <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mr-4">
-                      {step.icon}
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">{step.title}</h4>
-                      <p className="text-gray-600">{step.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Business Journey */}
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <div className="flex items-center mb-6">
-                <Building className="w-10 h-10 text-green-600 mr-4" />
-                <div>
-                  <h3 className="text-2xl font-bold">For Businesses</h3>
-                  <p className="text-gray-600">Lead the change</p>
-                </div>
-              </div>
-              <div className="space-y-6">
-                {journeyPaths.business.map((step, index) => (
-                  <div key={index} className="flex items-start">
-                    <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mr-4">
-                      {step.icon}
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">{step.title}</h4>
-                      <p className="text-gray-600">{step.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="mt-9 flex flex-wrap gap-3 reveal" style={{ animationDelay: '.44s' }}>
+              <Link href="/signup" className="btn-primary">
+                Start your journey <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a href="#features" className="btn-ghost">Read the almanac</a>
             </div>
           </div>
 
-          {/* Community Impact */}
-          <div className="grid md:grid-cols-2 gap-8">
-            {communityInitiatives.map((initiative, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg">
-                <h3 className="text-xl font-semibold mb-4">{initiative.title}</h3>
-                <p className="text-gray-600 mb-6">{initiative.description}</p>
-                <ul className="space-y-3">
-                  {initiative.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center text-gray-600">
-                      <Check className="w-5 h-5 text-green-600 mr-2" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+          {/* forest readout panel */}
+          <div className="lg:col-span-5 reveal-slow" style={{ animationDelay: '.3s' }}>
+            <div className="relative bg-forest-deep text-paper p-7 md:p-9 bg-dots">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="tag text-lime">Live carbon index</p>
+                  <p className="mt-3 font-display text-6xl font-semibold stat-num">428<span className="text-lime">.6</span></p>
+                  <p className="tag text-paper/60 mt-2">ppm · global · trending</p>
+                </div>
+                <Seal />
               </div>
-            ))}
+              <div className="mt-8 grid grid-cols-3 gap-px bg-white/10 border border-white/10">
+                {[['−18%', 'Footprint'], ['+240', 'This week'], ['A+', 'Eco tier']].map(([a, b]) => (
+                  <div key={b} className="bg-forest-deep p-4">
+                    <p className="font-display text-2xl stat-num">{a}</p>
+                    <p className="tag text-paper/55 mt-1">{b}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex items-center gap-2 text-paper/60 text-xs">
+                <span className="w-2 h-2 rounded-full bg-lime animate-blink" />
+                <span className="tag">Built on Algorand · sustainable ledger</span>
+              </div>
+            </div>
           </div>
+        </div>
+      </header>
+
+      {/* ===================== STAT BAND ===================== */}
+      <section className="px-5 md:px-8">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-2 lg:grid-cols-4 border-y border-ink/15">
+          {stats.map((s, i) => (
+            <div key={s.l}
+              className={`py-8 px-6 ${i !== 0 ? 'border-l border-ink/15' : ''} ${i === 2 ? 'border-l-0 lg:border-l' : ''} ${i >= 2 ? 'border-t border-ink/15 lg:border-t-0' : ''}`}>
+              <p className="font-display text-4xl md:text-5xl font-semibold stat-num">{s.n}</p>
+              <p className="tag text-ink-faint mt-2">{s.l}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Platform Capabilities */}
-      <section id="platform" className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      {/* ===================== FEATURES ===================== */}
+      <section id="features" className="px-5 md:px-8 py-24 md:py-32">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
             <div>
-              <span className="text-green-600 font-semibold mb-2 inline-block">How It Works</span>
-              <h2 className="text-4xl font-bold mb-6">Simple Tools for Real Impact</h2>
-              <div className="space-y-6">
-                {capabilities.map((capability, index) => (
-                  <div key={index} className="flex items-start">
-                    <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mr-4 mt-1">
-                      {capability.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold mb-2">{capability.title}</h3>
-                      <p className="text-gray-600">{capability.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <p className="tag text-clay">Chapter I — The Platform</p>
+              <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight text-balance">
+                Sustainability,<br />made legible.
+              </h2>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h3 className="text-xl font-semibold mb-6">Platform Features</h3>
-              <div className="space-y-6">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-gray-600">Personal Impact Tracking</span>
-                    <span className="text-green-600">Available Now</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-green-600 h-2 rounded-full w-full"></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-gray-600">Community Challenges</span>
-                    <span className="text-green-600">Available Now</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-green-600 h-2 rounded-full w-full"></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-gray-600">Business Analytics</span>
-                    <span className="text-green-600">Available Now</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-green-600 h-2 rounded-full w-full"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Community Section */}
-      <section id="community" className="py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-green-600 font-semibold mb-2 inline-block">Join Us</span>
-            <h2 className="text-4xl font-bold mb-6">Be Part of the Change</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Connect with a community of changemakers and discover how small actions lead to big impact
+            <p className="max-w-sm text-ink-soft md:text-right">
+              Track, measure and improve environmental impact with tools designed for
+              everyone — from individuals to enterprises.
             </p>
           </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <Users className="w-12 h-12 text-green-600 mb-6" />
-              <h3 className="text-xl font-semibold mb-4">Community Challenges</h3>
-              <p className="text-gray-600">
-                Join monthly sustainability challenges and compete with others to create positive change.
-              </p>
+
+          <div className="grid md:grid-cols-3 border-t border-ink/15">
+            {features.map((f) => (
+              <article key={f.k}
+                className="group relative p-8 md:p-9 border-b border-ink/15 md:border-b-0 md:border-r md:last:border-r-0 border-ink/15 hover:bg-[#faf8f1] transition-colors">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-sm text-ink-faint">{f.k}</span>
+                  <span className="text-forest group-hover:text-clay transition-colors [&>svg]:w-6 [&>svg]:h-6">{f.icon}</span>
+                </div>
+                <h3 className="mt-10 font-display text-2xl font-semibold">{f.title}</h3>
+                <p className="mt-3 text-ink-soft leading-relaxed">{f.body}</p>
+                <ul className="mt-6 space-y-2">
+                  {f.tags.map((t) => (
+                    <li key={t} className="flex items-center gap-2 text-sm text-ink-soft">
+                      <Plus className="w-3.5 h-3.5 text-lime-deep" /> {t}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== JOURNEY ===================== */}
+      <section id="journey" className="px-5 md:px-8 py-24 md:py-28 bg-forest-deep text-paper">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="text-center mb-16">
+            <p className="tag text-lime">Chapter II — Your Path</p>
+            <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight">Choose your journey</h2>
+            <p className="mt-4 text-paper/70 max-w-xl mx-auto">
+              Whether you move as an individual or an organisation, there is a route to measurable impact.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-px bg-white/10 border border-white/10">
+            {[{ h: 'For Individuals', s: 'Make every action count', icon: <Users />, steps: individual },
+              { h: 'For Businesses', s: 'Lead the change', icon: <Building />, steps: business }].map((col) => (
+              <div key={col.h} className="bg-forest-deep p-8 md:p-10">
+                <div className="flex items-center gap-4 pb-8 border-b border-white/10">
+                  <span className="text-lime [&>svg]:w-8 [&>svg]:h-8">{col.icon}</span>
+                  <div>
+                    <h3 className="font-display text-2xl font-semibold">{col.h}</h3>
+                    <p className="text-paper/60 text-sm">{col.s}</p>
+                  </div>
+                </div>
+                <div className="mt-8 space-y-8">
+                  {col.steps.map((st, i) => (
+                    <div key={st.t} className="flex gap-5">
+                      <div className="shrink-0 w-12 text-center">
+                        <span className="tag text-lime">{String(i + 1).padStart(2, '0')}</span>
+                      </div>
+                      <div className="flex-1 pb-8 border-b border-white/5 last:border-0 last:pb-0">
+                        <p className="tag text-paper/50">{st.s}</p>
+                        <p className="mt-1 font-display text-xl">{st.t}</p>
+                        <p className="text-paper/65 text-sm mt-1">{st.d}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== CAPABILITIES ===================== */}
+      <section className="px-5 md:px-8 py-24 md:py-32">
+        <div className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <p className="tag text-clay">Chapter III — How it works</p>
+            <h2 className="mt-4 font-display text-4xl md:text-5xl font-semibold tracking-tight text-balance">
+              Simple tools for real impact.
+            </h2>
+            <div className="mt-10 space-y-8">
+              {[
+                { t: 'Activity Tracking', d: 'Connect daily actions to meaningful sustainability metrics.', icon: <LineChart /> },
+                { t: 'Community Platform', d: 'Join challenges and share with like-minded people and orgs.', icon: <Users /> },
+                { t: 'Impact Analytics', d: 'Understand and improve your footprint with clear insight.', icon: <Globe /> },
+              ].map((c) => (
+                <div key={c.t} className="flex gap-5 group">
+                  <div className="shrink-0 w-12 h-12 grid place-items-center border border-ink/15 bg-[#faf8f1] group-hover:bg-forest group-hover:text-lime transition-colors [&>svg]:w-5 [&>svg]:h-5">
+                    {c.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-display text-xl font-semibold">{c.t}</h3>
+                    <p className="text-ink-soft mt-1">{c.d}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <Star className="w-12 h-12 text-green-600 mb-6" />
-              <h3 className="text-xl font-semibold mb-4">Recognition Program</h3>
-              <p className="text-gray-600">
-                Earn badges and rewards as you progress on your sustainability journey.
-              </p>
+          </div>
+
+          <div className="card-paper p-8 md:p-10">
+            <p className="tag text-ink-faint">Platform features</p>
+            <div className="mt-8 space-y-7">
+              {[['Personal impact tracking', 100], ['Community challenges', 100], ['Business analytics', 100]].map(([t, v]) => (
+                <div key={t as string}>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-ink-soft">{t}</span>
+                    <span className="tag text-forest">Available now</span>
+                  </div>
+                  <div className="h-2 bg-ink/10 overflow-hidden">
+                    <div className="h-full bg-forest" style={{ ['--to' as string]: `${v}%`, animation: 'growW 1.4s cubic-bezier(0.16,1,0.3,1) forwards' }} />
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <Globe className="w-12 h-12 text-green-600 mb-6" />
-              <h3 className="text-xl font-semibold mb-4">Global Impact</h3>
-              <p className="text-gray-600">
-                See how your actions contribute to global sustainability goals.
-              </p>
+            <div className="mt-10 pt-6 border-t border-ink/15 flex items-center justify-between">
+              <span className="font-display text-lg">Ready in minutes.</span>
+              <Link href="/signup" className="link-wipe font-medium inline-flex items-center gap-1">
+                Get started <ArrowUpRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-green-600 to-green-700">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-2xl p-12 shadow-xl">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                  Ready to Start Your Journey?
-                </h2>
-                <p className="text-xl text-gray-600 mb-8">
-                  Join a community of changemakers and start making a difference today.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="bg-green-600 text-white px-8 py-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center">
-                    Get Started <ArrowRight className="w-5 h-5 ml-2" />
-                  </button>
-                  <button className="border-2 border-green-600 text-green-600 px-8 py-4 rounded-lg hover:bg-green-50 transition-colors flex items-center justify-center">
-                    Learn More <Calendar className="w-5 h-5 ml-2" />
-                  </button>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-green-50 p-6 rounded-xl">
-                  <Users className="w-8 h-8 text-green-600 mb-4" />
-                  <h3 className="font-semibold mb-2">Community</h3>
-                  <p className="text-gray-600 text-sm">Join like-minded people</p>
-                </div>
-                <div className="bg-green-50 p-6 rounded-xl">
-                  <Star className="w-8 h-8 text-green-600 mb-4" />
-                  <h3 className="font-semibold mb-2">Rewards</h3>
-                  <p className="text-gray-600 text-sm">Earn as you grow</p>
-                </div>
-                <div className="bg-green-50 p-6 rounded-xl">
-                  <Zap className="w-8 h-8 text-green-600 mb-4" />
-                  <h3 className="font-semibold mb-2">Easy Start</h3>
-                  <p className="text-gray-600 text-sm">Begin in minutes</p>
-                </div>
-                <div className="bg-green-50 p-6 rounded-xl">
-                  <Globe className="w-8 h-8 text-green-600 mb-4" />
-                  <h3 className="font-semibold mb-2">Impact</h3>
-                  <p className="text-gray-600 text-sm">Make a difference</p>
-                </div>
+      {/* ===================== COMMUNITY ===================== */}
+      <section id="community" className="px-5 md:px-8 pb-24 md:pb-32">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="text-center mb-14">
+            <p className="tag text-clay">Chapter IV — Join us</p>
+            <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight">Be part of the change</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { icon: <Users />, t: 'Community Challenges', d: 'Join monthly challenges and compete to create positive change.' },
+              { icon: <Star />, t: 'Recognition Program', d: 'Earn badges and rewards as you progress on your journey.' },
+              { icon: <Globe />, t: 'Global Impact', d: 'See how your actions contribute to global sustainability goals.' },
+            ].map((c) => (
+              <article key={c.t} className="card-paper p-8 group hover:-translate-y-1 transition-transform duration-500">
+                <span className="text-forest group-hover:text-clay transition-colors [&>svg]:w-9 [&>svg]:h-9">{c.icon}</span>
+                <h3 className="mt-7 font-display text-xl font-semibold">{c.t}</h3>
+                <p className="mt-2 text-ink-soft">{c.d}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== CTA ===================== */}
+      <section className="px-5 md:px-8 pb-24">
+        <div className="max-w-[1400px] mx-auto bg-lime text-ink p-10 md:p-16 relative overflow-hidden">
+          <div className="absolute -right-10 -top-10 w-64 h-64 rounded-full border border-ink/20 animate-spin-slow" />
+          <div className="relative grid lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <p className="tag text-ink/60">Colophon</p>
+              <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight text-balance">
+                Ready to start your journey?
+              </h2>
+            </div>
+            <div className="lg:text-right">
+              <p className="text-ink/80 text-lg mb-7">
+                Join a community of changemakers and start making a measurable difference today.
+              </p>
+              <div className="flex flex-wrap gap-3 lg:justify-end">
+                <Link href="/signup" className="btn-ghost !border-ink/80 bg-ink text-paper hover:bg-forest-deep">
+                  Get started <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link href="/login" className="btn-ghost">Sign in</Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer id="contact" className="bg-gray-900 text-white py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
-            <div className="space-y-6">
-              <div className="flex items-center">
-                <Leaf className="w-8 h-8 text-green-400 mr-2" />
-                <span className="font-bold text-2xl">CarbonGero</span>
-              </div>
-              <p className="text-gray-400 leading-relaxed">
-                Smart for Business, Great for Planet. Making sustainability accessible and rewarding.
+      {/* ===================== FOOTER ===================== */}
+      <footer id="contact" className="bg-forest-dark text-paper/70">
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8 py-16">
+          <div className="grid md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+            <div className="md:col-span-1">
+              <span className="font-display text-3xl font-semibold text-paper">CarbonGero</span>
+              <p className="mt-4 text-sm leading-relaxed">
+                The Carbon Almanac. Smart for Business, Great for Planet — making sustainability accessible and rewarding.
               </p>
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                  </svg>
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                  </svg>
-                </a>
+            </div>
+            {[
+              { h: 'Platform', links: ['Features', 'Community', 'Resources', 'Documentation'] },
+              { h: 'Resources', links: ['Getting started', 'Guide', 'Blog', 'Support'] },
+              { h: 'Contact', links: ['hello@carbongero.com', 'Bangalore, India'] },
+            ].map((col) => (
+              <div key={col.h}>
+                <p className="tag text-lime">{col.h}</p>
+                <ul className="mt-5 space-y-3 text-sm">
+                  {col.links.map((l) => (
+                    <li key={l}><a href="#" className="link-wipe">{l}</a></li>
+                  ))}
+                </ul>
               </div>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Platform</h3>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-gray-400 hover:text-white">Features</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Community</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Resources</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Documentation</a></li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Resources</h3>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-gray-400 hover:text-white">Getting Started</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Guide</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Blog</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Support</a></li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg">Contact</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center text-gray-400">
-                  <Mail className="w-5 h-5 mr-2" />
-                  hello@carbongero.com
-                </li>
-                <li className="flex items-center text-gray-400">
-                  <MapPin className="w-5 h-5 mr-2" />
-                  Bangalore, India
-                </li>
-              </ul>
-            </div>
+            ))}
           </div>
-
-          <div className="border-t border-gray-800 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-400 text-sm">
-                © 2025 CarbonGero. Smart for Business, Great for Planet.
-              </p>
-              <div className="flex space-x-6 mt-4 md:mt-0">
-                <a href="#" className="text-gray-400 hover:text-white text-sm">Privacy</a>
-                <a href="#" className="text-gray-400 hover:text-white text-sm">Terms</a>
-                <a href="#" className="text-gray-400 hover:text-white text-sm">Cookie Policy</a>
-              </div>
+          <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs tag text-paper/50">
+            <span>© 2025 CarbonGero · Vol. I</span>
+            <span className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-lime" /> Great for Planet</span>
+            <div className="flex gap-6">
+              <a href="#" className="link-wipe">Privacy</a>
+              <a href="#" className="link-wipe">Terms</a>
             </div>
           </div>
         </div>
