@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // ... other config
-  target: 'server', // or remove this line entirely
+  // target was removed in Next.js 12+; leave empty for default server output
 };
 
 module.exports = nextConfig;
