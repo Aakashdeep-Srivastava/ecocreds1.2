@@ -1,67 +1,51 @@
 'use client';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '@/config/firebase';
-import { 
-  onAuthStateChanged, 
-  signOut, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword,
-  User
-} from 'firebase/auth';
+import { createContext, useContext } from 'react';
+
+// No external auth provider. A personal user is always signed in.
+interface AppUser {
+  uid: string;
+  email: string;
+  displayName: string;
+}
 
 interface AuthContextType {
-  user: User | null;
-  login: (email: string, password: string) => Promise<any>;
-  signup: (email: string, password: string) => Promise<any>;
+  user: AppUser | null;
+  login: (email?: string, password?: string) => Promise<void>;
+  signup: (email?: string, password?: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
+const currentUser: AppUser = {
+  uid: 'user-1',
+  email: 'harshpratapsingh@gmail.com',
+  displayName: 'Harsh Singh',
+};
+
 const AuthContext = createContext<AuthContextType>({
-  user: null,
+  user: currentUser,
   login: async () => {},
   signup: async () => {},
-  logout: async () => {}
+  logout: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthContextProvider = ({ 
-  children 
-}: { 
-  children: React.ReactNode 
+export const AuthContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
 }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const login = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
-  };
-
-  const signup = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
-
+  const login = async () => {};
+  const signup = async () => {};
   const logout = async () => {
-    setUser(null);
-    await signOut(auth);
+    if (typeof window !== 'undefined') {
+      window.location.href = '/';
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user: currentUser, login, signup, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };
