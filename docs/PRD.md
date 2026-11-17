@@ -1,196 +1,1029 @@
-# CarbonGero — Product Requirements Document
+# CarbonGero
+## Product Requirements Document (PRD) & Technical Architecture Specification
 
-> **Product name:** **CarbonGero** (always — not "EcoVoyage" or "EcoCreds", which are retired/source names).
-> **Source vision:** the *EcoVoyage* pitch deck (Team Yogya — Mind the Product, E‑Summit '25) — its ideas inform this product, but the product is **CarbonGero**.
-> **Current codebase:** `ecocreds1.2` — Next.js 14 App Router app, deployed at **https://xecocreds.vercel.app**.
-> This PRD reconciles the deck's product vision with the existing implementation and lays out a **phase‑wise build plan**.
+**Version:** 2.0
+**Date:** 18 November 2026
+**Product:** CarbonGero (formerly EcoCreds)
+**Parent Company:** Xphora AI Technology Pvt. Ltd.
+**Product Category:** ClimateTech · GreenTech · Blockchain Infrastructure · AI
+**Blockchain:** Algorand
+**Document Status:** Proposed Technical Baseline
 
 ---
 
-## 1. Vision & One‑liner
+# 1. Executive Summary
 
-**Carbon‑credit‑as‑a‑Service (CoaaS) for the travel ecosystem.**
-An incentive‑oriented platform that lets individuals, corporates, and governments **track, earn, trade, and redeem carbon credits** across three interconnected sectors — **Transport, Hospitality, and Events/Tourism** — turning sustainable choices into measurable, rewardable action.
+CarbonGero is an open-source, AI-powered Proof of Sustainability and carbon asset infrastructure platform designed to capture, validate, quantify, record and monetize measurable environmental activities.
 
-*"Smart for Business, Great for Planet."*
+The platform connects individuals, businesses, sustainability projects, enterprises and environmental organizations through a common verification and asset infrastructure.
 
-## 2. Problem
+CarbonGero aims to solve five fundamental problems:
 
-- Travel, tourism, events, and hospitality generate **high carbon emissions** (transport = largest contributor; hotel food services alone ≈ 70% of hotel emissions).
-- **Low awareness** of carbon credits and their benefits → weak trust/engagement.
-- **Hard to track** consumer sustainability behaviour → data‑integrity gap.
-- **Costly/complex** for businesses to integrate carbon programs without hurting UX.
-- **Fragmented standards** and regulation.
+1. Lack of reliable evidence for sustainability claims.
+2. Fragmented environmental impact measurement.
+3. Limited transparency in carbon accounting.
+4. Risk of duplicate environmental claims and credit issuance.
+5. Lack of accessible infrastructure for converting verified environmental outcomes into traceable digital assets.
 
-## 3. Market (from deck)
+### Product Vision
 
-- 150M urban Indian travelers (TAM); 262M vehicles projected by 2050.
-- Hospitality sector → USD **541.7B by 2035** (9.7% demand CAGR).
-- Events/exhibition market ≈ **$8.44B**; media & entertainment ≈ **$48B**.
-- EV sales projected at **35% of total** by 2030.
+Build a transparent and interoperable sustainability infrastructure where environmental actions can be verified, measured and represented through cryptographically traceable digital records.
 
-## 4. User Types & Roles
+### Core Product Pillars
 
-| Role | Segment | Core jobs |
-|------|---------|-----------|
-| **Individual traveler** | B2C | Track footprint, earn credits (transport/hotel/event), join challenges, redeem rewards |
-| **Corporate / Enterprise** | B2B | Company‑wide dashboard, employee engagement campaigns, ESG/CSR reporting, redeemable programs |
-| **Government body** | B2G | Carbon‑credit framework, public‑transport campaigns, certification/accountability |
-| **Partner** (hotel, airline, aggregator) | B2B2C | Issue/accept credits, sustainable‑stay consent, redemption vouchers, API sync |
-| **Event organizer** | B2B | GreenGather program, QR check‑in, waste programs, booth/platform fees |
+| Pillar | Description |
+|---|---|
+| Proof of Sustainability | Evidence-backed records of environmental actions |
+| AI Verification | Automated evidence analysis and impact assessment |
+| Carbon Accounting | Emission reduction and removal quantification |
+| Algorand Infrastructure | Immutable records and tokenized assets |
+| ESG Intelligence | Sustainability analytics and reporting |
 
-## 5. Product Pillars (three sectors)
+# 2. Product Objectives
 
-### 5.1 Transport (CoaaS)
-- One‑stop tracking of carbon credits; partnerships across channels; credits redeemable via coupons; awareness program; **linked to Carbon Credit Trading Scheme**.
-- B2G: government‑backed certification (NSCICM, BEE), e‑buses/metros/e‑cycles, anti‑double‑counting.
-- B2B: corporate campaigns, dashboards; aggregator credit programs (Ola, Rapido, BluSmart); airline SAF/carbon‑capture (Star Alliance) → upgrades, emission dashboards.
-- B2C app flow: download → login/customize → **upload bills/proofs + scan QR to earn** → join streaks/challenges → redeem → track emissions.
+### Primary objectives
 
-### 5.2 Hospitality (CoaaS)
-- **Guest Credit Program** — "Sustainable Stay consent": towel/linen reuse, low‑energy rooms, EV taxis, plant‑based dining, no single‑use plastics → earn credits.
-- **Hotel Credit Program** — Green Hotel Certification based on energy efficiency, waste reduction, afforestation funding; **"Carbon Neutral Stay"** cert.
-- **Credit score & redemption** — discounts on future stays, room upgrades, spa/meal vouchers, donations to sustainability projects.
-- **Tech:** app + web dashboard; API with Hotel Management Systems & booking platforms (MakeMyTrip, Goibibo, Agoda, direct sites).
+- Establish a standardized digital record for sustainability activities.
+- Automate initial evidence assessment using AI.
+- Create auditable environmental impact records.
+- Prevent duplicate submissions and double counting.
+- Enable eligible carbon assets to be represented on Algorand.
+- Provide enterprises with measurable sustainability data.
+- Develop an open-source infrastructure that third-party applications can integrate with.
 
-### 5.3 Events / Tourism — **GreenGather Program**
-- Register for event → input transport/food → **emissions calculated** → app suggests lower‑emission substitutes.
-- Earn by uploading proof (public transport, EVs, eco‑hotels, plant‑based meals); participate in streaks/challenges/leaderboards.
-- Smart digital event: **QR‑based check‑in**, QR food tags, smart recycling bins, AI/blockchain carbon tracking, reverse vending machines ("Trash to Treasure").
-- Redeem: event discounts, merch, food, carbon offsets.
+### Success metrics
 
-## 6. Core Systems
+| Metric | Initial target |
+|---|---:|
+| Evidence processing time | Under 60 seconds |
+| Automated verification availability | 99% API availability target |
+| Duplicate detection | Above 95% precision target |
+| Verification audit coverage | 100% |
+| Blockchain transaction traceability | 100% of issued assets |
+| Evidence-to-decision traceability | 100% |
 
-### 6.1 Carbon Credit Scoring
-Combustion / Direct GHG emissions formula from the deck:
+Targets are engineering objectives for the MVP, not demonstrated performance claims.
 
+# 3. Target Users & Stakeholders
+
+### 3.1 Individual users
+
+- Individuals participating in recycling.
+- Users adopting sustainable transportation.
+- Individuals using renewable energy.
+- Consumers participating in verified sustainability programs.
+
+### 3.2 Businesses and MSMEs
+
+- Small businesses tracking environmental performance.
+- Manufacturers measuring waste reduction.
+- Organizations tracking energy consumption.
+- Businesses preparing ESG reports.
+
+### 3.3 Sustainability project developers
+
+- Waste management organizations.
+- Renewable energy projects.
+- Carbon reduction initiatives.
+- Environmental organizations.
+
+### 3.4 Enterprises and institutional buyers
+
+- Corporates purchasing eligible environmental credits.
+- ESG and sustainability teams.
+- Organizations monitoring environmental impact.
+- Carbon market participants.
+
+### 3.5 Platform administrators and verifiers
+
+- CarbonGero administrators.
+- Independent verification organizations.
+- Project auditors.
+- Methodology administrators.
+
+# 4. Product Scope
+
+## 4.1 Core modules
+
+| Module | Priority | Description |
+|---|---|---|
+| User & Organization Management | P0 | Authentication, identity and roles |
+| Sustainability Activity Management | P0 | Activity creation and submission |
+| Evidence Management | P0 | Images, documents and supporting data |
+| AI Verification Engine | P0 | Evidence classification and assessment |
+| Proof of Sustainability Registry | P0 | Permanent traceable sustainability records |
+| Carbon Accounting Engine | P0 | Emission impact calculations |
+| Algorand Integration | P0 | On-chain proof and asset issuance |
+| Asset Management | P1 | Digital asset lifecycle |
+| Sustainability Dashboard | P1 | Environmental performance |
+| ESG Reporting | P1 | Reports and exportable records |
+| Marketplace | P2 | Discovery and transfer of eligible assets |
+| Developer API & SDK | P1 | Third-party integration |
+
+## 4.2 Supported sustainability activities
+
+The system should support configurable activity categories.
+
+1. Recycling and waste recovery.
+2. Sustainable transportation.
+3. Renewable energy adoption.
+4. Verified carbon offset participation.
+5. Sustainable purchasing.
+
+Each activity must have its own evidence requirements, measurement methodology and verification rules.
+
+**MVP focus:** Recycling and waste recovery.
+
+The initial demo should support a user uploading a recycling photograph, receiving an AI-assisted assessment, submitting the activity for verification and generating a traceable sustainability record.
+
+# 5. Detailed Functional Requirements
+
+## 5.1 Identity and Access Management
+
+**Objective:** Provide secure access for individuals, businesses and platform stakeholders.
+
+Functional requirements:
+
+- FR-001: User registration and login.
+- FR-002: Email verification.
+- FR-003: Organization registration.
+- FR-004: Role-based access control.
+- FR-005: User profile and sustainability preferences.
+- FR-006: Wallet address association.
+- FR-007: Organization verification status.
+- FR-008: Account and session management.
+
+Roles:
+
+- Individual
+- Business
+- Project Developer
+- Verifier
+- Auditor
+- Administrator
+- Marketplace Buyer
+
+## 5.2 Sustainability Activity Management
+
+**Objective:** Capture environmental actions in a structured and measurable format.
+
+Functional requirements:
+
+- FR-009: Create sustainability activity.
+- FR-010: Select activity category.
+- FR-011: Upload evidence.
+- FR-012: Capture activity timestamp and location where required.
+- FR-013: Associate activity with a user or organization.
+- FR-014: Track verification status.
+- FR-015: Maintain historical activity records.
+
+Activity states:
+
+`DRAFT → SUBMITTED → PROCESSING → UNDER_REVIEW → VERIFIED / REJECTED`
+
+A verified activity can subsequently enter the carbon accounting and asset eligibility workflow.
+
+## 5.3 Evidence Management System
+
+Supported evidence formats:
+
+- JPEG
+- PNG
+- PDF
+- Structured JSON
+- CSV
+
+Functional requirements:
+
+- FR-016: Secure evidence uploads.
+- FR-017: File metadata extraction.
+- FR-018: Cryptographic SHA-256 hashing.
+- FR-019: Evidence versioning.
+- FR-020: Duplicate evidence detection.
+- FR-021: Evidence access control.
+- FR-022: Evidence retention and deletion policies.
+
+Every evidence record should contain:
+
+- Evidence ID
+- Activity ID
+- User ID
+- File hash
+- File location
+- Submission timestamp
+- Verification status
+- AI assessment reference
+- Reviewer information
+
+Evidence files should remain in controlled off-chain storage. Only required proof references and hashes should be written on-chain.
+
+## 5.4 AI Verification Engine
+
+**Objective:** Automate preliminary evidence assessment and reduce manual verification overhead.
+
+The AI engine will be developed as independent FastAPI microservices.
+
+### AI capabilities
+
+**A. Image Classification**
+
+- Identify recyclable materials.
+- Classify waste categories.
+- Detect visible contamination.
+- Identify potentially irrelevant images.
+- Assess image quality.
+
+**B. Evidence Validation**
+
+- Compare uploaded evidence with the declared activity.
+- Identify suspicious or duplicated submissions.
+- Extract relevant metadata.
+- Assign confidence scores.
+
+**C. Sustainability Claim Assessment**
+
+- Compare submitted claims with available evidence.
+- Identify unsupported environmental claims.
+- Flag inconsistencies for human review.
+
+**D. Anomaly Detection**
+
+- Repeated evidence detection.
+- Unusual submission patterns.
+- Suspicious activity volumes.
+- Inconsistent user submissions.
+
+### Verification output
+
+Each AI assessment must return:
+
+- Activity ID
+- Evidence ID
+- Classification
+- Confidence score
+- Validation findings
+- Anomaly indicators
+- Recommended action
+- Model version
+- Assessment timestamp
+
+Possible outcomes:
+
+`APPROVED_FOR_REVIEW | NEEDS_HUMAN_REVIEW | REJECTED`
+
+AI approval must not independently establish carbon-credit eligibility.
+
+## 5.5 Carbon Accounting Engine
+
+**Objective:** Calculate environmental impact using documented methodologies.
+
+The calculation engine must be independent of the AI verification engine.
+
+### Calculation inputs
+
+- Activity category.
+- Quantity.
+- Unit of measurement.
+- Geographic location.
+- Baseline emissions.
+- Emission factors.
+- Applicable methodology.
+- Measurement period.
+- Evidence references.
+
+### Calculation output
+
+- Activity ID.
+- Baseline emissions.
+- Project emissions.
+- Net estimated reduction.
+- Unit (kgCO2e or tCO2e).
+- Methodology ID and version.
+- Emission factor references.
+- Calculation timestamp.
+- Review status.
+
+General calculation model:
+
+`Net Emission Reduction = Baseline Emissions - Project Emissions - Leakage - Applicable Adjustments`
+
+The actual methodology must define the relevant parameters and boundaries.
+
+Important distinction:
+
+- Estimated impact: Platform-calculated environmental impact.
+- Verified impact: Impact assessed through an applicable verification process.
+- Issuable carbon credit: Environmental outcome eligible for issuance under an applicable carbon-credit methodology and authorization process.
+
+The system must never automatically convert every sustainability action into an offset.
+
+## 5.6 Proof of Sustainability Registry
+
+This is the central infrastructure layer of CarbonGero.
+
+Every approved sustainability activity generates a unique Proof of Sustainability record.
+
+### Proof structure
+
+```json
+{
+  "proof_id": "POS-2026-000001",
+  "activity_id": "ACT-000001",
+  "user_id": "USR-000001",
+  "activity_type": "RECYCLING",
+  "evidence_hash": "sha256_hash",
+  "verification_status": "VERIFIED",
+  "impact": {
+    "value": 12.5,
+    "unit": "kgCO2e",
+    "status": "ESTIMATED"
+  },
+  "methodology_id": "METH-001",
+  "created_at": "2026-11-18T00:00:00Z",
+  "blockchain_status": "PENDING"
+}
 ```
-GHG_Direct = Activity Data (AD) × Emission Factor (EF) × Oxidation Factor (OF)
-  GHG_Direct — Direct GHG Emissions [t CO2]
-  AD — Activity data [TOE | kCal | kg | tonne of material]
-  EF — Emission factor [t CO2/TOE | g CO2/kCal]
-  OF — Oxidation factor [dimensionless]
+
+Functional requirements:
+
+- FR-023: Generate unique proof IDs.
+- FR-024: Maintain proof-to-evidence relationships.
+- FR-025: Record verification history.
+- FR-026: Prevent duplicate proof issuance.
+- FR-027: Maintain immutable audit history.
+- FR-028: Generate public verification references.
+- FR-029: Support proof verification through API.
+
+The registry must distinguish between an internal verified activity record and a certified carbon-credit record.
+
+# 6. Algorand Blockchain Infrastructure
+
+**Blockchain:** Algorand
+
+Algorand will provide the blockchain infrastructure for traceability, asset representation and transparent ownership records.
+
+## 6.1 Blockchain responsibilities
+
+- Sustainability proof anchoring.
+- Asset issuance.
+- Asset ownership tracking.
+- Asset transfer records.
+- Transaction verification.
+- Immutable audit references.
+
+## 6.2 Asset Architecture
+
+Use Algorand Standard Assets (ASA) for eligible digital assets.
+
+Two distinct asset classes are required.
+
+### A. CarbonGero Sustainability Rewards
+
+Internal platform rewards for verified activities.
+
+Examples:
+- Recycling rewards.
+- Sustainable transportation rewards.
+- Renewable energy participation rewards.
+
+These rewards are not carbon offsets and must not be marketed as certified carbon credits.
+
+### B. Carbon Credit Assets
+
+Digital representations of eligible carbon credits.
+
+Each asset must reference:
+
+- Project ID.
+- Issuing registry.
+- Applicable methodology.
+- Vintage.
+- Credit quantity.
+- Verification documentation.
+- Serial number or registry identifier.
+- Retirement status.
+- Relevant transaction records.
+
+The issuance process must preserve the relationship with the recognized underlying registry and prevent duplicate claims or issuance.
+
+## 6.3 Smart Contract Requirements
+
+The blockchain layer should implement:
+
+- Asset creation.
+- Authorized issuance.
+- Asset transfer controls.
+- Asset freeze and clawback controls where applicable.
+- Retirement tracking.
+- Administrative permissions.
+- Proof reference storage.
+- Transaction event indexing.
+
+Smart contracts must be independently tested and reviewed before production deployment.
+
+## 6.4 Blockchain transaction workflow
+
+```text
+Verified Sustainability Record
+          |
+          v
+Carbon Accounting Assessment
+          |
+          v
+Asset Eligibility Check
+          |
+          v
+Authorized Issuance Approval
+          |
+          v
+Algorand Asset Creation
+          |
+          v
+Transaction Confirmation
+          |
+          v
+On-chain Reference Mapping
+          |
+          v
+CarbonGero Asset Registry
 ```
 
-A **standard score card** converts emissions *saved* → carbon credits.
+No asset issuance should occur solely because an AI model returned a positive result.
 
-### 6.2 Earn → Track → Trade → Redeem loop
-- **Earn:** sustainable transport, hotel programs, GreenGather events, bonus credits, referrals (50 credits/user).
-- **Track:** real‑time, AI + blockchain for accuracy/transparency; personalized dashboard.
-- **Trade:** Carbon Credit Trading Scheme linkage; carbon‑credit exchanges (ACX in appendix).
-- **Redeem:** hotel upgrades, flight discounts, vouchers, event passes, offsets/donations.
+# 7. Marketplace & Asset Management
 
-### 6.3 Gamification — **GreenPrints Engagement Program**
-- EcoChallenger leaderboards, achievement badges, monthly themes ("Zero Emission Commute Week").
-- Social: share achievements, **EcoTribes** group challenges, EcoMentor pairing, in‑app forum.
-- Loyalty tiers: **Seedling → Sapling → Mighty Oak** with escalating perks.
-- Seasonal campaigns ("Summer of Sustainability", "New Year, New Footprint").
-- **EcoQuest:** AI travel planner optimizing itineraries for minimal footprint.
+**Priority:** Phase 2
 
-## 7. Revenue Model
+The marketplace will facilitate discovery and exchange of eligible environmental assets.
 
-| Stream | Detail |
-|--------|--------|
-| **Subscriptions** | Basic / Premium / Enterprise tiers for travel businesses |
-| **Data & analytics** | ESG sustainability reports (₹30k–40k/report), API access, advisory |
-| **Transaction fees** | 2–3% on carbon‑credit trades; 5–10% redemption commission from partners |
-| **Event‑based** | Platform fee (organizers/govt), booth fee (reverse vending), eco‑product revenue share |
-| **Gamification** | Challenge entry fees (₹50–500); Green Loyalty subscription (₹299–599/mo) |
+### Functional requirements
 
-## 8. KPIs & Targets
+- FR-030: View available assets.
+- FR-031: View project information.
+- FR-032: View asset provenance.
+- FR-033: View ownership history.
+- FR-034: Initiate eligible asset transfers.
+- FR-035: Record transaction references.
+- FR-036: Support retirement status.
+- FR-037: Maintain transaction audit logs.
 
-- **Adoption:** Active Users / TAM → Y1 7.5M (5%), Y2 30M (20%), Y3 60M (40%).
-- **LTV:** ARPU ₹800 × 4‑yr lifespan. **CAC:** marketing cost / new users. **ROI (Y1):** rev 2.5B vs cost 1.5B.
-- **Environmental:** 1M metric tons CO₂ offset (Y1); 200 kg CO₂ reduction/user/yr; 50% sustainable bookings by Y3.
-- **Engagement:** DAU/MAU ≥ 0.3, avg session ≥ 5 min by end Y1.
-- **Partners:** 1,000 by Y1 → 5,000 by Y3; 40% B2B revenue by Y3.
+### Asset lifecycle
 
-## 9. GTM (from deck)
+`CREATED → ISSUED → AVAILABLE → TRANSFERRED → RETIRED`
 
-- **0–6 mo (Awareness):** launch key B2B/B2C partners, digital campaigns, influencers, early‑adopter incentives.
-- **6–18 mo (Scale):** corporate subscriptions, govt agencies, offline activations (airports/stations/events), expand API integrations.
-- **18+ mo (Domination):** SE Asia & Middle East, global carbon exchanges, certifications, AI personalization.
+The actual lifecycle must also accommodate suspended, frozen, cancelled and revoked states where applicable.
+
+A token transfer does not automatically establish a valid carbon-offset claim. Retirement and claim attribution must be handled explicitly.
+
+# 8. ESG Intelligence & Reporting
+
+**Priority:** Phase 2
+
+Enterprises should be able to generate sustainability performance reports using verified activity records and documented calculations.
+
+### Dashboard components
+
+- Total sustainability activities.
+- Verified activities.
+- Estimated CO2e impact.
+- Verified carbon-credit quantity.
+- Recycling and waste recovery statistics.
+- Renewable energy participation.
+- Organizational sustainability trends.
+- Evidence and audit references.
+
+### Reporting features
+
+- Organization-level reporting.
+- Monthly and annual summaries.
+- Activity-level breakdown.
+- Export to PDF and CSV.
+- Evidence references.
+- Methodology references.
+- Audit trail.
+
+The reporting engine must clearly label estimated versus independently verified figures.
+
+# 9. Technical Architecture
+
+## 9.1 Proposed Technology Stack
+
+| Layer | Technology |
+|---|---|
+| Web Frontend | Next.js (16) |
+| Mobile Application | React Native / Expo |
+| Core Backend | Go (Golang) |
+| AI Microservices | Python / FastAPI |
+| Primary Database | PostgreSQL |
+| Vector Database | pgvector (optional) |
+| Cache | Redis |
+| Queue Processing | Redis-based queues |
+| Blockchain | Algorand |
+| Blockchain SDK | Algorand SDK / AlgoKit |
+| File Storage | Object storage |
+| API Communication | REST / GraphQL where justified |
+| Authentication | JWT / OAuth 2.0 |
+| Containerization | Docker |
+| Deployment | Cloud infrastructure |
+| CI/CD | GitHub Actions |
+| Monitoring | OpenTelemetry-compatible observability |
+
+## 9.2 High-Level Architecture
+
+```text
+                 CLIENT APPLICATIONS
+              ┌────────────────────────┐
+              │ Next.js Web Application│
+              │ React Native Mobile    │
+              └────────────┬───────────┘
+                           |
+                           v
+              ┌────────────────────────┐
+              │     API GATEWAY        │
+              │      Go (Golang)       │
+              └────────────┬───────────┘
+                           |
+          ┌────────────────┼─────────────────┐
+          |                |                 |
+          v                v                 v
+   User & Identity   Activity Service   Asset Service
+          |                |                 |
+          |                v                 |
+          |         Evidence Service         |
+          |                |                 |
+          |                v                 |
+          |        AI Verification           |
+          |            FastAPI               |
+          |                |                 |
+          |                v                 |
+          |       Carbon Accounting          |
+          |                |                 |
+          └────────────────┼─────────────────┘
+                           |
+                           v
+              PROOF OF SUSTAINABILITY
+                      REGISTRY
+                           |
+             ┌─────────────┴─────────────┐
+             |                           |
+             v                           v
+       PostgreSQL                    Redis
+             |
+             v
+       Blockchain Service
+             |
+             v
+          Algorand
+             |
+             v
+       ASA / Proof Records
+             |
+             v
+       Asset & Audit Indexer
+```
+
+## 9.3 Backend Service Architecture
+
+### Go (Golang) Core Services
+
+Idiomatic Go layout (standard `cmd/` + `internal/` structure). Suggested frameworks: **Chi** or **Gin** for HTTP, **sqlc**/**pgx** for Postgres, **asynq** for Redis-backed queues.
+
+```text
+backend/
+├── cmd/
+│   └── api/                 # main entrypoint (API gateway)
+├── internal/
+│   ├── auth/
+│   ├── users/
+│   ├── organizations/
+│   ├── activities/
+│   ├── evidence/
+│   ├── verification/        # calls FastAPI AI services
+│   ├── carbonaccounting/
+│   ├── proofregistry/
+│   ├── blockchain/          # Algorand SDK integration
+│   ├── assets/
+│   ├── marketplace/
+│   ├── reporting/
+│   ├── notifications/
+│   ├── audit/
+│   └── integrations/
+├── pkg/                     # shared libraries
+├── migrations/              # SQL migrations
+└── common/                  # config, logging, middleware, errors
+```
+
+### FastAPI AI Services
+
+```text
+ai-services/
+├── api/
+├── image-classification/
+├── waste-classification/
+├── evidence-validation/
+├── duplicate-detection/
+├── anomaly-detection/
+├── claim-assessment/
+├── model-management/
+├── evaluation/
+└── shared/
+```
+
+AI services should be independently deployable and versioned.
+
+## 9.4 Database Architecture
+
+PostgreSQL will serve as the primary source of truth for application data.
+
+Core tables:
+
+| Table | Purpose |
+|---|---|
+| users | User information |
+| organizations | Organization information |
+| wallets | Blockchain wallet associations |
+| activities | Sustainability activity records |
+| activity_categories | Activity definitions |
+| evidence | Uploaded evidence metadata |
+| verification_results | AI and human verification |
+| methodologies | Carbon methodologies |
+| emission_factors | Calculation parameters |
+| impact_assessments | Environmental impact |
+| sustainability_proofs | Proof registry |
+| blockchain_transactions | Transaction records |
+| digital_assets | Asset metadata |
+| asset_transfers | Ownership changes |
+| asset_retirements | Retirement records |
+| projects | Sustainability projects |
+| audit_logs | Audit history |
+
+### Important database constraints
+
+- Unique proof IDs.
+- Unique blockchain transaction IDs.
+- Idempotent issuance requests.
+- Unique evidence hashes within applicable deduplication scopes.
+- Foreign-key relationships between activities, evidence and proofs.
+- Versioned methodologies and emission factors.
+- Immutable audit events.
+
+# 10. API Specification
+
+All APIs should use versioned routes:
+
+`/api/v1/`
+
+## 10.1 Authentication
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | /auth/register | Register user |
+| POST | /auth/login | Login |
+| POST | /auth/refresh | Refresh token |
+| GET | /users/me | Current user |
+
+## 10.2 Activities
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | /activities | Create activity |
+| GET | /activities | List activities |
+| GET | /activities/:id | Activity details |
+| PATCH | /activities/:id | Update draft |
+| POST | /activities/:id/submit | Submit activity |
+
+## 10.3 Evidence
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | /evidence/upload | Upload evidence |
+| GET | /evidence/:id | Evidence metadata |
+| GET | /evidence/:id/status | Verification status |
+
+## 10.4 AI Verification
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | /ai/verify-image | Image assessment |
+| POST | /ai/validate-evidence | Evidence assessment |
+| POST | /ai/detect-duplicate | Duplicate detection |
+| POST | /ai/assess-claim | Claim assessment |
+
+## 10.5 Carbon Accounting
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | /carbon/calculate | Calculate impact |
+| GET | /carbon/impact/:id | Impact details |
+| GET | /carbon/methodologies | List methodologies |
+
+## 10.6 Proof Registry
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | /proofs | Create proof |
+| GET | /proofs/:id | Retrieve proof |
+| GET | /proofs/:id/verify | Verify proof |
+| GET | /proofs | List proofs |
+
+## 10.7 Blockchain & Assets
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | /blockchain/anchor | Anchor proof |
+| POST | /assets/issue | Request authorized issuance |
+| GET | /assets/:id | Asset details |
+| GET | /assets/:id/history | Asset history |
+| POST | /assets/:id/retire | Initiate retirement |
+| GET | /blockchain/transactions/:id | Transaction status |
+
+All issuance, transfer and retirement endpoints must use authorization checks and idempotency keys.
+
+# 11. End-to-End User Journey
+
+## MVP: Recycling to Proof of Sustainability
+
+**Step 1 — Registration**
+
+User registers and associates a wallet.
+
+**Step 2 — Activity Submission**
+
+User selects recycling and enters the relevant activity details.
+
+**Step 3 — Evidence Upload**
+
+User uploads a photograph and supporting information.
+
+**Step 4 — AI Assessment**
+
+FastAPI evaluates the image and evidence.
+
+**Step 5 — Verification**
+
+The platform checks for duplicates and applies verification rules. Uncertain submissions are sent to human review.
+
+**Step 6 — Carbon Accounting**
+
+The accounting engine calculates an eligible environmental impact estimate using an approved calculation method.
+
+**Step 7 — Proof Generation**
+
+CarbonGero generates a unique Proof of Sustainability record.
+
+**Step 8 — Blockchain Anchoring**
+
+The proof reference is anchored to Algorand.
+
+**Step 9 — Reward or Asset Issuance**
+
+The user may receive an internal sustainability reward. A carbon-credit asset can only be issued when the underlying activity is eligible and all applicable project, methodology, verification and authorization requirements are satisfied.
+
+**Step 10 — Dashboard**
+
+User views the sustainability record, environmental impact and blockchain transaction reference.
+
+# 12. Security, Privacy & Compliance
+
+### Application security
+
+- JWT-based authentication.
+- Role-based access control.
+- API rate limiting.
+- Input validation.
+- Secure file uploads.
+- Encrypted data transmission.
+- Secrets management.
+- Audit logging.
+
+### Blockchain security
+
+- Secure signing-key management.
+- Restricted administrative permissions.
+- Transaction simulation and validation.
+- Smart-contract security testing.
+- Issuance authorization.
+- Double-issuance prevention.
+- Retirement tracking.
+
+### Data protection
+
+- Collect only necessary personal information.
+- Separate private evidence from public proof metadata.
+- Support data retention and deletion policies.
+- Do not expose personal information through blockchain transactions.
+- Maintain appropriate consent and access controls.
+
+### Carbon market integrity
+
+- Maintain methodology provenance.
+- Record independent verification references.
+- Track project ownership and issuance authority.
+- Prevent double issuance and double claiming.
+- Maintain retirement and ownership history.
+- Distinguish voluntary platform rewards from recognized carbon credits.
+
+The platform must not claim regulatory certification or registry accreditation without the required authorization.
+
+# 13. Non-Functional Requirements
+
+| Requirement | Target |
+|---|---|
+| API availability | 99% initial target |
+| API response time | P95 under 500 ms for ordinary reads |
+| AI processing | P95 under 60 seconds for supported images |
+| Scalability | Horizontally scalable services |
+| Database consistency | Transactional integrity |
+| Security | OWASP-aligned security controls |
+| Observability | Centralized logs, metrics and traces |
+| Recovery | Documented backup and recovery procedures |
+| Idempotency | Required for financial and issuance operations |
+| Auditability | Complete activity-to-proof traceability |
+
+These are initial service-level engineering objectives and must be validated through load testing.
+
+# 14. MVP Development Roadmap
+
+## Phase 1 — Foundation
+
+- Repository and project setup.
+- Authentication.
+- User and organization management.
+- Activity management.
+- Evidence upload.
+- PostgreSQL schema.
+- API gateway.
+
+## Phase 2 — AI Verification
+
+- Image classification.
+- Waste classification.
+- Evidence validation.
+- Duplicate detection.
+- Verification workflow.
+- Human review interface.
+
+## Phase 3 — Proof & Carbon Accounting
+
+- Proof of Sustainability registry.
+- Methodology management.
+- Emission factor configuration.
+- Carbon calculation engine.
+- Proof verification APIs.
+- Audit trail.
+
+## Phase 4 — Algorand Integration
+
+- Wallet integration.
+- Testnet deployment.
+- Proof anchoring.
+- ASA issuance for authorized asset classes.
+- Asset indexing.
+- Transaction monitoring.
+
+## Phase 5 — Product Experience
+
+- Web dashboard.
+- Mobile application.
+- Activity history.
+- Proof verification page.
+- Sustainability rewards.
+- Basic ESG reporting.
+
+## Phase 6 — Expansion
+
+- Project developer portal.
+- Enterprise integrations.
+- Marketplace.
+- Advanced reporting.
+- Third-party developer SDK.
+- Additional sustainability activity categories.
+
+# 15. Testing & Acceptance Criteria
+
+### Functional testing
+
+- Users can register and submit activities.
+- Evidence uploads are securely stored.
+- Duplicate evidence is detected.
+- AI assessment results are traceable.
+- Human reviewers can approve or reject activities.
+- Carbon calculations reproduce from versioned inputs.
+- Proof records are uniquely generated.
+- Algorand transactions are indexed and verified.
+- Asset issuance is restricted to authorized workflows.
+
+### Security testing
+
+- Authentication and authorization testing.
+- API penetration testing.
+- File-upload security testing.
+- Smart-contract review.
+- Wallet signing security.
+- Duplicate transaction testing.
+- Privilege escalation testing.
+
+### MVP acceptance criteria
+
+The MVP is considered complete when a user can:
+
+1. Register.
+2. Submit a recycling activity.
+3. Upload evidence.
+4. Receive an AI assessment.
+5. Complete required verification.
+6. Generate a Proof of Sustainability record.
+7. Calculate a documented environmental impact estimate.
+8. Anchor the proof reference on Algorand.
+9. View the proof and its transaction reference.
+
+The MVP must demonstrate the full evidence-to-proof workflow without representing an unverified activity as a certified carbon offset.
+
+# 16. Open-Source Strategy
+
+CarbonGero should be developed with an open-source-first infrastructure strategy.
+
+Potential open-source components:
+
+- Core proof registry.
+- Sustainability activity APIs.
+- Carbon accounting framework.
+- Algorand integration SDK.
+- Verification service interfaces.
+- Developer documentation.
+- Example sustainability applications.
+
+Proprietary or controlled components may include:
+
+- Enterprise dashboards.
+- Advanced AI models.
+- Managed verification services.
+- Commercial integrations.
+- Enterprise reporting and support.
+
+The final repository structure and licensing strategy should be established before public release.
+
+# 17. Business Model
+
+| Revenue stream | Description |
+|---|---|
+| SaaS subscriptions | Enterprise sustainability management |
+| Verification fees | Evidence and project verification services |
+| API usage | Paid enterprise API access |
+| Marketplace fees | Transaction facilitation fees |
+| ESG reporting | Enterprise reporting subscriptions |
+| Infrastructure licensing | Managed proof and blockchain infrastructure |
+
+Revenue from carbon-credit transactions must be conditional on the relevant legal, registry and market requirements.
+
+# 18. Explicitly Out of Scope for MVP
+
+To prevent unnecessary engineering complexity, the following are excluded from the initial release:
+
+- RWA lending and borrowing.
+- Zero-knowledge proof infrastructure.
+- Satellite-based verification.
+- IoT and DePIN infrastructure.
+- Complex cross-chain bridges.
+- National carbon-market infrastructure.
+- Autonomous AI issuance of carbon credits.
+- Complex derivatives and carbon-credit financial products.
+
+These may be evaluated separately after validating the core product.
+
+# 19. Key Technical Decisions
+
+| Decision | Selected approach |
+|---|---|
+| Product identity | CarbonGero |
+| Original product | EcoCreds |
+| Blockchain | Algorand |
+| Token standard | Algorand Standard Assets |
+| Core backend | Go (Golang) |
+| AI backend | FastAPI |
+| Database | PostgreSQL |
+| Cache | Redis |
+| Web | Next.js |
+| Mobile | React Native / Expo |
+| Proof model | Proof of Sustainability |
+| Verification | AI-assisted + human review |
+| Accounting | Methodology-driven calculation engine |
+| Asset integrity | Issuance authorization + provenance + retirement |
+
+# 20. Final Product Definition
+
+CarbonGero is an open-source, AI-powered Proof of Sustainability infrastructure that enables individuals, businesses and sustainability projects to generate evidence-backed environmental records, calculate measurable impact, and create traceable digital environmental assets through Algorand.
+
+Its core value proposition is not simply tokenizing carbon credits.
+
+It is creating the infrastructure that connects:
+
+**Real-world environmental action → Verifiable evidence → Measurable impact → Digital proof → Authorized asset issuance → Transparent environmental accounting.**
 
 ---
 
-## 10. Current Implementation vs. Vision (gap analysis)
-
-**Exists today** (`src/app/…`):
-- ✅ Marketing landing page (redesigned — "Carbon Almanac" system)
-- ✅ Auth: login / signup (demo mode, no backend — personal user persona)
-- ✅ Dashboard shell: sidebar, topbar, metric cards, emissions chart
-- ✅ Routes (static/mock data): `travel`, `hotels`, `challenges`, `Rewards`, `analytics`, `scanner` (QR), `profile`, `corporate` + `corporate/reports`
-
-**Not yet built (gaps vs. deck):**
-- ❌ Real auth & user accounts; persistence (DB)
-- ❌ Carbon‑credit scoring engine (the GHG formula + scorecard)
-- ❌ Earn flow: bill/proof upload, QR scan → credits awarded
-- ❌ Credit wallet / ledger; trading; redemption catalog with real fulfilment
-- ❌ Gamification engine (streaks, leaderboards, EcoTribes, tiers, badges)
-- ❌ GreenGather events module (registration, footprint calc, QR check‑in)
-- ❌ Hospitality "Sustainable Stay consent" + Green Hotel certification
-- ❌ Corporate ESG reporting with real data; partner/API integrations
-- ❌ AI travel planner (EcoQuest), AI insights
-- ❌ Backend/API, blockchain ledger (or a credible mock), notifications
-
----
-
-## 11. Technical Direction
-
-- **Framework:** Next.js App Router. *Recommendation: upgrade 14 → latest (15/16) as Phase 0* (requires React 19; verify `react-chartjs-2`, `html5-qrcode`). Gives Server Actions, Cache Components, longer function timeouts.
-- **Design system:** "Carbon Almanac" — Fraunces (display) + Hanken Grotesk (UI) + JetBrains Mono (data); paper/forest/lime tokens in `tailwind.config.js` + `globals.css`. **Reuse everywhere.**
-- **Data:** start with typed mock/fixtures (labelled as mock), then a real DB (Postgres via Vercel Marketplace / Neon) + API routes/Server Actions.
-- **Auth:** Clerk (Vercel‑native) or NextAuth when real accounts are needed.
-- **Carbon engine:** pure‑TS module implementing GHG formula + scorecard; unit‑tested; feeds wallet ledger.
-- **Charts:** chart.js (already in use) with the Almanac palette; mounted‑guard to avoid SSR hydration mismatch.
-
----
-
-## 12. Phase‑wise Build Plan
-
-### Phase 0 — Foundations (infra & polish)
-- Optional: upgrade Next.js to latest + React 19; verify build & key libs.
-- Solidify the Carbon Almanac design system; apply to **every** existing route (travel, hotels, challenges, rewards, analytics, scanner, profile, corporate).
-- Centralize mock data into a typed `lib/data` layer (clearly labelled mock).
-- **Exit:** every page on‑brand; clean build; no hydration errors.
-
-### Phase 1 — The Credit Core (B2C MVP)
-- **Carbon scoring engine** (GHG formula + scorecard) as a tested TS module.
-- **Credit wallet / ledger**: balance, history, earn/spend transactions.
-- **Earn flows:** manual activity logging (transport/hotel/meal) → credits; QR‑scan stub; bill/proof upload stub.
-- **Redemption catalog:** browse rewards, "redeem" against balance (mock fulfilment).
-- **Dashboard:** real numbers wired to wallet + scoring.
-- **Exit:** a user can log an activity, earn credits, see them in the wallet, and redeem.
-
-### Phase 2 — Engagement (GreenPrints)
-- Streaks & monthly challenges, leaderboards, badges, loyalty tiers (Seedling→Mighty Oak).
-- Profile with achievements; referral codes (50 credits).
-- Seasonal campaign framework.
-- **Exit:** measurable engagement loop; DAU/MAU‑style metrics instrumented.
-
-### Phase 3 — Sector Modules
-- **Hospitality:** Sustainable Stay consent flow; hotel credit program; Green Hotel cert view.
-- **Events (GreenGather):** event registration, footprint calc + substitute suggestions, QR check‑in, waste program.
-- **Transport:** aggregator‑style earn (mock Ola/Rapido), EV multipliers.
-- **Exit:** all three pillars have a working credit loop.
-
-### Phase 4 — B2B / B2G & Reporting
-- Corporate dashboard with org‑wide aggregation; employee campaigns.
-- ESG/CSR report generation (PDF/export) from real data.
-- Partner/admin views; (mock) API integration surfaces.
-- **Exit:** a corporate admin can run a campaign and export an ESG report.
-
-### Phase 5 — Intelligence & Scale
-- EcoQuest AI travel planner + AI insights (via Vercel AI Gateway).
-- Real backend (DB + auth), notifications.
-- Carbon‑credit trading surface; exchange integration mock.
-- **Exit:** AI‑assisted, persistent, trade‑capable platform.
-
----
-
-## 13. Immediate Next Steps (proposed)
-1. Decide on the **Next.js upgrade** (latest vs. stay on 14 for now).
-2. **Phase 0** cleanup: apply the design system to the remaining dashboard routes + centralize mock data.
-3. Begin **Phase 1 — Credit Core**.
-
-*Living document — update as phases complete.*
+**Document ownership:** Product & Engineering
+**Product:** CarbonGero
+**Parent:** Xphora AI Technology Pvt. Ltd.
+**Version:** 2.0
+**Status:** Proposed baseline for engineering review.
