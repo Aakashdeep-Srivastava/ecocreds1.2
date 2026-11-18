@@ -3,6 +3,7 @@ import {
   Hexagon, ShieldCheck, BadgeCheck, Layers, Repeat, BarChart3,
   Landmark, Building2, Sprout, ClipboardCheck, Zap, Leaf, TrendingUp,
   ArrowRight, ArrowUpRight, Play, Menu, X, ChevronDown, Calendar, FileCheck,
+  Chrome, Smartphone,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useState, type ReactNode } from 'react';
@@ -19,8 +20,8 @@ const NAV = ['Product', 'Solutions', 'Resources', 'Company'];
 function Logo({ className = '' }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
-      <img src="/favicon-32x32.png" alt="" className="w-8 h-8 rounded-md" />
-      <span className="font-display text-xl font-bold tracking-tight">
+      <img src="/logo-mark.png" alt="CarbonGero" className="w-8 h-8 object-contain" />
+      <span className="font-display text-base font-bold tracking-tight">
         Carbon<span className="text-green-600">Gero</span>
       </span>
     </span>
@@ -34,7 +35,7 @@ function ImpactCard() {
       <div className="flex gap-4">
         <div className="hidden sm:flex flex-col gap-1 w-24 shrink-0 text-xs border-r border-gray-100 pr-3">
           <span className="inline-flex items-center gap-1.5 mb-3">
-            <img src="/favicon-32x32.png" alt="" className="w-5 h-5 rounded" />
+            <img src="/logo-mark.png" alt="" className="w-5 h-5 object-contain" />
             <span className="font-display text-xs font-bold">Carbon<span className="text-green-600">Gero</span></span>
           </span>
           {['Dashboard', 'Projects', 'Credits', 'Marketplace', 'Reports'].map((m, i) => (
@@ -169,12 +170,12 @@ export default function Home() {
             <span data-hero className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-sm">
               <Hexagon className="w-3.5 h-3.5 text-green-600" /> Built on Algorand
             </span>
-            <h1 data-hero className="mt-6 font-display font-bold tracking-tight leading-[1.02] text-[clamp(2.4rem,5.5vw,4.2rem)]">
+            <h1 data-hero className="mt-6 font-display font-bold leading-[1.08] tracking-[-0.02em] text-[clamp(1.75rem,3.6vw,2.85rem)]">
               Tokenize, Track and<br />
               Trade <span className="text-gradient">Carbon Impact</span><br />
               with Trust.
             </h1>
-            <p data-hero className="mt-6 max-w-lg text-lg text-ink-soft">
+            <p data-hero className="mt-6 max-w-lg text-base text-ink-soft">
               A transparent, compliant and scalable infrastructure for creating, verifying
               and trading carbon credits on the Algorand blockchain.
             </p>
@@ -203,10 +204,10 @@ export default function Home() {
       {/* ===================== INFRASTRUCTURE ===================== */}
       <section id="product" className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-24">
         <div data-reveal className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+          <h2 className="font-display text-2xl md:text-[2.1rem] font-bold tracking-[-0.02em] leading-[1.12]">
             An End-to-End <span className="text-green-600">Carbon Credit</span> Infrastructure
           </h2>
-          <p className="mt-4 text-ink-soft text-lg">
+          <p className="mt-4 text-ink-soft text-base">
             From project creation to credit trading — everything you need to turn climate action into verifiable value.
           </p>
         </div>
@@ -214,7 +215,7 @@ export default function Home() {
           {infra.map((f) => (
             <div key={f.t}>
               <div className="w-12 h-12 grid place-items-center rounded-xl bg-green-50 text-green-600 [&>svg]:w-6 [&>svg]:h-6 mb-5">{f.icon}</div>
-              <h3 className="font-display text-lg font-semibold">{f.t}</h3>
+              <h3 className="font-display text-base font-semibold">{f.t}</h3>
               <p className="mt-2 text-ink-soft text-sm leading-relaxed">{f.d}</p>
             </div>
           ))}
@@ -226,8 +227,8 @@ export default function Home() {
         <div className="max-w-[1280px] mx-auto px-5 md:px-8">
           <div data-reveal className="max-w-2xl mb-12">
             <p className="tag text-green-600">Solutions</p>
-            <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight">Built for Real-World Climate Action</h2>
-            <p className="mt-4 text-ink-soft text-lg">
+            <h2 className="mt-3 font-display text-2xl md:text-[2.1rem] font-bold tracking-[-0.02em] leading-[1.12]">Built for Real-World Climate Action</h2>
+            <p className="mt-4 text-ink-soft text-base">
               Flexible solutions for governments, enterprises and project developers to finance, manage and scale sustainability impact.
             </p>
           </div>
@@ -256,10 +257,10 @@ export default function Home() {
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12 items-center">
           <div data-reveal>
             <p className="tag text-green-600">How it works</p>
-            <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight">
+            <h2 className="mt-3 font-display text-2xl md:text-[2.1rem] font-bold tracking-[-0.02em] leading-[1.12]">
               From Climate Action to <span className="text-green-600">Carbon Value</span>
             </h2>
-            <p className="mt-4 text-ink-soft text-lg">A simple, compliant and transparent flow from project to market.</p>
+            <p className="mt-4 text-ink-soft text-base">A simple, compliant and transparent flow from project to market.</p>
           </div>
           <div data-stagger className="grid grid-cols-2 sm:grid-cols-4 gap-5">
             {steps.map((s, i) => (
@@ -277,7 +278,7 @@ export default function Home() {
       {/* ===================== WHY ===================== */}
       <section className="bg-surface-2 py-20 md:py-24">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8">
-          <h2 data-reveal className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-12">Why CarbonGero?</h2>
+          <h2 data-reveal className="font-display text-2xl md:text-3xl font-bold tracking-[-0.02em] mb-12">Why CarbonGero?</h2>
           <div data-stagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {why.map((w) => (
               <div key={w.t} className="flex gap-4">
@@ -297,7 +298,7 @@ export default function Home() {
         <p data-reveal className="font-display text-xl font-semibold mb-8"><span className="text-green-600">Trusted</span> By Climate Innovators</p>
         <div data-reveal className="flex flex-wrap items-center justify-center gap-x-10 gap-y-5 text-ink-faint">
           {trust.map((t) => (
-            <span key={t} className="font-display font-semibold text-lg md:text-xl grayscale opacity-70 hover:opacity-100 transition-opacity">{t}</span>
+            <span key={t} className="font-display font-semibold text-base md:text-xl grayscale opacity-70 hover:opacity-100 transition-opacity">{t}</span>
           ))}
         </div>
       </section>
@@ -309,10 +310,10 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-forest-dark/95 via-forest-deep/90 to-forest-deep/70" />
           <div className="relative grid lg:grid-cols-2 gap-8 items-center text-white">
             <div>
-              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+              <h2 className="font-display text-2xl md:text-[2.1rem] font-bold tracking-[-0.02em] leading-[1.12]">
                 Turn Your Climate Projects into Verifiable Carbon Value.
               </h2>
-              <p className="mt-4 text-white/80 text-lg max-w-md">
+              <p className="mt-4 text-white/80 text-base max-w-md">
                 Join CarbonGero and build a more transparent, liquid and impactful carbon economy.
               </p>
             </div>
@@ -333,6 +334,15 @@ export default function Home() {
               <p className="mt-4 text-sm leading-relaxed max-w-xs">
                 Tokenize · Trade · Mitigate — a blockchain-powered carbon credit infrastructure for a net-zero world.
               </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {[['Chrome extension', <Chrome key="c" className="w-3.5 h-3.5" />], ['Mobile app', <Smartphone key="s" className="w-3.5 h-3.5" />]].map(([label, icon]) => (
+                  <span key={label as string} className="inline-flex items-center gap-1.5 text-xs font-medium text-white/85 bg-white/[0.06] border border-white/10 rounded-full pl-2.5 pr-2 py-1.5">
+                    <span className="text-green-400">{icon as ReactNode}</span>
+                    {label as string}
+                    <span className="ml-0.5 text-[0.65rem] font-semibold text-green-400 bg-green-400/10 rounded-full px-1.5 py-0.5">SOON</span>
+                  </span>
+                ))}
+              </div>
             </div>
             {[
               { h: 'Product', links: ['Platform', 'Marketplace', 'Verification', 'Analytics'] },
