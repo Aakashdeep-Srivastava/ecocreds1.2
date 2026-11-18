@@ -93,13 +93,28 @@ with the impact, evidence-hash, verification status, and the on-chain anchor lin
 - Go: `go build ./...` (all functions compile as separate packages); set
   `DATABASE_URL` to the Neon string to exercise the store directly.
 
-## 6. Honesty / scope
+## 6. Algorand anchoring (Phase 4 — IMPLEMENTED)
 
-- **AI assessment** is a deterministic stub (`pkg/store.assessEvidence`). Real
-  image/waste classification + duplicate/anomaly detection = PRD Phase 2 (FastAPI).
-- **Algorand anchor** is a deterministic mock tx id (`pkg/chain`). Real AlgoKit
-  testnet submission + ASA issuance = PRD Phase 4. The UI clearly labels impact as
-  **estimated**, never as a certified/independently-verified carbon credit.
+`pkg/chain` submits a **real Algorand TestNet transaction** (go-algorand-sdk v2)
+anchoring each proof: a 0-ALGO self-payment whose **note field** carries
+`{app, proof, evidence-hash}`, sent via the public AlgoNode node
+(`https://testnet-api.algonode.cloud`), confirmed with `WaitForConfirmation`.
+The real tx id links to the Lora explorer.
+
+- **Config-gated:** enabled by `ALGORAND_MNEMONIC` (a funded TestNet account).
+- **Graceful fallback:** on any error (unfunded/timeout) it returns a deterministic
+  `simulated` anchor so the flow never breaks. The proof's `blockchain_status`
+  (`ANCHORED` vs `SIMULATED`) and `blockchain_network` tell the UI the truth — a
+  simulated anchor is never shown as on-chain-verified.
+- **To activate:** fund the account address once at a TestNet faucet; no redeploy.
+
+## 7. Honesty / scope
+
+- **AI assessment** is still a deterministic stub (`pkg/store.assessEvidence`).
+  Real image/waste classification + duplicate/anomaly detection = PRD Phase 2 (FastAPI).
+- Impact is always labeled **estimated**, never a certified carbon credit.
+- Next: Pera wallet connect (user wallet-address association, FR-006 — note MetaMask
+  does **not** support Algorand), ASA issuance for rewards, real auth.
 
 ## 7. Next steps (per PRD roadmap)
 
