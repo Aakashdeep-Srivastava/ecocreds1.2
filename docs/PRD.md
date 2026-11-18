@@ -1027,3 +1027,29 @@ It is creating the infrastructure that connects:
 **Parent:** Xphora AI Technology Pvt. Ltd.
 **Version:** 2.0
 **Status:** Proposed baseline for engineering review.
+
+---
+
+# 21. Implementation Progress (as of 18 Nov 2026)
+
+Deployed live at **https://xecocreds.vercel.app** — a monorepo (Next.js 16 frontend + Go serverless backend + Neon Postgres + Algorand TestNet) on Vercel. See `docs/BACKEND.md` for the wiring.
+
+| Phase | Status | Done | Left to execute |
+|---|---|---|---|
+| **1 — Foundation** | 🟢 Mostly done | Monorepo, Postgres schema (users, activities, evidence, assessments, proofs), activity submission, evidence SHA-256, Go API gateway (`/api/health,submit,proofs,stats,wallet`) | **Real auth** (currently demo-only, single `USR-DEMO`), organisation management, email verification, RBAC/roles |
+| **2 — AI Verification** | 🔴 Stub only | Deterministic AI assessment stub (classification + confidence + recommended action) | **FastAPI microservices**: image/waste classification, evidence validation, duplicate & anomaly detection, **human-review queue** |
+| **3 — Proof & Carbon Accounting** | 🟢 Mostly done | Proof of Sustainability registry, seeded methodologies + emission factors, carbon engine (GHG: AD×EF×OF − leakage), proof APIs, basic audit fields | Methodology/emission-factor **admin UI**, versioning, full immutable audit log, proof public-verify endpoint |
+| **4 — Algorand Integration** | 🟡 Partial | **Real TestNet anchoring** (go-algorand-sdk v2, note-field txn, config-gated + graceful fallback), **Pera/Lute wallet connect** (use-wallet), wallet-address persistence, explorer links | **Fund the TestNet account** to switch anchoring from simulated→live; **ASA issuance** (reward tokens to wallet); asset indexer; tx monitoring; smart-contract controls (freeze/clawback/retire) |
+| **5 — Product Experience** | 🟡 Partial | Rich web dashboard (collapsible sidebar, dark mode, ApexCharts), submit-activity flow, proof registry, KPI detail pages (credits/score/impact), onboarding tour, rewards UI | **Mobile app** (React Native/Expo), **real ESG reporting** (corporate dashboards still use mock data), full activity history from DB |
+| **6 — Expansion** | 🔴 Not started | — | Marketplace, project-developer portal, enterprise integrations, advanced reporting, developer SDK, more activity categories |
+
+### Beyond the PRD (already shipped)
+- "Carbon Almanac" → official **CarbonGero design system** (Sora + Inter, lime/emerald/teal, light + dark), Next.js 16 + React 19 upgrade.
+- Marketing landing matching the design mockup; auth pages with Pera wallet login; device favicons + PWA manifest.
+- **SEO blog system**: 6 fact-based articles (CCTS, CBAM, MSME, circular economy, product use-case, India-vs-EU) with tables, Mermaid diagrams + real-data ApexCharts, JSON-LD, sitemap.
+
+### Immediate next candidates
+1. **Fund the Algorand TestNet account** → flip anchoring to live (no redeploy).
+2. **ASA reward issuance** to the connected Pera wallet (Phase 4).
+3. **Real auth + organisations** (Phase 1 gap) — e.g. Clerk.
+4. **FastAPI AI evidence service** to replace the stub (Phase 2).
