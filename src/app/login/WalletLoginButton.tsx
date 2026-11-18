@@ -27,7 +27,7 @@ export function WalletLoginButton() {
   }, [activeAddress, router]);
 
   if (!mounted) {
-    return <div className="w-full h-[52px] rounded-lg border border-gray-200 animate-pulse" />;
+    return <div className="w-full h-11 rounded-lg border border-gray-200 animate-pulse" />;
   }
 
   if (activeAddress) {
@@ -44,7 +44,7 @@ export function WalletLoginButton() {
     <button
       type="button"
       onClick={() => pera?.connect()}
-      className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-lg border border-gray-200 hover:border-green-400 bg-white text-ink font-medium transition-colors"
+      className="w-full flex items-center justify-center gap-2.5 py-3 rounded-lg border border-gray-200 hover:border-green-400 bg-white text-ink font-medium transition-colors"
     >
       {pera?.metadata?.icon ? (
         <img src={pera.metadata.icon} alt="" className="w-5 h-5 rounded" />

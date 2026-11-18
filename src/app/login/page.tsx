@@ -57,21 +57,21 @@ export default function Login() {
       </aside>
 
       {/* ---- Form ---- */}
-      <main className="flex items-center justify-center p-6 md:p-10">
-        <div className="w-full max-w-md">
-          <Link href="/" className="lg:hidden inline-flex items-center gap-2 tag text-ink-faint mb-8">
+      <main className="flex items-center justify-center p-6 md:p-8">
+        <div className="w-full max-w-sm">
+          <Link href="/" className="lg:hidden inline-flex items-center gap-2 tag text-ink-faint mb-4">
             <ArrowLeft className="w-4 h-4" /> CarbonGero
           </Link>
 
           <p className="tag text-clay">Sign in</p>
-          <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight">Welcome back.</h1>
-          <p className="mt-2 text-ink-soft">Enter anything — this is an open demo.</p>
+          <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight">Welcome back.</h1>
+          <p className="mt-1 text-sm text-ink-soft">Enter anything — this is an open demo.</p>
 
           {/* type toggle */}
-          <div className="mt-8 grid grid-cols-2 border border-ink/15">
+          <div className="mt-5 grid grid-cols-2 border border-ink/15 rounded-lg overflow-hidden">
             {(['individual', 'corporate'] as const).map((t) => (
               <button key={t} type="button" onClick={() => setLoginType(t)}
-                className={`flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
+                className={`flex items-center justify-center gap-2 py-2.5 text-sm font-medium transition-colors ${
                   loginType === t ? 'bg-forest-deep text-paper' : 'text-ink-soft hover:bg-[#faf8f1]'
                 }`}>
                 {t === 'individual' ? <User className="w-4 h-4" /> : <Building className="w-4 h-4" />}
@@ -80,23 +80,23 @@ export default function Login() {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+          <form onSubmit={handleSubmit} className="mt-4 space-y-3">
             <label className="block">
               <span className="tag text-ink-faint">{loginType === 'corporate' ? 'Corporate email' : 'Email'}</span>
-              <div className="relative mt-2">
+              <div className="relative mt-1.5">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-faint" />
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@planet.earth"
-                  className="w-full pl-11 pr-4 py-3.5 bg-[#faf8f1] border border-ink/15 focus:border-forest focus:bg-white outline-none focus:ring-2 focus:ring-lime/60 transition" />
+                  className="w-full pl-11 pr-4 py-2.5 rounded-lg bg-[#faf8f1] border border-ink/15 focus:border-forest focus:bg-white outline-none focus:ring-2 focus:ring-lime/60 transition" />
               </div>
             </label>
             <label className="block">
               <span className="tag text-ink-faint">Password</span>
-              <div className="relative mt-2">
+              <div className="relative mt-1.5">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-faint" />
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-11 pr-4 py-3.5 bg-[#faf8f1] border border-ink/15 focus:border-forest focus:bg-white outline-none focus:ring-2 focus:ring-lime/60 transition" />
+                  className="w-full pl-11 pr-4 py-2.5 rounded-lg bg-[#faf8f1] border border-ink/15 focus:border-forest focus:bg-white outline-none focus:ring-2 focus:ring-lime/60 transition" />
               </div>
             </label>
 
@@ -107,7 +107,7 @@ export default function Login() {
               <a href="#" className="link-wipe text-ink-soft">Forgot password?</a>
             </div>
 
-            <button type="submit" disabled={isLoading} className="btn-primary w-full !py-4">
+            <button type="submit" disabled={isLoading} className="btn-primary w-full !py-3 !rounded-lg">
               {isLoading ? (
                 <span className="w-5 h-5 border-2 border-paper border-t-transparent rounded-full animate-spin" />
               ) : (
@@ -116,7 +116,7 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="flex items-center gap-3 my-5">
+          <div className="flex items-center gap-3 my-3.5">
             <div className="flex-1 h-px bg-gray-200" />
             <span className="tag text-ink-faint">or</span>
             <div className="flex-1 h-px bg-gray-200" />
@@ -125,7 +125,7 @@ export default function Login() {
             <WalletLoginButton />
           </AlgoWalletProvider>
 
-          <p className="mt-8 text-center text-sm text-ink-soft">
+          <p className="mt-5 text-center text-sm text-ink-soft">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="link-wipe font-semibold text-forest">Sign up</Link>
           </p>
