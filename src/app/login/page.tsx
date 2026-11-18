@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Leaf, Mail, Lock, ArrowRight, Building, User, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { AlgoWalletProvider } from '@/components/wallet-provider';
+import { WalletLoginButton } from './WalletLoginButton';
 
 export default function Login() {
   const router = useRouter();
@@ -113,6 +115,15 @@ export default function Login() {
               )}
             </button>
           </form>
+
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="tag text-ink-faint">or</span>
+            <div className="flex-1 h-px bg-gray-200" />
+          </div>
+          <AlgoWalletProvider>
+            <WalletLoginButton />
+          </AlgoWalletProvider>
 
           <p className="mt-8 text-center text-sm text-ink-soft">
             Don&apos;t have an account?{' '}
