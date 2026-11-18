@@ -115,7 +115,7 @@ export default function Home() {
   const solutions = [
     { icon: <Landmark />, t: 'For Governments', d: 'Digitize, monitor and monetize state and city-level climate projects.', img: '/sol-government.webp' },
     { icon: <Building2 />, t: 'For Enterprises', d: 'Meet net-zero goals with verified, traceable carbon credits.', img: '/sol-enterprise.webp' },
-    { icon: <Sprout />, t: 'For Project Developers', d: 'Turn your sustainability projects into high-integrity carbon assets.', img: '/sol-enterprise.webp' },
+    { icon: <Sprout />, t: 'For Project Developers', d: 'Turn your sustainability projects into high-integrity carbon assets.', img: '/sol-developer.webp' },
   ];
 
   const steps = [
