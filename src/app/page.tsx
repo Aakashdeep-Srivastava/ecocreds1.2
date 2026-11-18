@@ -113,9 +113,9 @@ export default function Home() {
   ];
 
   const solutions = [
-    { icon: <Landmark />, t: 'For Governments', d: 'Digitize, monitor and monetize state and city-level climate projects.' },
-    { icon: <Building2 />, t: 'For Enterprises', d: 'Meet net-zero goals with verified, traceable carbon credits.' },
-    { icon: <Sprout />, t: 'For Project Developers', d: 'Turn your sustainability projects into high-integrity carbon assets.' },
+    { icon: <Landmark />, t: 'For Governments', d: 'Digitize, monitor and monetize state and city-level climate projects.', img: '/sol-government.webp' },
+    { icon: <Building2 />, t: 'For Enterprises', d: 'Meet net-zero goals with verified, traceable carbon credits.', img: '/sol-enterprise.webp' },
+    { icon: <Sprout />, t: 'For Project Developers', d: 'Turn your sustainability projects into high-integrity carbon assets.', img: '/sol-enterprise.webp' },
   ];
 
   const steps = [
@@ -245,8 +245,10 @@ export default function Home() {
             {solutions.map((s) => (
               <motion.article key={s.t} whileHover={{ y: -6 }} transition={{ type: 'spring', stiffness: 300, damping: 22 }}
                 className="card-paper overflow-hidden group">
-                <div className="h-28 bg-brand-gradient relative grid place-items-center">
-                  <span className="w-14 h-14 grid place-items-center rounded-2xl bg-white/90 text-green-700 [&>svg]:w-7 [&>svg]:h-7 shadow">{s.icon}</span>
+                <div className="h-32 relative grid place-items-center overflow-hidden">
+                  <img src={s.img} alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/60 via-forest-dark/15 to-transparent" />
+                  <span className="relative w-14 h-14 grid place-items-center rounded-2xl bg-white/90 backdrop-blur text-green-700 [&>svg]:w-7 [&>svg]:h-7 shadow-lg">{s.icon}</span>
                 </div>
                 <div className="p-6">
                   <div className="flex items-center justify-between">

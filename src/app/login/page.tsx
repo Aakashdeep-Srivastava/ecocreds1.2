@@ -23,7 +23,9 @@ export default function Login() {
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-paper text-ink">
       {/* ---- Feature panel ---- */}
-      <aside className="relative hidden lg:flex flex-col justify-between p-12 bg-forest-deep text-paper bg-dots overflow-hidden">
+      <aside className="relative hidden lg:flex flex-col justify-between p-12 text-paper overflow-hidden">
+        <img src="/auth-bg.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-forest-dark/85 via-forest-deep/65 to-forest-dark/90" />
         <div className="absolute -left-16 -bottom-16 w-72 h-72 rounded-full border border-white/10 animate-spin-slow" />
         <Link href="/" className="relative flex items-center gap-2 w-fit">
           <img src="/logo-mark.png" alt="" className="w-8 h-8 object-contain" />
@@ -31,17 +33,17 @@ export default function Login() {
         </Link>
 
         <div className="relative max-w-md">
-          <p className="tag text-lime">№ 01 — Welcome back</p>
-          <h2 className="mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance">
-            Every action,<br /><span className="italic font-normal">accounted for.</span>
+          <p className="tag text-lime">Welcome back</p>
+          <h2 className="mt-5 font-display text-4xl md:text-5xl font-bold leading-[1.05] tracking-tight text-balance">
+            Every action,<br /><span className="text-gradient">accounted for.</span>
           </h2>
-          <p className="mt-6 text-paper/70 leading-relaxed">
-            Pick up where you left off. Your footprint, challenges and rewards —
-            all in one field guide.
+          <p className="mt-6 text-paper/80 leading-relaxed">
+            Pick up where you left off. Your footprint, credits and rewards —
+            all in one place.
           </p>
-          <div className="mt-10 grid grid-cols-3 gap-px bg-white/10 border border-white/10">
+          <div className="mt-10 grid grid-cols-3 gap-px bg-white/10 border border-white/10 rounded-xl overflow-hidden">
             {[['−18%', 'Footprint'], ['5,000', 'Credits'], ['A+', 'Tier']].map(([a, b]) => (
-              <div key={b} className="bg-forest-deep p-4">
+              <div key={b} className="bg-white/5 backdrop-blur-sm p-4">
                 <p className="font-display text-2xl stat-num">{a}</p>
                 <p className="tag text-paper/55 mt-1">{b}</p>
               </div>

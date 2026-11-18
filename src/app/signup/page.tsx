@@ -62,7 +62,9 @@ export default function Signup() {
       </main>
 
       {/* ---- Feature panel ---- */}
-      <aside className="relative hidden lg:flex flex-col justify-between p-12 bg-forest-deep text-paper bg-dots overflow-hidden order-1 lg:order-2">
+      <aside className="relative hidden lg:flex flex-col justify-between p-12 text-paper overflow-hidden order-1 lg:order-2">
+        <img src="/auth-bg.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-forest-dark/85 via-forest-deep/65 to-forest-dark/90" />
         <div className="absolute -right-16 -top-16 w-72 h-72 rounded-full border border-white/10 animate-spin-slow" />
         <Link href="/" className="relative flex items-center gap-2 w-fit self-end">
           <span className="font-display text-2xl font-semibold">CarbonGero</span>
@@ -70,9 +72,9 @@ export default function Signup() {
         </Link>
 
         <div className="relative max-w-md ml-auto text-right">
-          <p className="tag text-lime">№ 02 — Begin</p>
-          <h2 className="mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-balance">
-            Small actions,<br /><span className="italic font-normal">big arithmetic.</span>
+          <p className="tag text-lime">Get started</p>
+          <h2 className="mt-5 font-display text-4xl md:text-5xl font-bold leading-[1.05] tracking-tight text-balance">
+            Small actions,<br /><span className="text-gradient">big arithmetic.</span>
           </h2>
           <ul className="mt-9 space-y-4">
             {perks.map((p) => (
@@ -83,7 +85,7 @@ export default function Signup() {
           </ul>
         </div>
 
-        <p className="relative tag text-paper/40 self-end">Vol. I · The Carbon Almanac</p>
+        <p className="relative tag text-paper/40 self-end">Powered by Algorand</p>
       </aside>
     </div>
   );
