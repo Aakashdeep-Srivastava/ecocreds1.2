@@ -66,7 +66,7 @@ export default function Signup() {
         <div className="absolute -right-16 -top-16 w-72 h-72 rounded-full border border-white/10 animate-spin-slow" />
         <Link href="/" className="relative flex items-center gap-2 w-fit self-end">
           <span className="font-display text-2xl font-semibold">CarbonGero</span>
-          <Leaf className="w-7 h-7 text-lime" strokeWidth={1.5} />
+          <img src="/logo-mark.png" alt="" className="w-8 h-8 object-contain" />
         </Link>
 
         <div className="relative max-w-md ml-auto text-right">

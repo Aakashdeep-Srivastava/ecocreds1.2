@@ -26,7 +26,7 @@ export default function Login() {
       <aside className="relative hidden lg:flex flex-col justify-between p-12 bg-forest-deep text-paper bg-dots overflow-hidden">
         <div className="absolute -left-16 -bottom-16 w-72 h-72 rounded-full border border-white/10 animate-spin-slow" />
         <Link href="/" className="relative flex items-center gap-2 w-fit">
-          <Leaf className="w-7 h-7 text-lime" strokeWidth={1.5} />
+          <img src="/logo-mark.png" alt="" className="w-8 h-8 object-contain" />
           <span className="font-display text-2xl font-semibold">CarbonGero</span>
         </Link>
 

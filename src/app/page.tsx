@@ -157,25 +157,29 @@ export default function Home() {
       </nav>
 
       {/* ===================== HERO ===================== */}
-      <header className="relative pt-16 overflow-hidden">
-        {/* background image + light overlays */}
+      <header className="relative pt-16 overflow-hidden text-white">
+        {/* video background + legibility overlays */}
         <div className="absolute inset-0 z-0">
-          <img src="/hero-hills.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-white/25" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/40" />
+          <video
+            autoPlay loop muted playsInline preload="auto" poster="/hero-hills.jpg"
+            className="absolute inset-0 w-full h-full object-cover"
+            aria-hidden
+          >
+            <source src="/video/home.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-forest-dark/95 via-forest-deep/80 to-forest-deep/45" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-forest-dark/30" />
         </div>
 
-        <div className="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8 py-14 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
-          <div>
-            <span data-hero className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-sm">
-              <Hexagon className="w-3.5 h-3.5 text-green-600" /> Built on Algorand
+        <div className="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8 py-24 md:py-36">
+          <div className="max-w-2xl">
+            <span data-hero className="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-full px-3.5 py-1.5 text-xs font-semibold">
+              <Hexagon className="w-3.5 h-3.5 text-green-400" /> Built on Algorand
             </span>
-            <h1 data-hero className="mt-6 font-display font-bold leading-[1.08] tracking-[-0.02em] text-[clamp(1.75rem,3.6vw,2.85rem)]">
-              Tokenize, Track and<br />
-              Trade <span className="text-gradient">Carbon Impact</span><br />
-              with Trust.
+            <h1 data-hero className="mt-6 font-display font-bold leading-[1.08] tracking-[-0.02em] text-[clamp(1.9rem,4vw,3.1rem)]">
+              Tokenize, Track and Trade <span className="text-gradient">Carbon Impact</span> with Trust.
             </h1>
-            <p data-hero className="mt-6 max-w-lg text-base text-ink-soft">
+            <p data-hero className="mt-6 max-w-xl text-base text-white/80">
               A transparent, compliant and scalable infrastructure for creating, verifying
               and trading carbon credits on the Algorand blockchain.
             </p>
@@ -184,20 +188,17 @@ export default function Home() {
                 <Button asChild variant="brand" size="lg"><Link href="/signup">Start a Project <ArrowRight className="w-4 h-4" /></Link></Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                <Button asChild variant="secondary" size="lg"><Link href="/login"><Play className="w-4 h-4" /> Book a Demo</Link></Button>
+                <Button asChild size="lg" className="bg-white/10 text-white border border-white/30 backdrop-blur hover:bg-white/20"><Link href="/login"><Play className="w-4 h-4" /> Book a Demo</Link></Button>
               </motion.div>
             </div>
-            <div data-hero className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft">
+            <div data-hero className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/85">
               {[['Blockchain Verified', <ShieldCheck key="s" />], ['Audit Ready', <FileCheck key="f" />], ['Impact at Scale', <Leaf key="l" />]].map(([t, ic]) => (
                 <span key={t as string} className="inline-flex items-center gap-2">
-                  <span className="text-green-600 [&>svg]:w-4 [&>svg]:h-4">{ic as ReactNode}</span>{t as string}
+                  <span className="text-green-400 [&>svg]:w-4 [&>svg]:h-4">{ic as ReactNode}</span>{t as string}
                 </span>
               ))}
             </div>
           </div>
-          <motion.div data-hero initial={false} animate={{ y: [0, -10, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} className="justify-self-center lg:justify-self-end">
-            <ImpactCard />
-          </motion.div>
         </div>
       </header>
 
