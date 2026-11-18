@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"carbongero/internal/httpx"
-	"carbongero/internal/store"
+	"carbongero/pkg/httpx"
+	"carbongero/pkg/store"
 )
 
 // Handler serves POST /api/submit — the end-to-end recycling → Proof of

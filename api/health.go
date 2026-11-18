@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	"carbongero/internal/httpx"
-	"carbongero/internal/store"
+	"carbongero/pkg/httpx"
+	"carbongero/pkg/store"
 )
 
 // Handler serves GET /api/health.

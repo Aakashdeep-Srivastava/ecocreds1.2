@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"time"
 
-	"carbongero/internal/carbon"
-	"carbongero/internal/chain"
-	"carbongero/internal/db"
+	"carbongero/pkg/carbon"
+	"carbongero/pkg/chain"
+	"carbongero/pkg/db"
 )
 
 const demoUser = "USR-DEMO"

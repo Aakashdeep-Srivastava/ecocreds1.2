@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"carbongero/internal/httpx"
-	"carbongero/internal/store"
+	"carbongero/pkg/httpx"
+	"carbongero/pkg/store"
 )
 
 // Handler serves GET /api/stats — registry aggregates for dashboards.
