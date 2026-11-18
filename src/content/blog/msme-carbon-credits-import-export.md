@@ -33,6 +33,10 @@ This is the fork everything hangs on. There are **two separate markets** you can
 
 If your goal is to **sell to foreign people today**, Door 2 (the global VCM) is the open road. Door 1 is the domestic scheme that is still wiring up its international plumbing.
 
+```chart
+{"type":"bar","title":"Two doors into the carbon market, compared","caption":"Qualitative scoring (1 = low, 5 = high) of the domestic CCTS offset route vs the global voluntary market for an MSME in 2026.","categories":["Liquidity today","Export readiness","Policy alignment","Speed to first sale"],"series":[{"name":"CCTS Offset (domestic)","data":[2,2,5,2]},{"name":"Voluntary Market (global)","data":[5,5,3,4]}],"colors":["#00C853","#00D1B2"],"options":{"dataLabels":{"enabled":false}}}
+```
+
 ## From activity to credit — the actual journey
 
 Here is the end-to-end path, the one I walk every MSME through. The hard part is never the idea; it is the **MRV** — measurement, reporting and verification — in the middle.

@@ -2,6 +2,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Mermaid } from './Mermaid';
+import { BlogChart } from './BlogChart';
 
 function slugify(s: string) {
   return s.toLowerCase().replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
@@ -62,6 +63,7 @@ export function MarkdownArticle({ content }: { content: string }) {
             const cls: string = child?.props?.className || '';
             const code = child?.props?.children;
             if (/language-mermaid/.test(cls)) return <Mermaid chart={text(code)} />;
+            if (/language-chart/.test(cls)) return <BlogChart config={text(code)} />;
             return <pre className="my-5 overflow-x-auto rounded-xl bg-[#0b0d0c] text-green-200 p-4 text-xs">{children}</pre>;
           },
           code: ({ className, children }) => {

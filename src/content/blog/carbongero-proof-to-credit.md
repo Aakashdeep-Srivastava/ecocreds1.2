@@ -52,6 +52,10 @@ Walk the right-hand branch: a proof only becomes a *sellable, certified* carbon 
 | Algorand anchor | Public, cheap, immutable traceability | ASA + note-field transactions |
 | Asset issuance | A unit a market can price and trade | Algorand Standard Assets |
 
+```chart
+{"type":"bar","title":"Carbon accounting, worked example","caption":"12.5 kg recycled x 1.8 emission factor = 22.5 kg gross avoided; minus a conservative 10% leakage = 20.25 kgCO2e net — the figure CarbonGero anchors on-chain.","categories":["Gross avoided","Leakage (-10%)","Net reduction"],"series":[{"name":"kgCO2e","data":[22.5,2.25,20.25]}],"colors":["#00C853","#9CA3AF","#00D1B2"],"distributed":true,"options":{"dataLabels":{"enabled":true},"legend":{"show":false}}}
+```
+
 ## Why Algorand, specifically
 
 People ask why not just use a database. Because a database is trusted by *you*; a buyer in another jurisdiction has no reason to. Anchoring the proof reference on **Algorand** gives a neutral, public, low-cost, carbon-negative ledger that anyone can independently verify — the explorer link is the handshake. Transactions cost a fraction of a cent and settle in seconds, which matters when you're anchoring thousands of small MSME actions, not a handful of mega-projects. And unlike a proof-of-work chain, you're not burning carbon to certify carbon savings, which would be absurd.

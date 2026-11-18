@@ -45,6 +45,10 @@ Here is the part that catches finance teams off guard. If you cannot report **ve
 
 ICRIER has estimated CBAM could cut India's steel exports to the EU by **up to 24%**. Sit with that number. A quarter of a market, taxed away not because the product is worse, but because its carbon is both higher *and* un-measured.
 
+```chart
+{"type":"bar","title":"CBAM's bill on Indian exporters (2026)","caption":"Figures in %. Sources: ICRIER, GTRI, India Commerce Ministry.","categories":["Projected steel export cut","Early drop (first 4 months)","Default-value premium (upper)","Margin hit to absorb (upper)"],"series":[{"name":"%","data":[24,13,80,22]}],"colors":["#00C853"],"horizontal":true,"options":{"dataLabels":{"enabled":true}}}
+```
+
 ## How the charge actually flows
 
 I draw this for every exporter, because the leverage points are the two places you can intervene: measuring real emissions, and proving a domestic carbon price.

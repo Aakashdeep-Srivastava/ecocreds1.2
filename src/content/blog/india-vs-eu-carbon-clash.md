@@ -33,6 +33,10 @@ Strip the diplomacy away and look at who actually holds what.
 
 The EU holds the demand. India holds supply and a legitimate fairness argument. Neither can simply dictate to the other — which is why this becomes a negotiation, not a surrender.
 
+```chart
+{"type":"bar","title":"CBAM carbon cost per tonne, by origin (EUR)","caption":"The cost differential CBAM creates between exporters. Source: industry analysis, 2026.","categories":["Turkish steel","Vietnamese steel","Indian aluminium"],"series":[{"name":"EUR per tonne","data":[100,94,50]}],"colors":["#00C853"],"distributed":true,"options":{"dataLabels":{"enabled":true},"legend":{"show":false}}}
+```
+
 ## Why "carbon colonialism" is both true and incomplete
 
 India's case is strong and I won't pretend otherwise. CBAM is **unilateral**: Brussels designed it, Brussels collects it, and the developing-country producer pays the decarbonisation bill while the revenue stays in Europe. It cuts against *common but differentiated responsibilities*, the principle that the countries which filled the atmosphere first should carry more of the cost. Calling it "carbon colonialism" is rhetorically sharp but not baseless.

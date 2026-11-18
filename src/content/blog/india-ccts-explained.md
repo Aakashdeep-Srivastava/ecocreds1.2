@@ -35,6 +35,10 @@ People constantly conflate these, so let me separate them cleanly. CCTS has **tw
 
 The compliance side is the heavy machinery. The offset side is the door through which the rest of the economy — including the recycler, the solar rooftop, the EV fleet — walks in.
 
+```chart
+{"type":"bar","title":"Why a Carbon Credit Certificate has real value","caption":"CCTS prices non-compliance at 2x the market rate — so buying a credit always beats paying the penalty. That multiplier is what gives the certificate value.","categories":["Buy a credit","Non-compliance penalty"],"series":[{"name":"Cost (x market price)","data":[1,2]}],"colors":["#00C853","#EF4444"],"distributed":true,"options":{"dataLabels":{"enabled":true},"plotOptions":{"bar":{"columnWidth":"45%"}},"legend":{"show":false}}}
+```
+
 ## Who is obligated
 
 Nine energy-intensive sectors carry binding targets. If you run a plant in these, July 2026 is already circled on your calendar.

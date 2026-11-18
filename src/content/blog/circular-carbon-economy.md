@@ -32,6 +32,10 @@ I think of it as a strict hierarchy. You exhaust each move before spending money
 
 Most corporate "net-zero" plans quietly invert this hierarchy — a little reduction, then a mountain of cheap removals on paper. The circular model refuses that shortcut.
 
+```chart
+{"type":"bar","title":"Cost of abatement rises down the hierarchy","caption":"Illustrative relative cost per tonne. The cheapest tonne is the one never emitted; engineered removal (CCUS/DAC) is the expensive last resort.","categories":["Reduce","Reuse","Recycle","Remove (CCUS/DAC)"],"series":[{"name":"Relative cost / tonne","data":[1,2,3,8]}],"colors":["#00C853"],"distributed":true,"options":{"dataLabels":{"enabled":true},"legend":{"show":false}}}
+```
+
 ## Where carbon credits actually fit
 
 Credits are not the economy; they are the **accounting layer and the price signal** that makes the loop pay. A credit rewards a tonne reduced, reused, recycled or removed — and a market price tells every actor which move is worth making. Without the credit, the recycler's avoided emissions are invisible. With it, they're an asset.
