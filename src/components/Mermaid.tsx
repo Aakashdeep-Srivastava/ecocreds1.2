@@ -24,9 +24,8 @@ export function Mermaid({ chart }: { chart: string }) {
           lineColor: dark ? '#4b5563' : '#9ca3af',
           secondaryColor: dark ? '#1a2a22' : '#f1f5f9',
           tertiaryColor: dark ? '#161b19' : '#ffffff',
-          fontFamily: 'var(--font-inter), sans-serif',
-          fontSize: '14px',
         },
+        flowchart: { htmlLabels: true, padding: 14, nodeSpacing: 40, rankSpacing: 55, useMaxWidth: true },
       });
       try {
         const { svg } = await mermaid.render(`mmd-${counter++}`, chart.trim());
