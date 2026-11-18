@@ -3,12 +3,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Home, QrCode, Hotel, ShoppingCart, Award, Map, User, LogOut,
-  BarChart2, PanelLeftClose, PanelLeftOpen,
+  BarChart2, PanelLeftClose, PanelLeftOpen, FilePlus2, Hexagon,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 const menuItems = [
   { title: 'Dashboard', icon: Home, path: '/dashboard' },
+  { title: 'Submit Activity', icon: FilePlus2, path: '/dashboard/submit' },
+  { title: 'Proof Registry', icon: Hexagon, path: '/dashboard/proofs' },
   { title: 'Travel Hub', icon: Map, path: '/dashboard/travel' },
   { title: 'Hotels', icon: Hotel, path: '/dashboard/hotels' },
   { title: 'Challenges', icon: Award, path: '/dashboard/challenges' },
