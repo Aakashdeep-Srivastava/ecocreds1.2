@@ -17,8 +17,8 @@ interface AuthContextType {
 
 const currentUser: AppUser = {
   uid: 'user-1',
-  email: 'harshpratapsingh@gmail.com',
-  displayName: 'Harsh Singh',
+  email: 'aria.verde@carbongero.com',
+  displayName: 'Aria Verde',
 };
 
 const AuthContext = createContext<AuthContextType>({

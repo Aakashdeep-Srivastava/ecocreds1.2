@@ -2,13 +2,11 @@
 'use client';
 
 import { useState } from 'react';
-import { QrScanner } from './components/eco/QrScanner';
-import { CarbonMetrics } from './components/analytics/CarbonMetrics';
+import { Coins, Award, Sprout, TrendingUp } from 'lucide-react';
 import { EmissionsChart } from './components/analytics/EmissionsChart';
 import { ChallengeCard } from './components/rewards/ChallengeCard';
-import { SustainabilityScore } from './components/eco/SustainabilityScore';
 import { QuickActions } from './components/shared/QuickActions';
-import { RewardProgress } from './components/rewards/RewardProgress';
+import { KpiCard } from './components/eco/KpiCard';
 
 const Dashboard = () => {
   const [activeChallenge, setActiveChallenge] = useState({
@@ -48,19 +46,11 @@ const Dashboard = () => {
         </div>
         <span className="tag text-ink-faint hidden sm:block">Fig. 01 — 04</span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-        <CarbonMetrics
-          total={userMetrics.carbonCredits}
-          monthly={userMetrics.monthlyReduction}
-        />
-        <SustainabilityScore
-          tier={userMetrics.sustainabilityTier}
-          points={userMetrics.rewardCoins}
-        />
-        <RewardProgress
-          current={userMetrics.monthlyStats.saved}
-          target={userMetrics.monthlyStats.target}
-        />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        <KpiCard href="/dashboard/credits" label="Carbon Credits" value="5,000" delta="+200 this month" icon={<Coins />} />
+        <KpiCard href="/dashboard/score" label="Sustainability Score" value="842" unit="/ 1000" delta="EcoChampion tier" icon={<Award />} />
+        <KpiCard href="/dashboard/impact" label="CO₂ Offset" value="1.24" unit="tCO₂e" delta="+0.2 this month" icon={<Sprout />} />
+        <KpiCard href="/dashboard/analytics" label="Monthly Progress" value="67%" unit="of target" delta="200 / 300 kg" icon={<TrendingUp />} />
       </div>
 
       {/* Section — trend */}

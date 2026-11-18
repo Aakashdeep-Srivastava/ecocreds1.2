@@ -6,7 +6,7 @@ import {
   Chrome, Smartphone,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -79,7 +79,15 @@ function ImpactCard() {
 
 export default function Home() {
   const [menu, setMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useGSAP(() => {
     gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
@@ -129,10 +137,10 @@ export default function Home() {
   return (
     <div ref={root} className="min-h-screen bg-paper text-ink overflow-x-hidden">
       {/* ===================== NAV ===================== */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+      <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 dark:bg-[#0B0D0C]/80 backdrop-blur-md border-b border-gray-200' : 'bg-transparent border-b border-transparent'}`}>
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
-          <Link href="/"><Logo /></Link>
-          <div className="hidden lg:flex items-center gap-7 text-sm font-medium text-ink-soft">
+          <Link href="/"><Logo className={!scrolled ? 'text-white' : ''} /></Link>
+          <div className={`hidden lg:flex items-center gap-7 text-sm font-medium ${scrolled ? 'text-ink-soft' : 'text-white/90'}`}>
             {NAV.map((n) => (
               <button key={n} className="inline-flex items-center gap-1 hover:text-ink transition-colors">
                 {n} <ChevronDown className="w-3.5 h-3.5" />
@@ -140,10 +148,10 @@ export default function Home() {
             ))}
           </div>
           <div className="hidden lg:flex items-center gap-3">
-            <Button asChild variant="outline" size="sm"><Link href="/login">Log in</Link></Button>
+            <Button asChild variant="outline" size="sm" className={!scrolled ? 'border-white/40 text-white bg-transparent hover:bg-white/10' : ''}><Link href="/login">Log in</Link></Button>
             <Button asChild variant="brand" size="sm"><Link href="/signup">Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
           </div>
-          <button onClick={() => setMenu(!menu)} className="lg:hidden p-2 -mr-2" aria-label="Menu">
+          <button onClick={() => setMenu(!menu)} className={`lg:hidden p-2 -mr-2 ${scrolled ? 'text-ink' : 'text-white'}`} aria-label="Menu">
             {menu ? <X /> : <Menu />}
           </button>
         </div>
@@ -157,7 +165,7 @@ export default function Home() {
       </nav>
 
       {/* ===================== HERO ===================== */}
-      <header className="relative pt-16 overflow-hidden text-white">
+      <header className="relative pt-16 overflow-hidden text-white rounded-b-[2rem] md:rounded-b-[3rem]">
         {/* video background + legibility overlays */}
         <div className="absolute inset-0 z-0">
           <video
@@ -167,8 +175,8 @@ export default function Home() {
           >
             <source src="/video/home.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-r from-forest-dark/95 via-forest-deep/80 to-forest-deep/45" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-forest-dark/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-forest-dark/95 via-forest-deep/75 to-forest-deep/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-forest-dark/60 via-transparent to-forest-dark/25" />
         </div>
 
         <div className="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8 py-24 md:py-36">

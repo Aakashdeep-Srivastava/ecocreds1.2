@@ -3,8 +3,8 @@ import { User, Settings, Bell, Shield, Award, Leaf, Zap, Car, Hotel, Recycle } f
 
 export default function ProfilePage() {
   const userProfile = {
-    name: 'Harsh Singh',
-    email: 'harshpratapsingh@gmail.com',
+    name: 'Aria Verde',
+    email: 'aria.verde@carbongero.com',
     joinDate: 'Feb 2024',
     totalCredits: 5000,
     level: 'EcoChampion',

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Sora, Inter } from 'next/font/google'
 import './globals.css'
 import { AuthContextProvider } from '@/context/AuthContext'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const sora = Sora({
   subsets: ['latin'],
@@ -50,11 +51,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${sora.variable} ${inter.variable}`}>
+    <html lang="en" className={`${sora.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
-        <AuthContextProvider>
-          {children}
-        </AuthContextProvider>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
+          <AuthContextProvider>
+            {children}
+          </AuthContextProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
