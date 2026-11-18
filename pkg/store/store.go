@@ -263,6 +263,29 @@ type Stats struct {
 	Anchored      int     `json:"anchored"`
 }
 
+// SetWallet associates an Algorand address with the demo user (PRD FR-006).
+func SetWallet(address string) error {
+	conn, err := db.Conn()
+	if err != nil {
+		return err
+	}
+	_, err = conn.Exec(`UPDATE users SET wallet_address=$1 WHERE id=$2`, address, demoUser)
+	return err
+}
+
+// GetWallet returns the demo user's associated Algorand address (may be empty).
+func GetWallet() (string, error) {
+	conn, err := db.Conn()
+	if err != nil {
+		return "", err
+	}
+	var addr sql.NullString
+	if err := conn.QueryRow(`SELECT wallet_address FROM users WHERE id=$1`, demoUser).Scan(&addr); err != nil {
+		return "", err
+	}
+	return addr.String, nil
+}
+
 // GetStats aggregates registry figures.
 func GetStats() (*Stats, error) {
 	conn, err := db.Conn()

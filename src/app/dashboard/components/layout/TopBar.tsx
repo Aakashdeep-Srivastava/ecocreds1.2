@@ -4,6 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useTheme } from 'next-themes';
 import { Coins, Sun, Moon } from 'lucide-react';
 import { NotificationMenu } from './NotificationMenu';
+import { ConnectWallet } from './ConnectWallet';
 
 export const TopBar = () => {
   const { user } = useAuth();
@@ -22,7 +23,8 @@ export const TopBar = () => {
         </h1>
       </div>
       <div className="flex items-center gap-2">
-        <span className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400">
+        <ConnectWallet />
+        <span className="hidden md:inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400">
           <Coins className="w-4 h-4" />
           <span className="font-display font-bold stat-num text-sm">5,000</span>
           <span className="tag opacity-70">credits</span>
