@@ -39,14 +39,11 @@ const Dashboard = () => {
   return (
     <div className="max-w-[1200px] mx-auto">
       {/* Section — ledger */}
-      <div className="flex items-end justify-between mb-5">
-        <div>
-          <p className="tag text-clay">The ledger</p>
-          <h2 className="mt-1 font-display text-2xl font-semibold">This month at a glance</h2>
-        </div>
+      <div className="flex items-center justify-between mb-2.5">
+        <h2 className="font-display text-lg font-semibold">This month at a glance</h2>
         <span className="tag text-ink-faint hidden sm:block">Fig. 01 — 04</span>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
         <KpiCard href="/dashboard/credits" label="Carbon Credits" value="5,000" delta="+200 this month" icon={<Coins />} />
         <KpiCard href="/dashboard/score" label="Sustainability Score" value="842" unit="/ 1000" delta="EcoChampion tier" icon={<Award />} />
         <KpiCard href="/dashboard/impact" label="CO₂ Offset" value="1.24" unit="tCO₂e" delta="+0.2 this month" icon={<Sprout />} />
@@ -54,13 +51,8 @@ const Dashboard = () => {
       </div>
 
       {/* Section — trend */}
-      <div className="flex items-end justify-between mb-5">
-        <div>
-          <p className="tag text-clay">The record</p>
-          <h2 className="mt-1 font-display text-2xl font-semibold">Emissions trend</h2>
-        </div>
-      </div>
-      <div className="mb-10">
+      <h2 className="font-display text-lg font-semibold mb-2.5">Emissions trend</h2>
+      <div className="mb-5">
         <EmissionsChart
           current={userMetrics.monthlyStats.saved}
           previous={userMetrics.monthlyStats.previousMonth}
@@ -69,13 +61,8 @@ const Dashboard = () => {
       </div>
 
       {/* Section — field work */}
-      <div className="flex items-end justify-between mb-5">
-        <div>
-          <p className="tag text-clay">Field work</p>
-          <h2 className="mt-1 font-display text-2xl font-semibold">Act & earn</h2>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <h2 className="font-display text-lg font-semibold mb-2.5">Act & earn</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <QuickActions actions={quickActions} />
         <ChallengeCard
           challenge={activeChallenge}
