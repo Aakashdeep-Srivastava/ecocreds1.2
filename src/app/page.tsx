@@ -15,7 +15,43 @@ import { Button } from '@/components/ui/button';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const NAV = ['Product', 'Solutions', 'Resources', 'Company'];
+const MENUS: { label: string; items: { label: string; href: string; desc?: string }[] }[] = [
+  {
+    label: 'Product',
+    items: [
+      { label: 'Platform overview', href: '#product', desc: 'End-to-end carbon credit infrastructure' },
+      { label: 'How it works', href: '#how' },
+      { label: 'Why CarbonGero', href: '#why' },
+      { label: 'Submit an activity', href: '/dashboard/submit' },
+      { label: 'Proof registry', href: '/dashboard/proofs' },
+    ],
+  },
+  {
+    label: 'Solutions',
+    items: [
+      { label: 'For Governments', href: '#solutions' },
+      { label: 'For Enterprises', href: '#solutions' },
+      { label: 'For Project Developers', href: '#solutions' },
+    ],
+  },
+  {
+    label: 'Resources',
+    items: [
+      { label: 'Blog', href: '/blog', desc: 'India CCTS, CBAM & carbon markets' },
+      { label: "India's CCTS, Decoded", href: '/blog/india-ccts-explained' },
+      { label: 'CBAM & Indian Exporters', href: '/blog/cbam-india-exporters' },
+      { label: 'The MSME Playbook', href: '/blog/msme-carbon-credits-import-export' },
+    ],
+  },
+  {
+    label: 'Company',
+    items: [
+      { label: 'About', href: '#why' },
+      { label: 'Contact', href: '#contact' },
+      { label: 'Open the app', href: '/dashboard' },
+    ],
+  },
+];
 
 function Logo({ className = '' }: { className?: string }) {
   return (
@@ -79,6 +115,7 @@ function ImpactCard() {
 
 export default function Home() {
   const [menu, setMenu] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const root = useRef<HTMLDivElement>(null);
 
@@ -140,11 +177,33 @@ export default function Home() {
       <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/80 dark:bg-[#0B0D0C]/80 backdrop-blur-md border-b border-gray-200' : 'bg-transparent border-b border-transparent'}`}>
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
           <Link href="/"><Logo className={!scrolled ? 'text-white' : ''} /></Link>
-          <div className={`hidden lg:flex items-center gap-7 text-sm font-medium ${scrolled ? 'text-ink-soft' : 'text-white/90'}`}>
-            {NAV.map((n) => (
-              <button key={n} className="inline-flex items-center gap-1 hover:text-ink transition-colors">
-                {n} <ChevronDown className="w-3.5 h-3.5" />
-              </button>
+          <div className={`hidden lg:flex items-center gap-1 text-sm font-medium ${scrolled ? 'text-ink-soft' : 'text-white/90'}`}>
+            {MENUS.map((m) => (
+              <div key={m.label} className="relative" onMouseEnter={() => setOpenMenu(m.label)} onMouseLeave={() => setOpenMenu(null)}>
+                <button className="inline-flex items-center gap-1 px-3 py-2 hover:opacity-80 transition-opacity">
+                  {m.label} <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openMenu === m.label ? 'rotate-180' : ''}`} />
+                </button>
+                {openMenu === m.label && (
+                  <div className="absolute left-0 top-full pt-3">
+                    <div className="w-72 rounded-xl border border-gray-200 bg-white shadow-lift p-2">
+                      {m.items.map((it) => {
+                        const cls = 'block px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors';
+                        const inner = (
+                          <>
+                            <span className="text-sm font-medium text-ink">{it.label}</span>
+                            {it.desc && <span className="block text-xs text-ink-faint">{it.desc}</span>}
+                          </>
+                        );
+                        return it.href.startsWith('/') ? (
+                          <Link key={it.label} href={it.href} onClick={() => setOpenMenu(null)} className={cls}>{inner}</Link>
+                        ) : (
+                          <a key={it.label} href={it.href} onClick={() => setOpenMenu(null)} className={cls}>{inner}</a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
           <div className="hidden lg:flex items-center gap-3">
@@ -156,10 +215,25 @@ export default function Home() {
           </button>
         </div>
         {menu && (
-          <div className="lg:hidden border-t border-gray-200 bg-white px-5 py-4 flex flex-col gap-3 text-sm font-medium">
-            {NAV.map((n) => <span key={n} className="text-ink-soft">{n}</span>)}
-            <Link href="/login" onClick={() => setMenu(false)} className="pt-2">Log in</Link>
-            <Button asChild variant="brand" className="w-full"><Link href="/signup" onClick={() => setMenu(false)}>Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
+          <div className="lg:hidden border-t border-gray-200 bg-white px-5 py-4 flex flex-col gap-4 text-sm max-h-[72vh] overflow-y-auto">
+            {MENUS.map((m) => (
+              <div key={m.label}>
+                <p className="tag text-ink-faint mb-2">{m.label}</p>
+                <div className="flex flex-col gap-1.5 pl-1">
+                  {m.items.map((it) =>
+                    it.href.startsWith('/') ? (
+                      <Link key={it.label} href={it.href} onClick={() => setMenu(false)} className="text-ink-soft hover:text-ink">{it.label}</Link>
+                    ) : (
+                      <a key={it.label} href={it.href} onClick={() => setMenu(false)} className="text-ink-soft hover:text-ink">{it.label}</a>
+                    ),
+                  )}
+                </div>
+              </div>
+            ))}
+            <div className="flex flex-col gap-2 pt-3 border-t border-gray-200">
+              <Link href="/login" onClick={() => setMenu(false)} className="font-medium">Log in</Link>
+              <Button asChild variant="brand" className="w-full"><Link href="/signup" onClick={() => setMenu(false)}>Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
+            </div>
           </div>
         )}
       </nav>
@@ -211,7 +285,7 @@ export default function Home() {
       </header>
 
       {/* ===================== INFRASTRUCTURE ===================== */}
-      <section id="product" className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-24">
+      <section id="product" className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-24 scroll-mt-16">
         <div data-reveal className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="font-display text-2xl md:text-[2.1rem] font-bold tracking-[-0.02em] leading-[1.12]">
             An End-to-End <span className="text-green-600">Carbon Credit</span> Infrastructure
@@ -232,7 +306,7 @@ export default function Home() {
       </section>
 
       {/* ===================== SOLUTIONS ===================== */}
-      <section id="solutions" className="bg-surface-gradient py-20 md:py-24">
+      <section id="solutions" className="bg-surface-gradient py-20 md:py-24 scroll-mt-16">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8">
           <div data-reveal className="max-w-2xl mb-12">
             <p className="tag text-green-600">Solutions</p>
@@ -263,7 +337,7 @@ export default function Home() {
       </section>
 
       {/* ===================== HOW IT WORKS ===================== */}
-      <section id="how" className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-24">
+      <section id="how" className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-24 scroll-mt-16">
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12 items-center">
           <div data-reveal>
             <p className="tag text-green-600">How it works</p>
@@ -286,7 +360,7 @@ export default function Home() {
       </section>
 
       {/* ===================== WHY ===================== */}
-      <section className="bg-surface-2 py-20 md:py-24">
+      <section id="why" className="bg-surface-2 py-20 md:py-24 scroll-mt-16">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8">
           <h2 data-reveal className="font-display text-2xl md:text-3xl font-bold tracking-[-0.02em] mb-12">Why CarbonGero?</h2>
           <div data-stagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -336,7 +410,7 @@ export default function Home() {
       </section>
 
       {/* ===================== FOOTER ===================== */}
-      <footer className="bg-forest-dark text-white/70">
+      <footer id="contact" className="bg-forest-dark text-white/70 scroll-mt-16">
         <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-16">
           <div className="grid md:grid-cols-6 gap-10 pb-12 border-b border-white/10">
             <div className="md:col-span-2">
