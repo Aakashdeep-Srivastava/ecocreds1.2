@@ -1,448 +1,359 @@
 'use client';
 import {
-  Leaf, Users, ArrowRight, ArrowUpRight, Check, LineChart,
-  TrendingUp, Globe, Building, Star, Sparkles, Plus, Menu, X,
+  Hexagon, ShieldCheck, BadgeCheck, Layers, Repeat, BarChart3,
+  Landmark, Building2, Sprout, ClipboardCheck, Zap, Leaf, TrendingUp,
+  ArrowRight, ArrowUpRight, Play, Menu, X, ChevronDown, Calendar, FileCheck,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { motion } from 'motion/react';
+import { Button } from '@/components/ui/button';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-/* ---- rotating almanac seal ------------------------------- */
-function Seal() {
+const NAV = ['Product', 'Solutions', 'Resources', 'Company'];
+
+function Logo({ className = '' }: { className?: string }) {
   return (
-    <div className="relative w-36 h-36 md:w-44 md:h-44 shrink-0">
-      <svg viewBox="0 0 200 200" className="w-full h-full animate-spin-slow" aria-hidden>
-        <defs>
-          <path id="seal" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
-        </defs>
-        <text className="fill-[#f2eee1]" style={{ fontFamily: 'var(--font-mono)', fontSize: 13, letterSpacing: 6 }}>
-          <textPath href="#seal" startOffset="0%">
-            · CARBON ALMANAC · EST. 2024 · SMART FOR BUSINESS · GREAT FOR PLANET
-          </textPath>
-        </text>
-      </svg>
-      <div className="absolute inset-0 grid place-items-center">
-        <Leaf className="w-10 h-10 text-lime" strokeWidth={1.4} />
+    <span className={`inline-flex items-center gap-2 ${className}`}>
+      <img src="/favicon-32x32.png" alt="" className="w-8 h-8 rounded-md" />
+      <span className="font-display text-xl font-bold tracking-tight">
+        Carbon<span className="text-green-600">Gero</span>
+      </span>
+    </span>
+  );
+}
+
+/* Floating product mockup in the hero */
+function ImpactCard() {
+  return (
+    <div className="relative w-full max-w-lg card-paper p-4 md:p-5 shadow-lift">
+      <div className="flex gap-4">
+        <div className="hidden sm:flex flex-col gap-1 w-24 shrink-0 text-xs border-r border-gray-100 pr-3">
+          <span className="inline-flex items-center gap-1.5 mb-3">
+            <img src="/favicon-32x32.png" alt="" className="w-5 h-5 rounded" />
+            <span className="font-display text-xs font-bold">Carbon<span className="text-green-600">Gero</span></span>
+          </span>
+          {['Dashboard', 'Projects', 'Credits', 'Marketplace', 'Reports'].map((m, i) => (
+            <span key={m} className={`px-2.5 py-1.5 rounded-md ${i === 0 ? 'bg-green-50 text-green-700 font-semibold' : 'text-ink-faint'}`}>{m}</span>
+          ))}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between mb-3">
+            <span className="font-display font-semibold text-sm">Impact Dashboard</span>
+            <span className="tag text-[0.6rem] text-ink-faint border border-gray-200 rounded px-2 py-0.5">Last 12 Months</span>
+          </div>
+          <div className="grid grid-cols-3 gap-2 mb-3">
+            {[['124,560', 'Credits Issued'], ['98,320', 'Credits Traded'], ['27', 'Projects']].map(([v, l]) => (
+              <div key={l} className="bg-surface-2 rounded-lg p-2.5">
+                <p className="font-display font-bold text-sm stat-num">{v}</p>
+                <p className="text-[0.6rem] text-ink-faint mt-0.5">{l}</p>
+              </div>
+            ))}
+          </div>
+          <div className="bg-surface-2 rounded-lg p-3">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[0.65rem] text-ink-faint">Carbon Impact (tCO₂e)</span>
+              <span className="text-xs font-bold text-green-600">+42%</span>
+            </div>
+            <svg viewBox="0 0 220 56" className="w-full h-14" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="spark" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#00C853" stopOpacity="0.35" />
+                  <stop offset="100%" stopColor="#00C853" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path d="M0,46 L24,40 L48,43 L72,30 L96,34 L120,22 L144,26 L168,14 L192,18 L220,6 L220,56 L0,56 Z" fill="url(#spark)" />
+              <path d="M0,46 L24,40 L48,43 L72,30 L96,34 L120,22 L144,26 L168,14 L192,18 L220,6" fill="none" stroke="#00C853" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
-const TICKER = [
-  'CO₂ TRACKED · 48.2kt', 'EV RIDES LOGGED · 12,904', 'TREES EQUIVALENT · 61,300',
-  'ACTIVE CHANGEMAKERS · 8,412', 'CHALLENGES RUNNING · 37', 'WATER SAVED · 2.1M L',
-];
 
 export default function Home() {
   const [menu, setMenu] = useState(false);
   const root = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // Scroll-reveal for marked blocks
     gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
       gsap.from(el, {
-        y: 44, autoAlpha: 0, duration: 1, ease: 'power3.out',
+        y: 40, autoAlpha: 0, duration: 0.9, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 86%', once: true },
       });
     });
-    // Staggered children (card grids)
     gsap.utils.toArray<HTMLElement>('[data-stagger]').forEach((grid) => {
       gsap.from(grid.children, {
-        y: 36, autoAlpha: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12,
-        scrollTrigger: { trigger: grid, start: 'top 84%', once: true },
+        y: 34, autoAlpha: 0, duration: 0.8, ease: 'power3.out', stagger: 0.1,
+        scrollTrigger: { trigger: grid, start: 'top 85%', once: true },
       });
     });
-    // Hero readout panel parallax
-    gsap.to('[data-parallax]', {
-      yPercent: -12, ease: 'none',
-      scrollTrigger: { trigger: root.current, start: 'top top', end: '60% top', scrub: true },
-    });
+    gsap.from('[data-hero]', { y: 26, autoAlpha: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12, delay: 0.05 });
   }, { scope: root });
 
-  const stats = [
-    { n: '48.2kt', l: 'CO₂ accounted' },
-    { n: '8,412', l: 'Changemakers' },
-    { n: '37', l: 'Live challenges' },
-    { n: '61.3k', l: 'Trees equiv.' },
+  const infra = [
+    { icon: <BadgeCheck />, t: 'Create & Verify', d: 'Standardized, auditable carbon credit generation.' },
+    { icon: <Hexagon />, t: 'Tokenize on Algorand', d: 'Immutable, low-cost and high-performance issuance.' },
+    { icon: <Repeat />, t: 'Trade & Settle', d: 'A transparent marketplace for compliant credit trading.' },
+    { icon: <BarChart3 />, t: 'Measure Impact', d: 'Real-time, verifiable climate impact reporting.' },
   ];
 
-  const features = [
-    {
-      k: '01', title: 'Connect & Track',
-      body: 'Join a community making sustainability simple and rewarding. Log daily activity, join challenges, earn real rewards.',
-      tags: ['Activity tracking', 'Community challenges', 'Digital rewards'], icon: <Users />,
-    },
-    {
-      k: '02', title: 'Measure & Report',
-      body: 'Turn complex sustainability data into clear insight and reports that prove your environmental impact.',
-      tags: ['Impact analytics', 'Progress reports', 'Performance tracking'], icon: <LineChart />,
-    },
-    {
-      k: '03', title: 'Grow & Share',
-      body: 'Be part of a movement. Share your journey, inspire others, and compound small actions into measurable change.',
-      tags: ['Success stories', 'Community impact', 'Knowledge sharing'], icon: <Sparkles />,
-    },
+  const solutions = [
+    { icon: <Landmark />, t: 'For Governments', d: 'Digitize, monitor and monetize state and city-level climate projects.' },
+    { icon: <Building2 />, t: 'For Enterprises', d: 'Meet net-zero goals with verified, traceable carbon credits.' },
+    { icon: <Sprout />, t: 'For Project Developers', d: 'Turn your sustainability projects into high-integrity carbon assets.' },
   ];
 
-  const individual = [
-    { s: 'Start', t: 'Track your impact', d: 'Connect daily activity to sustainability metrics.', icon: <Leaf /> },
-    { s: 'Engage', t: 'Join challenges', d: 'Take part in community initiatives and earn rewards.', icon: <Users /> },
-    { s: 'Grow', t: 'Lead change', d: 'Inspire others and widen your positive impact.', icon: <Star /> },
+  const steps = [
+    { icon: <Sprout />, t: 'Register Project', d: 'e.g. waste, forestry, renewables' },
+    { icon: <ClipboardCheck />, t: 'Verify & Measure', d: 'using trusted methodologies' },
+    { icon: <Hexagon />, t: 'Tokenize on Algorand', d: 'issue verifiable carbon credits' },
+    { icon: <Repeat />, t: 'Trade & Retire', d: 'buy, sell or retire with full traceability' },
   ];
-  const business = [
-    { s: 'Start', t: 'Measure & report', d: 'Stand up your sustainability tracking framework.', icon: <LineChart /> },
-    { s: 'Optimize', t: 'Improve & adapt', d: 'Use insight to sharpen sustainability practices.', icon: <TrendingUp /> },
-    { s: 'Scale', t: 'Expand impact', d: 'Grow initiatives across every operation.', icon: <Globe /> },
+
+  const why = [
+    { icon: <Zap />, t: 'Built on Algorand', d: 'Fast, secure and low-cost blockchain.' },
+    { icon: <ShieldCheck />, t: 'Compliant & Auditable', d: 'Aligned with global carbon standards.' },
+    { icon: <Layers />, t: 'Scalable & Modular', d: 'From pilots to nationwide programs.' },
+    { icon: <Leaf />, t: 'Real-World Impact', d: 'Measurable, verifiable emissions reduction.' },
   ];
+
+  const trust = ['Algorand', 'UN Environment', 'Gold Standard', 'VERRA', 'ICROA', 'GIM'];
 
   return (
     <div ref={root} className="min-h-screen bg-paper text-ink overflow-x-hidden">
       {/* ===================== NAV ===================== */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-paper/85 backdrop-blur-md border-b border-ink/10">
-        <div className="max-w-[1400px] mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-baseline gap-2">
-            <span className="font-display text-2xl font-semibold tracking-tight">CarbonGero</span>
-            <span className="tag text-ink-faint hidden sm:inline">/ index</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-9 text-sm font-medium">
-            <a href="#features" className="link-wipe">Features</a>
-            <a href="#journey" className="link-wipe">Journey</a>
-            <a href="#community" className="link-wipe">Community</a>
-            <Link href="/login" className="link-wipe">Login</Link>
-            <Link href="/signup" className="btn-primary !px-5 !py-2.5 text-sm">
-              Join the movement <ArrowUpRight className="w-4 h-4" />
-            </Link>
+      <nav className="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
+          <Link href="/"><Logo /></Link>
+          <div className="hidden lg:flex items-center gap-7 text-sm font-medium text-ink-soft">
+            {NAV.map((n) => (
+              <button key={n} className="inline-flex items-center gap-1 hover:text-ink transition-colors">
+                {n} <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+            ))}
           </div>
-          <button onClick={() => setMenu(!menu)} className="md:hidden p-2 -mr-2" aria-label="Menu">
+          <div className="hidden lg:flex items-center gap-3">
+            <Button asChild variant="outline" size="sm"><Link href="/login">Log in</Link></Button>
+            <Button asChild variant="brand" size="sm"><Link href="/signup">Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
+          </div>
+          <button onClick={() => setMenu(!menu)} className="lg:hidden p-2 -mr-2" aria-label="Menu">
             {menu ? <X /> : <Menu />}
           </button>
         </div>
         {menu && (
-          <div className="md:hidden border-t border-ink/10 bg-paper px-5 py-4 flex flex-col gap-4 text-sm font-medium">
-            <a href="#features" onClick={() => setMenu(false)}>Features</a>
-            <a href="#journey" onClick={() => setMenu(false)}>Journey</a>
-            <a href="#community" onClick={() => setMenu(false)}>Community</a>
-            <Link href="/login" onClick={() => setMenu(false)}>Login</Link>
-            <Link href="/signup" className="btn-primary text-sm" onClick={() => setMenu(false)}>
-              Join the movement <ArrowUpRight className="w-4 h-4" />
-            </Link>
+          <div className="lg:hidden border-t border-gray-200 bg-white px-5 py-4 flex flex-col gap-3 text-sm font-medium">
+            {NAV.map((n) => <span key={n} className="text-ink-soft">{n}</span>)}
+            <Link href="/login" onClick={() => setMenu(false)} className="pt-2">Log in</Link>
+            <Button asChild variant="brand" className="w-full"><Link href="/signup" onClick={() => setMenu(false)}>Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
           </div>
         )}
       </nav>
 
-      {/* ===================== TICKER ===================== */}
-      <div className="fixed top-16 inset-x-0 z-40 bg-forest-deep text-paper/90 border-b border-black/20 overflow-hidden marquee-mask">
-        <div className="marquee-track py-2">
-          {[...TICKER, ...TICKER].map((t, i) => (
-            <span key={i} className="tag flex items-center gap-4 px-6 whitespace-nowrap text-paper/70">
-              <span className="w-1.5 h-1.5 rounded-full bg-lime" /> {t}
-            </span>
-          ))}
-        </div>
-      </div>
-
       {/* ===================== HERO ===================== */}
-      <header className="pt-40 md:pt-48 pb-16 px-5 md:px-8">
-        <div className="max-w-[1400px] mx-auto grid lg:grid-cols-12 gap-10 items-end">
-          <div className="lg:col-span-7">
-            <p className="tag text-ink-faint reveal" style={{ animationDelay: '.05s' }}>
-              № 01 — The sustainability index
-            </p>
-            <h1 className="mt-6 font-display font-semibold leading-[0.92] tracking-tight text-[clamp(2.9rem,8vw,6.4rem)] text-balance">
-              <span className="reveal block" style={{ animationDelay: '.12s' }}>Smart for</span>
-              <span className="reveal block" style={{ animationDelay: '.2s' }}>
-                Business, <span className="italic font-normal text-forest">great</span>
-              </span>
-              <span className="reveal block" style={{ animationDelay: '.28s' }}>for Planet.</span>
-            </h1>
-            <p className="mt-8 max-w-md text-lg text-ink-soft reveal text-pretty" style={{ animationDelay: '.36s' }}>
-              A field guide to real climate action. Track, measure and reward
-              sustainability — for people and the organisations they move.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3 reveal" style={{ animationDelay: '.44s' }}>
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }} className="inline-flex">
-                <Link href="/signup" className="btn-primary">
-                  Start your journey <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
-              <motion.a whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.96 }} href="#features" className="btn-ghost">
-                Read the almanac
-              </motion.a>
-            </div>
-          </div>
+      <header className="relative pt-16 overflow-hidden">
+        {/* background image + light overlays */}
+        <div className="absolute inset-0 z-0">
+          <img src="/hero-hills.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-white/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/40" />
+        </div>
 
-          {/* forest readout panel */}
-          <div className="lg:col-span-5 reveal-slow" style={{ animationDelay: '.3s' }}>
-            <div data-parallax className="relative bg-forest-deep text-paper p-7 md:p-9 bg-dots">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="tag text-lime">Live carbon index</p>
-                  <p className="mt-3 font-display text-6xl font-semibold stat-num">428<span className="text-lime">.6</span></p>
-                  <p className="tag text-paper/60 mt-2">ppm · global · trending</p>
-                </div>
-                <Seal />
-              </div>
-              <div className="mt-8 grid grid-cols-3 gap-px bg-white/10 border border-white/10">
-                {[['−18%', 'Footprint'], ['+240', 'This week'], ['A+', 'Eco tier']].map(([a, b]) => (
-                  <div key={b} className="bg-forest-deep p-4">
-                    <p className="font-display text-2xl stat-num">{a}</p>
-                    <p className="tag text-paper/55 mt-1">{b}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 flex items-center gap-2 text-paper/60 text-xs">
-                <span className="w-2 h-2 rounded-full bg-lime animate-blink" />
-                <span className="tag">Built on Algorand · sustainable ledger</span>
-              </div>
+        <div className="relative z-10 max-w-[1280px] mx-auto px-5 md:px-8 py-14 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <span data-hero className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-sm">
+              <Hexagon className="w-3.5 h-3.5 text-green-600" /> Built on Algorand
+            </span>
+            <h1 data-hero className="mt-6 font-display font-bold tracking-tight leading-[1.02] text-[clamp(2.4rem,5.5vw,4.2rem)]">
+              Tokenize, Track and<br />
+              Trade <span className="text-gradient">Carbon Impact</span><br />
+              with Trust.
+            </h1>
+            <p data-hero className="mt-6 max-w-lg text-lg text-ink-soft">
+              A transparent, compliant and scalable infrastructure for creating, verifying
+              and trading carbon credits on the Algorand blockchain.
+            </p>
+            <div data-hero className="mt-8 flex flex-wrap gap-3">
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <Button asChild variant="brand" size="lg"><Link href="/signup">Start a Project <ArrowRight className="w-4 h-4" /></Link></Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <Button asChild variant="secondary" size="lg"><Link href="/login"><Play className="w-4 h-4" /> Book a Demo</Link></Button>
+              </motion.div>
+            </div>
+            <div data-hero className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft">
+              {[['Blockchain Verified', <ShieldCheck key="s" />], ['Audit Ready', <FileCheck key="f" />], ['Impact at Scale', <Leaf key="l" />]].map(([t, ic]) => (
+                <span key={t as string} className="inline-flex items-center gap-2">
+                  <span className="text-green-600 [&>svg]:w-4 [&>svg]:h-4">{ic as ReactNode}</span>{t as string}
+                </span>
+              ))}
             </div>
           </div>
+          <motion.div data-hero initial={false} animate={{ y: [0, -10, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} className="justify-self-center lg:justify-self-end">
+            <ImpactCard />
+          </motion.div>
         </div>
       </header>
 
-      {/* ===================== STAT BAND ===================== */}
-      <section className="px-5 md:px-8">
-        <div data-reveal className="max-w-[1400px] mx-auto grid grid-cols-2 lg:grid-cols-4 border-y border-ink/15">
-          {stats.map((s, i) => (
-            <div key={s.l}
-              className={`py-8 px-6 ${i !== 0 ? 'border-l border-ink/15' : ''} ${i === 2 ? 'border-l-0 lg:border-l' : ''} ${i >= 2 ? 'border-t border-ink/15 lg:border-t-0' : ''}`}>
-              <p className="font-display text-4xl md:text-5xl font-semibold stat-num">{s.n}</p>
-              <p className="tag text-ink-faint mt-2">{s.l}</p>
+      {/* ===================== INFRASTRUCTURE ===================== */}
+      <section id="product" className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-24">
+        <div data-reveal className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+            An End-to-End <span className="text-green-600">Carbon Credit</span> Infrastructure
+          </h2>
+          <p className="mt-4 text-ink-soft text-lg">
+            From project creation to credit trading — everything you need to turn climate action into verifiable value.
+          </p>
+        </div>
+        <div data-stagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {infra.map((f) => (
+            <div key={f.t}>
+              <div className="w-12 h-12 grid place-items-center rounded-xl bg-green-50 text-green-600 [&>svg]:w-6 [&>svg]:h-6 mb-5">{f.icon}</div>
+              <h3 className="font-display text-lg font-semibold">{f.t}</h3>
+              <p className="mt-2 text-ink-soft text-sm leading-relaxed">{f.d}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ===================== FEATURES ===================== */}
-      <section id="features" className="px-5 md:px-8 py-24 md:py-32">
-        <div className="max-w-[1400px] mx-auto">
-          <div data-reveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-            <div>
-              <p className="tag text-clay">Chapter I — The Platform</p>
-              <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight text-balance">
-                Sustainability,<br />made legible.
-              </h2>
-            </div>
-            <p className="max-w-sm text-ink-soft md:text-right">
-              Track, measure and improve environmental impact with tools designed for
-              everyone — from individuals to enterprises.
+      {/* ===================== SOLUTIONS ===================== */}
+      <section id="solutions" className="bg-surface-gradient py-20 md:py-24">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8">
+          <div data-reveal className="max-w-2xl mb-12">
+            <p className="tag text-green-600">Solutions</p>
+            <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight">Built for Real-World Climate Action</h2>
+            <p className="mt-4 text-ink-soft text-lg">
+              Flexible solutions for governments, enterprises and project developers to finance, manage and scale sustainability impact.
             </p>
           </div>
-
-          <div data-stagger className="grid md:grid-cols-3 border-t border-ink/15">
-            {features.map((f) => (
-              <article key={f.k}
-                className="group relative p-8 md:p-9 border-b border-ink/15 md:border-b-0 md:border-r md:last:border-r-0 border-ink/15 hover:bg-[#faf8f1] transition-colors">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-ink-faint">{f.k}</span>
-                  <span className="text-forest group-hover:text-clay transition-colors [&>svg]:w-6 [&>svg]:h-6">{f.icon}</span>
+          <div data-stagger className="grid md:grid-cols-3 gap-6">
+            {solutions.map((s) => (
+              <motion.article key={s.t} whileHover={{ y: -6 }} transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                className="card-paper overflow-hidden group">
+                <div className="h-28 bg-brand-gradient relative grid place-items-center">
+                  <span className="w-14 h-14 grid place-items-center rounded-2xl bg-white/90 text-green-700 [&>svg]:w-7 [&>svg]:h-7 shadow">{s.icon}</span>
                 </div>
-                <h3 className="mt-10 font-display text-2xl font-semibold">{f.title}</h3>
-                <p className="mt-3 text-ink-soft leading-relaxed">{f.body}</p>
-                <ul className="mt-6 space-y-2">
-                  {f.tags.map((t) => (
-                    <li key={t} className="flex items-center gap-2 text-sm text-ink-soft">
-                      <Plus className="w-3.5 h-3.5 text-lime-deep" /> {t}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===================== JOURNEY ===================== */}
-      <section id="journey" className="px-5 md:px-8 py-24 md:py-28 bg-forest-deep text-paper">
-        <div className="max-w-[1400px] mx-auto">
-          <div data-reveal className="text-center mb-16">
-            <p className="tag text-lime">Chapter II — Your Path</p>
-            <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight">Choose your journey</h2>
-            <p className="mt-4 text-paper/70 max-w-xl mx-auto">
-              Whether you move as an individual or an organisation, there is a route to measurable impact.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-px bg-white/10 border border-white/10">
-            {[{ h: 'For Individuals', s: 'Make every action count', icon: <Users />, steps: individual },
-              { h: 'For Businesses', s: 'Lead the change', icon: <Building />, steps: business }].map((col) => (
-              <div key={col.h} className="bg-forest-deep p-8 md:p-10">
-                <div className="flex items-center gap-4 pb-8 border-b border-white/10">
-                  <span className="text-lime [&>svg]:w-8 [&>svg]:h-8">{col.icon}</span>
-                  <div>
-                    <h3 className="font-display text-2xl font-semibold">{col.h}</h3>
-                    <p className="text-paper/60 text-sm">{col.s}</p>
+                <div className="p-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-xl font-semibold">{s.t}</h3>
+                    <span className="w-9 h-9 grid place-items-center rounded-full bg-green-50 text-green-600 group-hover:bg-green-600 group-hover:text-white transition-colors"><ArrowRight className="w-4 h-4" /></span>
                   </div>
+                  <p className="mt-3 text-ink-soft">{s.d}</p>
                 </div>
-                <div className="mt-8 space-y-8">
-                  {col.steps.map((st, i) => (
-                    <div key={st.t} className="flex gap-5">
-                      <div className="shrink-0 w-12 text-center">
-                        <span className="tag text-lime">{String(i + 1).padStart(2, '0')}</span>
-                      </div>
-                      <div className="flex-1 pb-8 border-b border-white/5 last:border-0 last:pb-0">
-                        <p className="tag text-paper/50">{st.s}</p>
-                        <p className="mt-1 font-display text-xl">{st.t}</p>
-                        <p className="text-paper/65 text-sm mt-1">{st.d}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===================== CAPABILITIES ===================== */}
-      <section className="px-5 md:px-8 py-24 md:py-32">
-        <div data-reveal className="max-w-[1400px] mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <p className="tag text-clay">Chapter III — How it works</p>
-            <h2 className="mt-4 font-display text-4xl md:text-5xl font-semibold tracking-tight text-balance">
-              Simple tools for real impact.
-            </h2>
-            <div className="mt-10 space-y-8">
-              {[
-                { t: 'Activity Tracking', d: 'Connect daily actions to meaningful sustainability metrics.', icon: <LineChart /> },
-                { t: 'Community Platform', d: 'Join challenges and share with like-minded people and orgs.', icon: <Users /> },
-                { t: 'Impact Analytics', d: 'Understand and improve your footprint with clear insight.', icon: <Globe /> },
-              ].map((c) => (
-                <div key={c.t} className="flex gap-5 group">
-                  <div className="shrink-0 w-12 h-12 grid place-items-center border border-ink/15 bg-[#faf8f1] group-hover:bg-forest group-hover:text-lime transition-colors [&>svg]:w-5 [&>svg]:h-5">
-                    {c.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-display text-xl font-semibold">{c.t}</h3>
-                    <p className="text-ink-soft mt-1">{c.d}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="card-paper p-8 md:p-10">
-            <p className="tag text-ink-faint">Platform features</p>
-            <div className="mt-8 space-y-7">
-              {[['Personal impact tracking', 100], ['Community challenges', 100], ['Business analytics', 100]].map(([t, v]) => (
-                <div key={t as string}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-ink-soft">{t}</span>
-                    <span className="tag text-forest">Available now</span>
-                  </div>
-                  <div className="h-2 bg-ink/10 overflow-hidden">
-                    <div className="h-full bg-forest" style={{ ['--to' as string]: `${v}%`, animation: 'growW 1.4s cubic-bezier(0.16,1,0.3,1) forwards' }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-10 pt-6 border-t border-ink/15 flex items-center justify-between">
-              <span className="font-display text-lg">Ready in minutes.</span>
-              <Link href="/signup" className="link-wipe font-medium inline-flex items-center gap-1">
-                Get started <ArrowUpRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===================== COMMUNITY ===================== */}
-      <section id="community" className="px-5 md:px-8 pb-24 md:pb-32">
-        <div className="max-w-[1400px] mx-auto">
-          <div data-reveal className="text-center mb-14">
-            <p className="tag text-clay">Chapter IV — Join us</p>
-            <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight">Be part of the change</h2>
-          </div>
-          <div data-reveal className="grid md:grid-cols-3 gap-5">
-            {[
-              { icon: <Users />, t: 'Community Challenges', d: 'Join monthly challenges and compete to create positive change.' },
-              { icon: <Star />, t: 'Recognition Program', d: 'Earn badges and rewards as you progress on your journey.' },
-              { icon: <Globe />, t: 'Global Impact', d: 'See how your actions contribute to global sustainability goals.' },
-            ].map((c) => (
-              <motion.article key={c.t}
-                whileHover={{ y: -8 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                className="card-paper p-8 group">
-                <span className="text-forest group-hover:text-clay transition-colors [&>svg]:w-9 [&>svg]:h-9">{c.icon}</span>
-                <h3 className="mt-7 font-display text-xl font-semibold">{c.t}</h3>
-                <p className="mt-2 text-ink-soft">{c.d}</p>
               </motion.article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===================== CTA ===================== */}
-      <section className="px-5 md:px-8 pb-24">
-        <div data-reveal className="max-w-[1400px] mx-auto bg-lime text-ink p-10 md:p-16 relative overflow-hidden">
-          <div className="absolute -right-10 -top-10 w-64 h-64 rounded-full border border-ink/20 animate-spin-slow" />
-          <div className="relative grid lg:grid-cols-2 gap-8 items-center">
-            <div>
-              <p className="tag text-ink/60">Colophon</p>
-              <h2 className="mt-4 font-display text-4xl md:text-6xl font-semibold tracking-tight text-balance">
-                Ready to start your journey?
-              </h2>
-            </div>
-            <div className="lg:text-right">
-              <p className="text-ink/80 text-lg mb-7">
-                Join a community of changemakers and start making a measurable difference today.
-              </p>
-              <div className="flex flex-wrap gap-3 lg:justify-end">
-                <Link href="/signup" className="btn-ghost !border-ink/80 bg-ink text-paper hover:bg-forest-deep">
-                  Get started <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link href="/login" className="btn-ghost">Sign in</Link>
+      {/* ===================== HOW IT WORKS ===================== */}
+      <section id="how" className="max-w-[1280px] mx-auto px-5 md:px-8 py-20 md:py-24">
+        <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12 items-center">
+          <div data-reveal>
+            <p className="tag text-green-600">How it works</p>
+            <h2 className="mt-3 font-display text-3xl md:text-5xl font-bold tracking-tight">
+              From Climate Action to <span className="text-green-600">Carbon Value</span>
+            </h2>
+            <p className="mt-4 text-ink-soft text-lg">A simple, compliant and transparent flow from project to market.</p>
+          </div>
+          <div data-stagger className="grid grid-cols-2 sm:grid-cols-4 gap-5">
+            {steps.map((s, i) => (
+              <div key={s.t} className="relative text-center">
+                <div className="w-16 h-16 mx-auto grid place-items-center rounded-2xl border border-gray-200 bg-white text-green-600 [&>svg]:w-7 [&>svg]:h-7 shadow-sm">{s.icon}</div>
+                <p className="mt-4 font-semibold text-sm">{s.t}</p>
+                <p className="mt-1 text-xs text-ink-faint">{s.d}</p>
+                {i < steps.length - 1 && <span className="hidden sm:block absolute top-8 -right-3 text-gray-300">→</span>}
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== WHY ===================== */}
+      <section className="bg-surface-2 py-20 md:py-24">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8">
+          <h2 data-reveal className="font-display text-3xl md:text-4xl font-bold tracking-tight mb-12">Why CarbonGero?</h2>
+          <div data-stagger className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {why.map((w) => (
+              <div key={w.t} className="flex gap-4">
+                <span className="shrink-0 w-11 h-11 grid place-items-center rounded-xl bg-white border border-gray-200 text-green-600 [&>svg]:w-5 [&>svg]:h-5">{w.icon}</span>
+                <div>
+                  <h3 className="font-semibold">{w.t}</h3>
+                  <p className="mt-1 text-sm text-ink-soft">{w.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===================== TRUST ===================== */}
+      <section className="max-w-[1280px] mx-auto px-5 md:px-8 py-16 text-center">
+        <p data-reveal className="font-display text-xl font-semibold mb-8"><span className="text-green-600">Trusted</span> By Climate Innovators</p>
+        <div data-reveal className="flex flex-wrap items-center justify-center gap-x-10 gap-y-5 text-ink-faint">
+          {trust.map((t) => (
+            <span key={t} className="font-display font-semibold text-lg md:text-xl grayscale opacity-70 hover:opacity-100 transition-opacity">{t}</span>
+          ))}
+        </div>
+      </section>
+
+      {/* ===================== CTA ===================== */}
+      <section className="max-w-[1280px] mx-auto px-5 md:px-8 pb-20">
+        <div data-reveal className="relative rounded-3xl overflow-hidden p-10 md:p-16">
+          <img src="/hero-hills.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-forest-dark/95 via-forest-deep/90 to-forest-deep/70" />
+          <div className="relative grid lg:grid-cols-2 gap-8 items-center text-white">
+            <div>
+              <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight">
+                Turn Your Climate Projects into Verifiable Carbon Value.
+              </h2>
+              <p className="mt-4 text-white/80 text-lg max-w-md">
+                Join CarbonGero and build a more transparent, liquid and impactful carbon economy.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 lg:justify-end">
+              <Button asChild variant="brand" size="lg"><Link href="/signup">Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
+              <Button asChild size="lg" className="bg-white/10 text-white border border-white/30 hover:bg-white/20"><Link href="/login"><Calendar className="w-4 h-4" /> Talk to Our Team</Link></Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* ===================== FOOTER ===================== */}
-      <footer id="contact" className="relative bg-forest-dark text-paper/70 overflow-hidden">
-        {/* ambient background video */}
-        <video
-          autoPlay loop muted playsInline preload="none"
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
-          aria-hidden
-        >
-          <source src="/video/home.mp4" type="video/mp4" />
-        </video>
-        {/* legibility overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-forest-dark via-forest-dark/85 to-forest-dark/70" aria-hidden />
-        <div className="relative z-10 max-w-[1400px] mx-auto px-5 md:px-8 py-16">
-          <div className="grid md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
-            <div className="md:col-span-1">
-              <span className="font-display text-3xl font-semibold text-paper">CarbonGero</span>
-              <p className="mt-4 text-sm leading-relaxed">
-                The Carbon Almanac. Smart for Business, Great for Planet — making sustainability accessible and rewarding.
+      <footer className="bg-forest-dark text-white/70">
+        <div className="max-w-[1280px] mx-auto px-5 md:px-8 py-16">
+          <div className="grid md:grid-cols-6 gap-10 pb-12 border-b border-white/10">
+            <div className="md:col-span-2">
+              <Logo className="[&_span]:text-white" />
+              <p className="mt-4 text-sm leading-relaxed max-w-xs">
+                Tokenize · Trade · Mitigate — a blockchain-powered carbon credit infrastructure for a net-zero world.
               </p>
             </div>
             {[
-              { h: 'Platform', links: ['Features', 'Community', 'Resources', 'Documentation'] },
-              { h: 'Resources', links: ['Getting started', 'Guide', 'Blog', 'Support'] },
-              { h: 'Contact', links: ['hello@carbongero.com', 'Bangalore, India'] },
+              { h: 'Product', links: ['Platform', 'Marketplace', 'Verification', 'Analytics'] },
+              { h: 'Solutions', links: ['Governments', 'Enterprises', 'Project Developers', 'Partners'] },
+              { h: 'Resources', links: ['Docs', 'Guides', 'Case Studies', 'Blog'] },
+              { h: 'Company', links: ['About', 'Team', 'Careers', 'Contact'] },
             ].map((col) => (
               <div key={col.h}>
-                <p className="tag text-lime">{col.h}</p>
+                <p className="tag text-green-400">{col.h}</p>
                 <ul className="mt-5 space-y-3 text-sm">
-                  {col.links.map((l) => (
-                    <li key={l}><a href="#" className="link-wipe">{l}</a></li>
-                  ))}
+                  {col.links.map((l) => <li key={l}><a href="#" className="link-wipe">{l}</a></li>)}
                 </ul>
               </div>
             ))}
           </div>
-          <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs tag text-paper/50">
-            <span>© 2025 CarbonGero · Vol. I</span>
-            <span className="flex items-center gap-2"><Check className="w-3.5 h-3.5 text-lime" /> Great for Planet</span>
+          <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
+            <span>© 2026 CarbonGero. All rights reserved.</span>
             <div className="flex gap-6">
               <a href="#" className="link-wipe">Privacy</a>
               <a href="#" className="link-wipe">Terms</a>
+              <a href="#" className="link-wipe">Security</a>
             </div>
           </div>
         </div>

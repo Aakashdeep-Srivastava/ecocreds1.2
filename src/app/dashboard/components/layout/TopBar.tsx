@@ -9,7 +9,7 @@ export const TopBar = () => {
   return (
     <header className="sticky top-0 z-30 h-16 bg-paper/85 backdrop-blur-md border-b border-ink/10 flex items-center justify-between px-6 md:px-8">
       <div>
-        <p className="tag text-ink-faint leading-none">The Almanac — Vol. I</p>
+        <p className="tag text-ink-faint leading-none">Proof of Sustainability</p>
         <h1 className="font-display text-lg md:text-xl font-semibold leading-tight mt-0.5">
           Welcome back, {first}.
         </h1>
