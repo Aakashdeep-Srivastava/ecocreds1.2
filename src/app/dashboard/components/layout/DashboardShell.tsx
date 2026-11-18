@@ -11,7 +11,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />
       <div className={`${collapsed ? 'ml-16' : 'ml-64'} transition-[margin] duration-300 min-h-screen flex flex-col`}>
         <TopBar />
-        <main className="flex-1 p-4 md:p-5">{children}</main>
+        <main className="dash flex-1 p-4 md:p-5">{children}</main>
       </div>
     </div>
   );

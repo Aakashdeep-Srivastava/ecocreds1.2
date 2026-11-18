@@ -2,7 +2,8 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useTheme } from 'next-themes';
-import { Coins, Bell, Sun, Moon } from 'lucide-react';
+import { Coins, Sun, Moon } from 'lucide-react';
+import { NotificationMenu } from './NotificationMenu';
 
 export const TopBar = () => {
   const { user } = useAuth();
@@ -30,9 +31,7 @@ export const TopBar = () => {
           className="w-10 h-10 grid place-items-center rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-ink dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 transition-colors">
           {mounted && isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
         </button>
-        <button className="w-10 h-10 grid place-items-center rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-ink dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 transition-colors" aria-label="Notifications">
-          <Bell className="w-5 h-5" />
-        </button>
+        <NotificationMenu />
       </div>
     </header>
   );

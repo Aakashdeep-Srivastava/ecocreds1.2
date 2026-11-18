@@ -75,6 +75,26 @@
   --ring: 145 100% 48%;
 }
 
+/* ---- Dark-mode fallback for legacy dashboard surfaces (.dash content) ----
+   Legacy pages use hardcoded light classes; these scoped overrides keep text
+   legible in dark mode without rewriting every page. */
+.dark .dash .bg-white { background-color: #161b19 !important; }
+.dark .dash .bg-gray-50 { background-color: #12161a !important; }
+.dark .dash .bg-gray-100 { background-color: #1a2026 !important; }
+.dark .dash .bg-green-50 { background-color: rgba(0, 200, 83, 0.1) !important; }
+.dark .dash .bg-green-100 { background-color: rgba(0, 200, 83, 0.16) !important; }
+.dark .dash .bg-blue-50 { background-color: rgba(14, 165, 233, 0.12) !important; }
+.dark .dash .bg-red-50 { background-color: rgba(239, 68, 68, 0.12) !important; }
+.dark .dash .bg-orange-50 { background-color: rgba(245, 158, 11, 0.12) !important; }
+.dark .dash .text-gray-900 { color: #f5f7f6 !important; }
+.dark .dash .text-gray-800 { color: #e6e9e8 !important; }
+.dark .dash .text-gray-700 { color: rgba(245, 247, 246, 0.82) !important; }
+.dark .dash .text-gray-600 { color: rgba(245, 247, 246, 0.66) !important; }
+.dark .dash .text-gray-500 { color: rgba(245, 247, 246, 0.5) !important; }
+.dark .dash :is(.border, .border-b, .border-t, .border-gray-100, .border-gray-200) { border-color: rgba(255, 255, 255, 0.1) !important; }
+.dark .dash :is(.shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl) { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important; }
+.dark .dash .divide-gray-100 > :not([hidden]) ~ :not([hidden]) { border-color: rgba(255, 255, 255, 0.08) !important; }
+
 @layer base {
   * { border-color: hsl(var(--border)); }
 
