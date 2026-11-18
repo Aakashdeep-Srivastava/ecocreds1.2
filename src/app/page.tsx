@@ -363,7 +363,11 @@ export default function Home() {
               <div key={col.h}>
                 <p className="tag text-green-400">{col.h}</p>
                 <ul className="mt-5 space-y-3 text-sm">
-                  {col.links.map((l) => <li key={l}><a href="#" className="link-wipe">{l}</a></li>)}
+                  {col.links.map((l) => (
+                    <li key={l}>
+                      <a href={l === 'Blog' ? '/blog' : '#'} className="link-wipe">{l}</a>
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}
