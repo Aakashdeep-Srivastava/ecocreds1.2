@@ -1,10 +1,11 @@
 // Package chain anchors Proof-of-Sustainability records to Algorand.
 //
-// NOTE: this is a deterministic STUB for the MVP (PRD §6 / Phase 4). It derives
-// an Algorand-style 52-character base32 transaction id from the proof id and
-// evidence hash so the end-to-end flow is demonstrable. Real AlgoKit / testnet
-// submission (ASA issuance, note field with the proof reference) is a follow-up
-// and must never be represented as an on-chain-verified transaction until wired.
+// When ALGORAND_MNEMONIC is set (a funded TestNet account), Anchor submits a
+// real note-field transaction to Algorand TestNet and returns the on-chain tx.
+// Otherwise it falls back to a deterministic SIMULATED anchor so the flow stays
+// demonstrable. The result's "live" flag (and the "simulated" network label)
+// tells the UI which mode produced the record — never present a simulated
+// anchor as an on-chain-verified transaction.
 package chain
 
 import (
@@ -13,18 +14,35 @@ import (
 	"strings"
 )
 
-// Anchor returns the network label and a deterministic mock transaction id.
-func Anchor(proofID, evidenceHash string) (network, txID string) {
+// Anchor records a proof on-chain (real) or produces a simulated anchor.
+// Returns the network label, the transaction id, and whether it is live.
+func Anchor(proofID, evidenceHash string) (network, txID string, live bool) {
+	if configured() {
+		if tx, err := realAnchor(proofID, evidenceHash); err == nil {
+			return "algorand-testnet", tx, true
+		}
+		// Graceful degradation: fall through to the simulated anchor on any
+		// error (unfunded account, node timeout, etc.).
+	}
+	return "simulated", mockTx(proofID, evidenceHash), false
+}
+
+// mockTx derives a deterministic Algorand-style 52-char base32 id.
+func mockTx(proofID, evidenceHash string) string {
 	sum := sha512.Sum512_256([]byte(proofID + ":" + evidenceHash + ":carbongero"))
 	enc := base32.StdEncoding.WithPadding(base32.NoPadding).EncodeToString(sum[:])
-	txID = strings.ToUpper(enc)
+	txID := strings.ToUpper(enc)
 	if len(txID) > 52 {
 		txID = txID[:52]
 	}
-	return "algorand-testnet", txID
+	return txID
 }
 
-// ExplorerURL returns a Lora/AlgoExplorer-style link for a testnet tx.
-func ExplorerURL(txID string) string {
+// ExplorerURL returns a Lora explorer link for a TestNet transaction.
+// Empty for simulated anchors (no on-chain record exists).
+func ExplorerURL(network, txID string) string {
+	if network != "algorand-testnet" || txID == "" {
+		return ""
+	}
 	return "https://lora.algokit.io/testnet/transaction/" + txID
 }

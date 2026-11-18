@@ -89,11 +89,18 @@ export default function ProofsPage() {
                   <span className="text-[0.65rem] font-semibold uppercase tracking-wide px-2 py-1 rounded-full bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400">
                     {p.verificationStatus}
                   </span>
-                  <a href={p.explorerUrl} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-medium text-ink-soft dark:text-white/60 hover:text-green-600 dark:hover:text-green-400">
-                    <span className="font-mono hidden md:inline">{p.blockchainTx.slice(0, 8)}…</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
+                  {p.explorerUrl ? (
+                    <a href={p.explorerUrl} target="_blank" rel="noopener noreferrer" title="Live on Algorand TestNet"
+                      className="inline-flex items-center gap-1 text-xs font-medium text-green-700 dark:text-green-400 hover:underline">
+                      <span className="font-mono hidden md:inline">{p.blockchainTx.slice(0, 8)}…</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 text-xs text-amber-500" title="Simulated anchor">
+                      <span className="font-mono hidden md:inline">sim</span>
+                      <Hexagon className="w-4 h-4" />
+                    </span>
+                  )}
                 </div>
               </div>
             ))}

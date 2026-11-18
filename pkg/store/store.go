@@ -193,14 +193,18 @@ func Submit(in SubmitInput) (*SubmitResult, error) {
 		return nil, err
 	}
 	proofID := fmt.Sprintf("POS-%d-%06d", now.Year(), seq)
-	network, txid := chain.Anchor(proofID, evidenceHash)
+	network, txid, live := chain.Anchor(proofID, evidenceHash)
+	bcStatus := "SIMULATED"
+	if live {
+		bcStatus = "ANCHORED"
+	}
 
 	proof := Proof{
 		ID: proofID, ActivityID: actID, UserID: demoUser, ActivityType: in.Category,
 		EvidenceHash: evidenceHash, VerificationStatus: "VERIFIED",
 		ImpactValue: impact.Net, ImpactUnit: impact.Unit, ImpactStatus: "ESTIMATED",
-		MethodologyID: methID, BlockchainStatus: "ANCHORED", BlockchainNetwork: network,
-		BlockchainTx: txid, ExplorerURL: chain.ExplorerURL(txid), CreatedAt: now,
+		MethodologyID: methID, BlockchainStatus: bcStatus, BlockchainNetwork: network,
+		BlockchainTx: txid, ExplorerURL: chain.ExplorerURL(network, txid), CreatedAt: now,
 	}
 	if _, err = tx.Exec(
 		`INSERT INTO sustainability_proofs
@@ -245,7 +249,7 @@ func ListProofs(limit int) ([]Proof, error) {
 			&p.BlockchainStatus, &p.BlockchainNetwork, &p.BlockchainTx, &p.CreatedAt); err != nil {
 			return nil, err
 		}
-		p.ExplorerURL = chain.ExplorerURL(p.BlockchainTx)
+		p.ExplorerURL = chain.ExplorerURL(p.BlockchainNetwork, p.BlockchainTx)
 		out = append(out, p)
 	}
 	return out, rows.Err()

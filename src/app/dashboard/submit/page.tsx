@@ -175,17 +175,27 @@ export default function SubmitPage() {
                 ))}
               </dl>
 
-              <a href={result.proof.explorerUrl} target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#161b19] p-3 hover:border-green-400 transition-colors group">
-                <div className="flex items-center gap-2 min-w-0">
-                  <Hexagon className="w-5 h-5 text-green-600 dark:text-green-400 shrink-0" />
+              {result.proof.explorerUrl ? (
+                <a href={result.proof.explorerUrl} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-between rounded-xl border border-green-200 dark:border-green-500/30 bg-green-50/50 dark:bg-green-500/5 p-3 hover:border-green-400 transition-colors group">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Hexagon className="w-5 h-5 text-green-600 dark:text-green-400 shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold text-green-700 dark:text-green-400">● Live on Algorand TestNet</p>
+                      <p className="text-[0.7rem] text-gray-500 dark:text-white/40 font-mono truncate">{result.proof.blockchainTx}</p>
+                    </div>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-green-600 shrink-0" />
+                </a>
+              ) : (
+                <div className="flex items-center gap-2 rounded-xl border border-amber-200 dark:border-amber-500/30 bg-amber-50/60 dark:bg-amber-500/5 p-3">
+                  <Hexagon className="w-5 h-5 text-amber-500 shrink-0" />
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-green-700 dark:text-green-400">Anchored · {result.proof.blockchainNetwork}</p>
-                    <p className="text-[0.7rem] text-gray-500 dark:text-white/40 font-mono truncate">{result.proof.blockchainTx}</p>
+                    <p className="text-xs font-semibold text-amber-600 dark:text-amber-400">Simulated anchor</p>
+                    <p className="text-[0.7rem] text-gray-500 dark:text-white/40 truncate">Fund the TestNet account to anchor on-chain.</p>
                   </div>
                 </div>
-                <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-green-600 shrink-0" />
-              </a>
+              )}
 
               <div className="flex gap-2">
                 <Button asChild variant="secondary" className="flex-1"><Link href="/dashboard/proofs">View registry</Link></Button>
