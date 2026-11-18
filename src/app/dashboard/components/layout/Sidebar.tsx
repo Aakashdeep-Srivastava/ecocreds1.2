@@ -33,6 +33,7 @@ export const Sidebar = ({
 
   return (
     <aside
+      data-tour="sidebar"
       className={`fixed inset-y-0 left-0 z-40 flex flex-col bg-white dark:bg-[#0B0D0C] border-r border-gray-200 dark:border-white/10 transition-[width] duration-300 ${
         collapsed ? 'w-16' : 'w-64'
       }`}
@@ -70,6 +71,7 @@ export const Sidebar = ({
           const Icon = item.icon;
           return (
             <Link key={item.path} href={item.path} title={collapsed ? item.title : undefined}
+              data-tour={item.path === '/dashboard/submit' ? 'nav-submit' : undefined}
               className={`group relative flex items-center rounded-lg transition-colors ${
                 collapsed ? 'justify-center px-0 py-2.5' : 'gap-3 px-4 py-2.5'
               } ${

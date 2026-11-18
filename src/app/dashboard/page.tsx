@@ -43,7 +43,7 @@ const Dashboard = () => {
         <h2 className="font-display text-lg font-semibold">This month at a glance</h2>
         <span className="tag text-ink-faint hidden sm:block">Fig. 01 — 04</span>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+      <div data-tour="kpis" className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
         <KpiCard href="/dashboard/credits" label="Carbon Credits" value="5,000" delta="+200 this month" icon={<Coins />} />
         <KpiCard href="/dashboard/score" label="Sustainability Score" value="842" unit="/ 1000" delta="EcoChampion tier" icon={<Award />} />
         <KpiCard href="/dashboard/impact" label="CO₂ Offset" value="1.24" unit="tCO₂e" delta="+0.2 this month" icon={<Sprout />} />

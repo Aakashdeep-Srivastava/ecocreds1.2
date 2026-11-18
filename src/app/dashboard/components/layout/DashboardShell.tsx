@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 import { AlgoWalletProvider } from '@/components/wallet-provider';
+import { DashboardTour } from '../DashboardTour';
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
@@ -15,6 +16,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <TopBar />
         <main className="dash flex-1 p-4 md:p-5">{children}</main>
       </div>
+      <DashboardTour />
     </div>
     </AlgoWalletProvider>
   );
