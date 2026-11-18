@@ -315,21 +315,21 @@ export default function Home() {
 
       {/* ===================== CTA ===================== */}
       <section className="max-w-[1280px] mx-auto px-5 md:px-8 pb-20">
-        <div data-reveal className="relative rounded-3xl overflow-hidden p-10 md:p-16">
-          <img src="/hero-hills.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-forest-dark/95 via-forest-deep/90 to-forest-deep/70" />
-          <div className="relative grid lg:grid-cols-2 gap-8 items-center text-white">
+        <div data-reveal className="relative rounded-3xl overflow-hidden border border-gray-200 shadow-card p-10 md:p-16">
+          <img src="/cta-bg.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/92 via-white/60 to-white/10" />
+          <div className="relative grid lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="font-display text-2xl md:text-[2.1rem] font-bold tracking-[-0.02em] leading-[1.12]">
-                Turn Your Climate Projects into Verifiable Carbon Value.
+              <h2 className="font-display text-2xl md:text-[2.1rem] font-bold tracking-[-0.02em] leading-[1.12] text-ink">
+                Turn Your Climate Projects into <span className="text-green-600">Verifiable Carbon Value</span>.
               </h2>
-              <p className="mt-4 text-white/80 text-base max-w-md">
+              <p className="mt-4 text-ink-soft text-base max-w-md">
                 Join CarbonGero and build a more transparent, liquid and impactful carbon economy.
               </p>
             </div>
             <div className="flex flex-wrap gap-3 lg:justify-end">
               <Button asChild variant="brand" size="lg"><Link href="/signup">Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
-              <Button asChild size="lg" className="bg-white/10 text-white border border-white/30 hover:bg-white/20"><Link href="/login"><Calendar className="w-4 h-4" /> Talk to Our Team</Link></Button>
+              <Button asChild variant="secondary" size="lg"><Link href="/login"><Calendar className="w-4 h-4" /> Talk to Our Team</Link></Button>
             </div>
           </div>
         </div>
