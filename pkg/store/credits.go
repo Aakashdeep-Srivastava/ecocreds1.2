@@ -167,6 +167,39 @@ func BuyCredit(creditID, buyer, buyerAddress string) (*CarbonCredit, error) {
 	return GetCreditByID(creditID)
 }
 
+// BulkBuyResult summarises a bulk corporate purchase.
+type BulkBuyResult struct {
+	Bought    int            `json:"bought"`
+	TotalKg   float64        `json:"totalKg"`
+	TotalUsdc float64        `json:"totalUsdc"`
+	Credits   []CarbonCredit `json:"credits"`
+	Failed    []string       `json:"failed"`
+}
+
+// BuyCreditsBulk buys several LISTED credits in one corporate purchase. Each is
+// transferred individually (its own provenance record); non-buyable ids are
+// reported in Failed. Payment settles off-platform, as with single buys.
+func BuyCreditsBulk(creditIDs []string, buyer, buyerAddress string) (*BulkBuyResult, error) {
+	if len(creditIDs) == 0 {
+		return nil, fmt.Errorf("no credits selected")
+	}
+	res := &BulkBuyResult{Credits: []CarbonCredit{}, Failed: []string{}}
+	for _, id := range creditIDs {
+		c, err := BuyCredit(id, buyer, buyerAddress)
+		if err != nil {
+			res.Failed = append(res.Failed, id)
+			continue
+		}
+		res.Bought++
+		res.TotalKg += c.Quantity
+		if c.PriceUSDC != nil {
+			res.TotalUsdc += *c.PriceUSDC
+		}
+		res.Credits = append(res.Credits, *c)
+	}
+	return res, nil
+}
+
 // RetireCredit permanently retires a credit (claims the offset). A transfer does
 // NOT establish an offset claim — retirement is the explicit claim (PRD §7).
 func RetireCredit(creditID string) (*CarbonCredit, error) {

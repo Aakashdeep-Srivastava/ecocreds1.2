@@ -207,6 +207,7 @@ export default function Home() {
             ))}
           </div>
           <div className="hidden lg:flex items-center gap-3">
+            <Link href="/marketplace" className={`text-sm font-medium px-1 ${scrolled ? 'text-ink hover:text-forest' : 'text-white/90 hover:text-white'}`}>Marketplace</Link>
             <Button asChild variant="outline" size="sm" className={!scrolled ? 'border-white/40 text-white bg-transparent hover:bg-white/10' : ''}><Link href="/login">Log in</Link></Button>
             <Button asChild variant="brand" size="sm"><Link href="/signup">Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
           </div>
@@ -231,6 +232,7 @@ export default function Home() {
               </div>
             ))}
             <div className="flex flex-col gap-2 pt-3 border-t border-gray-200">
+              <Link href="/marketplace" onClick={() => setMenu(false)} className="font-medium text-forest">Carbon Marketplace</Link>
               <Link href="/login" onClick={() => setMenu(false)} className="font-medium">Log in</Link>
               <Button asChild variant="brand" className="w-full"><Link href="/signup" onClick={() => setMenu(false)}>Get Started <ArrowRight className="w-4 h-4" /></Link></Button>
             </div>

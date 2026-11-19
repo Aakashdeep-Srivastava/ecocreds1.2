@@ -65,14 +65,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		}
 	case http.MethodPost:
 		var body struct {
-			Op           string  `json:"op"`
-			ProofID      string  `json:"proofId"`
-			Decision     string  `json:"decision"`
-			Notes        string  `json:"notes"`
-			CreditID     string  `json:"creditId"`
-			Price        float64 `json:"price"`
-			Buyer        string  `json:"buyer"`
-			BuyerAddress string  `json:"buyerAddress"`
+			Op           string   `json:"op"`
+			ProofID      string   `json:"proofId"`
+			Decision     string   `json:"decision"`
+			Notes        string   `json:"notes"`
+			CreditID     string   `json:"creditId"`
+			CreditIDs    []string `json:"creditIds"`
+			Price        float64  `json:"price"`
+			Buyer        string   `json:"buyer"`
+			BuyerAddress string   `json:"buyerAddress"`
 		}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			httpx.Error(w, http.StatusBadRequest, "invalid JSON body")
@@ -90,6 +91,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			respond(w, res, err)
 		case "buy":
 			res, err := store.BuyCredit(body.CreditID, body.Buyer, body.BuyerAddress)
+			respond(w, res, err)
+		case "buy-bulk":
+			res, err := store.BuyCreditsBulk(body.CreditIDs, body.Buyer, body.BuyerAddress)
 			respond(w, res, err)
 		case "retire":
 			res, err := store.RetireCredit(body.CreditID)
