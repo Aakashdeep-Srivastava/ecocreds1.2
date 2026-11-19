@@ -20,11 +20,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			httpx.Error(w, http.StatusBadRequest, "address required")
 			return
 		}
-		if err := store.SetWallet(body.Address); err != nil {
+		user, err := store.LinkWallet(body.Address)
+		if err != nil {
 			httpx.Error(w, http.StatusInternalServerError, err.Error())
 			return
 		}
-		httpx.JSON(w, http.StatusOK, map[string]string{"address": body.Address, "status": "linked"})
+		httpx.JSON(w, http.StatusOK, map[string]any{"address": body.Address, "status": "linked", "user": user})
 	case http.MethodGet:
 		addr, err := store.GetWallet()
 		if err != nil {

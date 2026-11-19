@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Leaf, Mail, Lock, ArrowRight, ArrowLeft, Check } from 'lucide-react';
+import { AlgoWalletProvider } from '@/components/wallet-provider';
+import { WalletLoginButton } from '../login/WalletLoginButton';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -53,6 +55,15 @@ export default function Signup() {
               Create account <ArrowRight className="w-4 h-4" />
             </button>
           </form>
+
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="tag text-ink-faint">or continue with</span>
+            <div className="flex-1 h-px bg-gray-200" />
+          </div>
+          <AlgoWalletProvider>
+            <WalletLoginButton />
+          </AlgoWalletProvider>
 
           <p className="mt-8 text-center text-sm text-ink-soft">
             Already have an account?{' '}

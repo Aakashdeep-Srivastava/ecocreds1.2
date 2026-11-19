@@ -1,5 +1,6 @@
 'use client';
 import { ShoppingBag, Tag, Zap, Car, Trees, Coffee, Ticket } from 'lucide-react';
+import { RewardWallet } from '../components/rewards/RewardWallet';
 
 export default function RewardsPage() {
   const products = [
@@ -52,15 +53,15 @@ export default function RewardsPage() {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold">Rewards</h1>
-          <p className="text-gray-600">Redeem your eco-points for sustainable rewards</p>
-        </div>
-        <div className="bg-green-100 px-4 py-2 rounded-lg">
-          <span className="text-green-600 font-medium">Your Balance: 5,000 coins</span>
-        </div>
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold">Rewards</h1>
+        <p className="text-gray-600">Your CarbonGero reward tokens — and sustainable rewards to redeem</p>
       </div>
+
+      {/* On-chain reward token (ASA) wallet — real ledger + Algorand opt-in */}
+      <RewardWallet />
+
+      <h2 className="text-lg font-semibold mb-4">Redeem your rewards</h2>
 
       <div className="flex gap-4 mb-6 overflow-x-auto">
         {categories.map((category) => (

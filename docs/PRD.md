@@ -1039,7 +1039,7 @@ Deployed live at **https://xecocreds.vercel.app** — a monorepo (Next.js 16 fro
 | **1 — Foundation** | 🟢 Mostly done | Monorepo, Postgres schema (users, activities, evidence, assessments, proofs), activity submission, evidence SHA-256, Go API gateway (`/api/health,submit,proofs,stats,wallet`) | **Real auth** (currently demo-only, single `USR-DEMO`), organisation management, email verification, RBAC/roles |
 | **2 — AI Verification** | 🔴 Stub only | Deterministic AI assessment stub (classification + confidence + recommended action) | **FastAPI microservices**: image/waste classification, evidence validation, duplicate & anomaly detection, **human-review queue** |
 | **3 — Proof & Carbon Accounting** | 🟢 Mostly done | Proof of Sustainability registry, seeded methodologies + emission factors, carbon engine (GHG: AD×EF×OF − leakage), proof APIs, basic audit fields | Methodology/emission-factor **admin UI**, versioning, full immutable audit log, proof public-verify endpoint |
-| **4 — Algorand Integration** | 🟡 Partial | **Real TestNet anchoring** (go-algorand-sdk v2, note-field txn, config-gated + graceful fallback), **Pera/Lute wallet connect** (use-wallet), wallet-address persistence, explorer links | **Fund the TestNet account** to switch anchoring from simulated→live; **ASA issuance** (reward tokens to wallet); asset indexer; tx monitoring; smart-contract controls (freeze/clawback/retire) |
+| **4 — Algorand Integration** | 🟢 Mostly done | **Real TestNet anchoring** (go-algorand-sdk v2, note-field txn), **Pera/Lute wallet connect**, wallet persistence, **ASA reward issuance** (CGRO, config-gated + opt-in aware + graceful fallback), **asset indexer** (`/api/account` on-chain holdings), **client-side ASA opt-in** (algosdk + Pera), tx log (`blockchain_transactions`), explorer links — all config-gated | **Fund the TestNet treasury + create the CGRO ASA** → flip issuance live (2 env vars, no redeploy); **smart-contract controls** (programmatic issuance-authorization / freeze-clawback / retirement — PyTeal or Algorand Python, Phase 6) |
 | **5 — Product Experience** | 🟡 Partial | Rich web dashboard (collapsible sidebar, dark mode, ApexCharts), submit-activity flow, proof registry, KPI detail pages (credits/score/impact), onboarding tour, rewards UI | **Mobile app** (React Native/Expo), **real ESG reporting** (corporate dashboards still use mock data), full activity history from DB |
 | **6 — Expansion** | 🔴 Not started | — | Marketplace, project-developer portal, enterprise integrations, advanced reporting, developer SDK, more activity categories |
 
@@ -1049,7 +1049,13 @@ Deployed live at **https://xecocreds.vercel.app** — a monorepo (Next.js 16 fro
 - **SEO blog system**: 6 fact-based articles (CCTS, CBAM, MSME, circular economy, product use-case, India-vs-EU) with tables, Mermaid diagrams + real-data ApexCharts, JSON-LD, sitemap.
 
 ### Immediate next candidates
-1. **Fund the Algorand TestNet account** → flip anchoring to live (no redeploy).
-2. **ASA reward issuance** to the connected Pera wallet (Phase 4).
+1. **Fund the Algorand TestNet treasury + create the CGRO reward ASA** → set
+   `ALGORAND_MNEMONIC` + `ALGORAND_REWARD_ASA` to flip anchoring **and** reward
+   issuance from simulated→live (no redeploy).
+2. **Smart-contract layer (PyTeal / Algorand Python)** — only needed for
+   *programmatic* on-chain logic: issuance-authorization app, rule-based
+   retirement, marketplace escrow. ASA primitives (create/transfer/opt-in/
+   freeze/clawback roles) already cover the reward + credit token mechanics
+   without a contract.
 3. **Real auth + organisations** (Phase 1 gap) — e.g. Clerk.
 4. **FastAPI AI evidence service** to replace the stub (Phase 2).

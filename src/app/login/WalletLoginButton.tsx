@@ -3,16 +3,19 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useWallet } from '@txnlab/use-wallet-react';
 import { Wallet, Loader2 } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
-export function WalletLoginButton() {
+export function WalletLoginButton({ redirectTo = '/dashboard' }: { redirectTo?: string }) {
   const router = useRouter();
   const { wallets, activeAddress } = useWallet();
+  const { setWalletSession } = useAuth();
   const [mounted, setMounted] = useState(false);
   const handled = useRef(false);
 
   useEffect(() => setMounted(true), []);
 
-  // Once a wallet is connected, link the address and enter the dashboard.
+  // Once a wallet is connected, link the address server-side, promote it to the
+  // active session, and enter the dashboard.
   useEffect(() => {
     if (activeAddress && !handled.current) {
       handled.current = true;
@@ -21,10 +24,12 @@ export function WalletLoginButton() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ address: activeAddress }),
       })
-        .catch(() => {})
-        .finally(() => router.push('/dashboard'));
+        .then((r) => (r.ok ? r.json() : null))
+        .catch(() => null)
+        .then((data) => setWalletSession(activeAddress, data?.user))
+        .finally(() => router.push(redirectTo));
     }
-  }, [activeAddress, router]);
+  }, [activeAddress, router, redirectTo, setWalletSession]);
 
   if (!mounted) {
     return <div className="w-full h-11 rounded-lg border border-gray-200 animate-pulse" />;
