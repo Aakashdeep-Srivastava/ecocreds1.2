@@ -8,7 +8,7 @@ import (
 	"carbongero/pkg/store"
 )
 
-// Handler serves GET /api/cron/keepalive — a minimal-compute DB keep-alive the
+// Handler serves GET /api/keepalive — a minimal-compute DB keep-alive the
 // Vercel cron hits on a schedule. If CRON_SECRET is set, require Vercel's
 // `Authorization: Bearer <CRON_SECRET>` header (Vercel sends it automatically).
 func Handler(w http.ResponseWriter, r *http.Request) {

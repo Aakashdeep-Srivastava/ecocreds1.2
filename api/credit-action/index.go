@@ -8,7 +8,7 @@ import (
 	"carbongero/pkg/store"
 )
 
-// Handler serves POST /api/credits/action — exchange actions on a credit.
+// Handler serves POST /api/credit-action — exchange actions on a credit.
 //
 //	{ "action": "list",   "creditId": "...", "price": 12.5 }
 //	{ "action": "buy",    "creditId": "...", "buyer": "Acme Corp", "buyerAddress": "..." }

@@ -8,7 +8,7 @@ import (
 	"carbongero/pkg/store"
 )
 
-// Handler serves POST /api/rewards/claim — the freemium gate: settle the user's
+// Handler serves POST /api/reward-claim — the freemium gate: settle the user's
 // accrued reward balance to their connected Algorand wallet. Requires a wallet
 // address (the point at which the user must have logged in with Pera).
 func Handler(w http.ResponseWriter, r *http.Request) {

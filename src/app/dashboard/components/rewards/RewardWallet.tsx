@@ -66,7 +66,7 @@ export function RewardWallet() {
     setBusy(true);
     setMsg(null);
     try {
-      const res = await fetch('/api/rewards/claim', {
+      const res = await fetch('/api/reward-claim', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ address: activeAddress }),

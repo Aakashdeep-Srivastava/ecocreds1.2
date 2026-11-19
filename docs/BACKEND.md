@@ -168,10 +168,10 @@ persisted in `localStorage`). The dashboard identity + sign-out reflect it.
 
 - **Freemium model**: rewards accrue off-chain while anonymous
   (`reward_issuances.status = PENDING_WALLET`). The user claims them to their
-  Algorand wallet via `POST /api/rewards/claim` (gated on a connected Pera
+  Algorand wallet via `POST /api/reward-claim` (gated on a connected Pera
   wallet) — one on-chain transfer settles the accrued balance. See
   `RewardWallet.tsx`.
-- **Keep-alive**: `GET /api/cron/keepalive` does one tiny upsert into
+- **Keep-alive**: `GET /api/keepalive` does one tiny upsert into
   `heartbeats`; a Vercel cron (`vercel.json`, every 12h → daily on Hobby) hits it
   so the Neon project stays active during slow onboarding. We deliberately do
   **not** keep the compute warm 24/7 — scale-to-zero is what preserves the free
@@ -189,7 +189,7 @@ persisted in `localStorage`). The dashboard identity + sign-out reflect it.
   vintage, methodology, and an on-chain **certificate anchor**
   (`chain.AnchorCertificate`). Labeled voluntary-market — **not** registry
   accredited.
-- **Exchange** (`/api/credits/action`, `/dashboard/marketplace`): `ISSUED → LISTED
+- **Exchange** (`/api/credit-action`, `/dashboard/marketplace`): `ISSUED → LISTED
   → SOLD`, plus `RETIRE` (the explicit offset claim — a transfer alone is not a
   claim, PRD §7). Full provenance in `credit_events`; sale/retire anchored
   on-chain. **Payment settles off-platform** (USDC via a licensed ramp — see

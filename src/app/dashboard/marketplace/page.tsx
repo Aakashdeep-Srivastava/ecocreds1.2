@@ -71,16 +71,16 @@ export default function MarketplacePage() {
   const listForSale = (creditId: string) => {
     const price = parseFloat(prices[creditId] || '');
     if (!price || price <= 0) { setMsg({ ok: false, text: 'Enter a price (USDC) first.' }); return; }
-    return act(() => fetch('/api/credits/action', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'list', creditId, price }) }),
+    return act(() => fetch('/api/credit-action', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'list', creditId, price }) }),
       `${creditId} listed at ${price} USDC.`, creditId);
   };
 
   const buy = (creditId: string) =>
-    act(() => fetch('/api/credits/action', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'buy', creditId, buyer }) }),
+    act(() => fetch('/api/credit-action', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'buy', creditId, buyer }) }),
       `${creditId} sold to ${buyer}.`, creditId);
 
   const retire = (creditId: string) =>
-    act(() => fetch('/api/credits/action', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'retire', creditId }) }),
+    act(() => fetch('/api/credit-action', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'retire', creditId }) }),
       `${creditId} retired — offset claimed.`, creditId);
 
   const toggleHistory = async (creditId: string) => {
