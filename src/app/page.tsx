@@ -19,9 +19,10 @@ const MENUS: { label: string; items: { label: string; href: string; desc?: strin
   {
     label: 'Product',
     items: [
+      { label: 'Carbon Marketplace', href: '/marketplace', desc: 'Buy verified carbon credits — single or bulk' },
+      { label: 'Footprint Calculator', href: '/calculator', desc: 'Your number + the changes that matter most' },
       { label: 'Platform overview', href: '#product', desc: 'End-to-end carbon credit infrastructure' },
       { label: 'How it works', href: '#how' },
-      { label: 'Why CarbonGero', href: '#why' },
       { label: 'Submit an activity', href: '/dashboard/submit' },
       { label: 'Proof registry', href: '/dashboard/proofs' },
     ],
@@ -37,6 +38,7 @@ const MENUS: { label: string; items: { label: string; href: string; desc?: strin
   {
     label: 'Resources',
     items: [
+      { label: 'Carbon removal, explained', href: '/learn', desc: 'Reforestation vs biochar vs direct air capture' },
       { label: 'Blog', href: '/blog', desc: 'India CCTS, CBAM & carbon markets' },
       { label: "India's CCTS, Decoded", href: '/blog/india-ccts-explained' },
       { label: 'CBAM & Indian Exporters', href: '/blog/cbam-india-exporters' },
@@ -46,6 +48,7 @@ const MENUS: { label: string; items: { label: string; href: string; desc?: strin
   {
     label: 'Company',
     items: [
+      { label: 'Get Involved', href: '/get-involved', desc: 'Pledge a change or join the waitlist' },
       { label: 'About', href: '#why' },
       { label: 'Contact', href: '#contact' },
       { label: 'Open the app', href: '/dashboard' },
