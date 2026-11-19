@@ -16,7 +16,7 @@ export default function VerifyPage() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await fetch('/api/reviews').then((r) => r.json());
+      const data = await fetch('/api/market?resource=reviews').then((r) => r.json());
       setPending(Array.isArray(data?.pending) ? data.pending : []);
     } catch {
       setPending([]);
@@ -31,10 +31,10 @@ export default function VerifyPage() {
     setBusy(proofId);
     setMsg(null);
     try {
-      const res = await fetch('/api/reviews', {
+      const res = await fetch('/api/market', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ proofId, decision }),
+        body: JSON.stringify({ op: 'review', proofId, decision }),
       }).then((r) => r.json());
       if (res?.proofId) {
         setMsg({ ok: true, text: `${proofId} ${decision.toLowerCase()} · attested ${res.live ? 'on-chain' : '(simulated)'}.` });

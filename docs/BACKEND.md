@@ -70,6 +70,15 @@ root `/api/*` paths are owned by the Go functions. One `git push` deploys both.
    package, so four flat `api/*.go` files each with `func Handler` collided
    (`Handler redeclared`). → Each function lives in its **own subdirectory**
    `api/<name>/index.go`, so each is a separate package / separate function.
+3. **Hobby plan: max 12 Serverless Functions per deployment.** Every
+   `api/**/index.go` is one function; exceed 12 (incl. the Next.js function) and
+   the **whole build fails** (`No more than 12 Serverless Functions…`). → We
+   **consolidate** related endpoints into one function that routes by
+   query/method/body. Current Go functions (7): `health` (also the keep-alive
+   cron via `?ping=1`), `submit`, `proofs`, `stats`, `wallet`, `rewards`
+   (reward summary/history + `?resource=assets|account` + `POST {action:"claim"}`),
+   `market` (`?resource=reviews|credits` + `POST {op:"review|issue|list|buy|retire"}`).
+   Keep new endpoints as sub-routes of these, not new directories.
 
 ## 3. Database (Neon Postgres)
 

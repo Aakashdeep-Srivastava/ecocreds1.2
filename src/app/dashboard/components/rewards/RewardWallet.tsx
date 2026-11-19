@@ -38,7 +38,7 @@ export function RewardWallet() {
   const loadLedger = useCallback(async () => {
     try {
       const [a, r] = await Promise.all([
-        fetch('/api/assets').then((x) => x.json()),
+        fetch('/api/rewards?resource=assets').then((x) => x.json()),
         fetch('/api/rewards').then((x) => x.json()),
       ]);
       setAsset(a?.reward ?? null);
@@ -51,7 +51,7 @@ export function RewardWallet() {
 
   const loadAccount = useCallback(async (address: string) => {
     try {
-      const s = await fetch(`/api/account?address=${encodeURIComponent(address)}`).then((x) => x.json());
+      const s = await fetch(`/api/rewards?resource=account&address=${encodeURIComponent(address)}`).then((x) => x.json());
       setSnap(s);
     } catch {
       setSnap(null);
@@ -66,10 +66,10 @@ export function RewardWallet() {
     setBusy(true);
     setMsg(null);
     try {
-      const res = await fetch('/api/reward-claim', {
+      const res = await fetch('/api/rewards', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address: activeAddress }),
+        body: JSON.stringify({ action: 'claim', address: activeAddress }),
       }).then((x) => x.json());
       if (res.status === 'OPTIN_REQUIRED') {
         setMsg({ ok: false, text: `Opt into ${asset?.unit || 'CGRO'} first, then claim.` });
