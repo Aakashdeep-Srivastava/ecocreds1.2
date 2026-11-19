@@ -177,6 +177,24 @@ persisted in `localStorage`). The dashboard identity + sign-out reflect it.
   **not** keep the compute warm 24/7 — scale-to-zero is what preserves the free
   compute budget. Optionally set `CRON_SECRET` to lock the endpoint.
 
+## 8d. Peer-review verification + carbon-credit exchange (Phase 2/6)
+
+- **Human peer review** (`pkg/store/verify.go`, `/api/reviews`, `/dashboard/verify`):
+  new proofs get `review_status='PENDING_REVIEW'`; a verifier approves/rejects.
+  Each decision is **attested on Algorand** (`chain.Attest`, config-gated). AI
+  assessment stays advisory (PRD §5.4). A credit can only be issued from an
+  `APPROVED` proof.
+- **Carbon-credit certificates** (`pkg/store/credits.go`, `/api/credits`): issued
+  one-per-proof (`carbon_credits`, anti-double-issue), with serial, project,
+  vintage, methodology, and an on-chain **certificate anchor**
+  (`chain.AnchorCertificate`). Labeled voluntary-market — **not** registry
+  accredited.
+- **Exchange** (`/api/credits/action`, `/dashboard/marketplace`): `ISSUED → LISTED
+  → SOLD`, plus `RETIRE` (the explicit offset claim — a transfer alone is not a
+  claim, PRD §7). Full provenance in `credit_events`; sale/retire anchored
+  on-chain. **Payment settles off-platform** (USDC via a licensed ramp — see
+  `docs/RESEARCH-verification-and-offramp.md`); CarbonGero does not custody fiat.
+
 ## 8c. Going live on Algorand (one-time, no secret in chat)
 
 Run `go run ./cmd/setup-asa` locally with a **funded** TestNet account's mnemonic
