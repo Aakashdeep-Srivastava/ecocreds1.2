@@ -149,6 +149,22 @@ func Submit(in SubmitInput) (*SubmitResult, error) {
 	if in.Quantity <= 0 {
 		return nil, fmt.Errorf("quantity must be greater than zero")
 	}
+	// Input bounds (reliability / sanity).
+	if in.Quantity > 100000 {
+		return nil, fmt.Errorf("quantity exceeds the allowed maximum")
+	}
+	if len(in.Description) > 2000 {
+		in.Description = in.Description[:2000]
+	}
+
+	// Anti-fraud: per-user daily submission cap.
+	var todayCount int
+	_ = conn.QueryRow(
+		`SELECT count(*) FROM activities WHERE user_id=$1 AND created_at::date = now()::date`, demoUser,
+	).Scan(&todayCount)
+	if todayCount >= 25 {
+		return nil, fmt.Errorf("daily submission limit reached; please try again tomorrow")
+	}
 
 	// Evidence hash (SHA-256) — PRD §5.3 FR-018.
 	raw := in.Evidence
@@ -157,6 +173,16 @@ func Submit(in SubmitInput) (*SubmitResult, error) {
 	}
 	sum := sha256.Sum256([]byte(raw))
 	evidenceHash := hex.EncodeToString(sum[:])
+
+	// Anti-fraud: reject duplicate evidence (PRD §5.3 FR-020). Skipped for the
+	// auto-generated placeholder hash (no real evidence attached).
+	if in.Evidence != "" {
+		var dupe int
+		_ = conn.QueryRow(`SELECT count(*) FROM evidence WHERE file_hash=$1`, evidenceHash).Scan(&dupe)
+		if dupe > 0 {
+			return nil, fmt.Errorf("this evidence has already been submitted (duplicate detected)")
+		}
+	}
 
 	// Look up methodology for the category.
 	var methID, mUnit string

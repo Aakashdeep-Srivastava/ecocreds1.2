@@ -35,8 +35,13 @@ export function PublicFooter() {
           <Link key={l.href} href={l.href} className="link-wipe text-ink-soft">{l.label}</Link>
         ))}
       </div>
-      <p>CarbonGero · Proof of Sustainability on Algorand</p>
-      <p className="mt-1">Voluntary-market · estimates are labelled · not registry-accredited.</p>
+      <div className="flex items-center justify-center gap-4 mb-2 text-xs">
+        <Link href="/disclosures" className="link-wipe text-ink-soft">Disclosures</Link>
+        <Link href="/terms" className="link-wipe text-ink-soft">Terms</Link>
+        <Link href="/privacy" className="link-wipe text-ink-soft">Privacy</Link>
+      </div>
+      <p>CarbonGero · Proof of Sustainability on Algorand · operated by Xphora AI Technology Pvt. Ltd.</p>
+      <p className="mt-1">Voluntary-market · estimates are labelled · not registry-accredited · not financial advice.</p>
     </footer>
   );
 }

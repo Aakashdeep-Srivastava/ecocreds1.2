@@ -16,6 +16,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		httpx.Error(w, http.StatusMethodNotAllowed, "method not allowed")
 		return
 	}
+	r.Body = http.MaxBytesReader(w, r.Body, 1<<20) // 1 MB cap
 	var in store.SubmitInput
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
 		httpx.Error(w, http.StatusBadRequest, "invalid JSON body")

@@ -154,7 +154,7 @@ export default function Home() {
 
   const solutions = [
     { icon: <Landmark />, t: 'For Governments', d: 'Digitize, monitor and monetize state and city-level climate projects.', img: '/sol-government.webp' },
-    { icon: <Building2 />, t: 'For Enterprises', d: 'Meet net-zero goals with verified, traceable carbon credits.', img: '/sol-enterprise.webp' },
+    { icon: <Building2 />, t: 'For Enterprises', d: 'Support your climate strategy with verified, traceable carbon records.', img: '/sol-enterprise.webp' },
     { icon: <Sprout />, t: 'For Project Developers', d: 'Turn your sustainability projects into high-integrity carbon assets.', img: '/sol-developer.webp' },
   ];
 
@@ -421,7 +421,7 @@ export default function Home() {
             <div className="md:col-span-2">
               <Logo className="[&_span]:text-white" />
               <p className="mt-4 text-sm leading-relaxed max-w-xs">
-                Tokenize · Trade · Mitigate — a blockchain-powered carbon credit infrastructure for a net-zero world.
+                Tokenize · Trade · Mitigate — blockchain-powered carbon record infrastructure for a lower-carbon world.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {[['Chrome extension', <Chrome key="c" className="w-3.5 h-3.5" />], ['Mobile app', <Smartphone key="s" className="w-3.5 h-3.5" />]].map(([label, icon]) => (
