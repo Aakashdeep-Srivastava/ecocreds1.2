@@ -87,7 +87,7 @@ export default function CorporateDashboard() {
               <Building className="w-8 h-8 text-green-600 mr-3" />
               <div>
                 <h1 className="text-2xl font-bold">ABC Corporation</h1>
-                <p className="text-sm text-gray-600">Corporate Sustainability Dashboard</p>
+                <p className="text-sm text-gray-600">Corporate Sustainability Dashboard <span className="ml-1 text-xs text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">Sample data</span></p>
               </div>
             </div>
             <div className="flex items-center space-x-4">

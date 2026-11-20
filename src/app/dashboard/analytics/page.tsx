@@ -80,6 +80,7 @@ export default function AnalyticsPage() {
 
   return (
     <div className="p-6 space-y-8">
+      <p className="inline-block text-xs text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-lg">Sample data — illustrative figures, not from live accounts.</p>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Analytics Dashboard</h1>
         <select className="border rounded-lg px-3 py-2">
